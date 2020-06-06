@@ -1,0 +1,2 @@
+rootProject.name='MessageBottle'
+include ':app'
