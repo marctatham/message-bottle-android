@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-// load up the external properties
+// load up the external properties - for signing configuration
 Properties props = new Properties()
 try {
     props.load(file('properties.properties').newDataInputStream())
@@ -30,17 +30,12 @@ android {
         def keyStoreAlias = "${props.getProperty("keyStoreAlias")}"
         def keyStoreAliasPassword = "${props.getProperty("keyStoreAliasPassword")}"
 
-
-        // only really useful if we're building on multiple machines
-        /*
         debug {
-
-            storeFile file("debug.keystore")
+            storeFile file("message-bottle-debug.jks")
             storePassword "android"
             keyAlias "androiddebugkey"
             keyPassword "android"
         }
-        */
 
         release {
             storeFile file("message-bottle-release.jks")
@@ -51,6 +46,17 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+
+            debuggable true
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
