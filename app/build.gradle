@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+// load up the external properties
+Properties props = new Properties()
+try {
+    props.load(file('properties.properties').newDataInputStream())
+} catch (Exception exception) {
+    throw new GradleException("properties.properties not found", exception)
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -16,10 +24,37 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+
+        def keyStorePassword = "${props.getProperty("keyStorePassword")}"
+        def keyStoreAlias = "${props.getProperty("keyStoreAlias")}"
+        def keyStoreAliasPassword = "${props.getProperty("keyStoreAliasPassword")}"
+
+
+        // only really useful if we're building on multiple machines
+        /*
+        debug {
+
+            storeFile file("debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+        */
+
+        release {
+            storeFile file("message-bottle-release.jks")
+            storePassword keyStorePassword
+            keyAlias keyStoreAlias
+            keyPassword keyStoreAliasPassword
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
