@@ -1,8 +1,7 @@
-package com.koala
+package com.koala.messagebottle
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.koala.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
