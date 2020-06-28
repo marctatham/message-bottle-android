@@ -12,25 +12,35 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GetTokenResult
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.R
+import com.koala.messagebottle.login.data.GetCreateUserDataModel
+import com.koala.messagebottle.login.data.UserService
 import kotlinx.android.synthetic.main.activity_login.*
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 private const val TAG = "LoginActivity"
 private const val REQUEST_CODE_GOOGLE = 9001
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    private lateinit var userService: UserService
 
     private lateinit var btnSignInGoogle: SignInButton
     private lateinit var progressBar: ProgressBar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +48,8 @@ class LoginActivity : AppCompatActivity() {
 
         progressBar = findViewById(R.id.progressBar)
         btnSignInGoogle = findViewById(R.id.btnSignInGoogle)
+
+        configureUserService()
 
         configureGoogleSignInButton()
     }
@@ -60,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
             .requestProfile()
             .build()
 
-        auth = Firebase.auth
+        firebaseAuth = Firebase.auth
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
 
         btnSignInGoogle = findViewById(R.id.btnSignInGoogle)
@@ -69,6 +81,19 @@ class LoginActivity : AppCompatActivity() {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE)
         }
+    }
+
+    // TODO: clean up
+    // this shouldn't be happening here
+    // let's move toward dagger, etc
+    private fun configureUserService() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(UserService.API_URL)
+            .client(getHttpClient())
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+
+        userService = retrofit.create(UserService::class.java)
     }
 
     /**
@@ -90,15 +115,37 @@ class LoginActivity : AppCompatActivity() {
     private fun firebaseAuthWithGoogle(idToken: String) {
         showProgressBar()
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
+        firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "firebaseAuthWithGoogle:success")
-                    val user: FirebaseUser = auth.currentUser!!
-                    displayGoogleSignSuccess(user)
+                    val user: FirebaseUser = firebaseAuth.currentUser!!
 
-                    setResult(Activity.RESULT_OK)
-                    finish()
+                    Log.w(TAG, "Getting FirebaseUser's IdToken")
+                    val taskGetIdToken: Task<GetTokenResult> = user.getIdToken(false)
+                    taskGetIdToken.addOnSuccessListener { result: GetTokenResult ->
+
+                        // TODO: call backend for getCreation of User
+                        // get token to provide to our backend for verification
+                        Log.w(TAG, "Received token result...")
+                        Log.w(TAG, "Token - [${result.token}]")
+                        Log.w(TAG, "Signin Provider - [${result.signInProvider}]")
+                        result.claims.forEach {
+                            Log.w(TAG, "[${it.key}] - [${it.value}]")
+                        }
+
+                        makeRequestToMybackend(result.token!!)
+
+                        displayGoogleSignSuccess(user)
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
+                    taskGetIdToken.addOnFailureListener {
+                        Log.w(TAG, "taskGetIdToken:failure", it)
+                        displayGoogleSignInFailed()
+                    }
+
+
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     displayGoogleSignInFailed()
@@ -106,6 +153,23 @@ class LoginActivity : AppCompatActivity() {
 
                 hideProgressBar()
             }
+    }
+
+    private fun makeRequestToMybackend(token: String) {
+        val getCreateUserDataModel = GetCreateUserDataModel(token)
+
+        userService.getCreateUser(getCreateUserDataModel)
+    }
+
+    private fun getHttpClient(): OkHttpClient {
+        val okHttpBuilder = OkHttpClient.Builder()
+        okHttpBuilder.addInterceptor { chain ->
+            val requestWithUserAgent = chain.request().newBuilder()
+                .header("User-Agent", "My custom user agent")
+                .build()
+            chain.proceed(requestWithUserAgent)
+        }
+        return okHttpBuilder.build()
     }
 
     private fun displayGoogleSignInFailed() {
