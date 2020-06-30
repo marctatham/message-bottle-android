@@ -77,12 +77,26 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versionKotlin"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+
+    // okhttp
+    api "com.squareup.okhttp3:okhttp:$versionOkHttp"
+    api "com.squareup.okhttp3:logging-interceptor:$versionOkHttp"
+
+    // moshi
+    api "com.squareup.moshi:moshi-kotlin:$versionMoshi"
+    api "com.squareup.moshi:moshi-adapters:$versionMoshi"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$versionMoshi"
+
+    // retrofit + moshi
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+
 
     // Dagger
     implementation "com.google.dagger:dagger:2.28.1"
@@ -98,9 +112,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:19.3.1'
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'com.google.android.material:material:1.1.0'
-
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
 
     testImplementation 'junit:junit:4.12'
 
