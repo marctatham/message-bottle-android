@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -21,26 +22,25 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.R
-import com.koala.messagebottle.login.data.GetCreateUserDataModel
-import com.koala.messagebottle.login.data.UserService
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
 private const val TAG = "LoginActivity"
 private const val REQUEST_CODE_GOOGLE = 9001
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : DaggerAppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    private lateinit var userService: UserService
-
     private lateinit var btnSignInGoogle: SignInButton
     private lateinit var progressBar: ProgressBar
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<LoginViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +48,6 @@ class LoginActivity : AppCompatActivity() {
 
         progressBar = findViewById(R.id.progressBar)
         btnSignInGoogle = findViewById(R.id.btnSignInGoogle)
-
-        configureUserService()
 
         configureGoogleSignInButton()
     }
@@ -81,19 +79,6 @@ class LoginActivity : AppCompatActivity() {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE)
         }
-    }
-
-    // TODO: clean up
-    // this shouldn't be happening here
-    // let's move toward dagger, etc
-    private fun configureUserService() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(UserService.API_URL)
-            .client(getHttpClient())
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
-
-        userService = retrofit.create(UserService::class.java)
     }
 
     /**
@@ -156,20 +141,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun makeRequestToMybackend(token: String) {
-        val getCreateUserDataModel = GetCreateUserDataModel(token)
-
-        userService.getCreateUser(getCreateUserDataModel)
-    }
-
-    private fun getHttpClient(): OkHttpClient {
-        val okHttpBuilder = OkHttpClient.Builder()
-        okHttpBuilder.addInterceptor { chain ->
-            val requestWithUserAgent = chain.request().newBuilder()
-                .header("User-Agent", "My custom user agent")
-                .build()
-            chain.proceed(requestWithUserAgent)
-        }
-        return okHttpBuilder.build()
+        viewModel.start(token)
     }
 
     private fun displayGoogleSignInFailed() {

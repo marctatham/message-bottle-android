@@ -6,6 +6,7 @@ buildscript {
     ext.versionRetrofit = '2.9.0'
     ext.versionOkHttp = '4.7.2'
     ext.versionMoshi = '1.9.3'
+    ext.versionFragmentKtx = '1.1.0-rc01'
 
     repositories {
         google()

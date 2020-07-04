@@ -4,6 +4,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class GetCreateUserDataModel(
-    @field:Json(name = "id") val myId: String
+data class GetCreateUserResponseDataModel(
+    @field:Json(name = "jwtToken") val jwtToken: String
 )

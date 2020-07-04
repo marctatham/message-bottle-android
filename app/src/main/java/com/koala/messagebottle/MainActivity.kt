@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
 
+        // TODO: re-evaluate
+        // We don't care about google signin State, we care more about being signed in to OUR app
         val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
         if (account == null) {
             val intent = Intent(this, LoginActivity::class.java)
