@@ -1,7 +1,6 @@
 package com.koala.messagebottle.di
 
 import com.koala.messagebottle.BuildConfig
-import com.koala.messagebottle.login.data.UserService
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -58,15 +57,6 @@ object NetworkModule {
             .addConverterFactory(moshiConverterFactory)
             .client(okHttpClient)
             .build()
-    }
-
-    // TODO don't want this provided directly by the network module
-    @Provides
-    @Singleton
-    fun providesUserService(
-        retrofit: Retrofit
-    ): UserService {
-        return retrofit.create(UserService::class.java)
     }
 
 }

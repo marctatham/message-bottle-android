@@ -2,9 +2,10 @@ package com.koala.messagebottle.di
 
 import android.content.Context
 import com.koala.messagebottle.BaseApplication
-import com.koala.messagebottle.login.di.LoginModule
+import com.koala.messagebottle.login.di.LoginComponent
 import dagger.BindsInstance
 import dagger.Component
+import dagger.Module
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
@@ -15,7 +16,8 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ViewModelBuilder::class,
         NetworkModule::class,
-        LoginModule::class
+        AuthenticationModule::class,
+        SubcomponentsModule::class
     ]
 )
 interface ApplicationComponent : AndroidInjector<BaseApplication> {
@@ -25,4 +27,14 @@ interface ApplicationComponent : AndroidInjector<BaseApplication> {
         fun create(@BindsInstance applicationContext: Context): ApplicationComponent
     }
 
+    fun loginComponent(): LoginComponent.Factory
+
 }
+
+
+@Module(
+    subcomponents = [
+        LoginComponent::class
+    ]
+)
+object SubcomponentsModule
