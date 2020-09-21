@@ -5,11 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.data.authentication.AuthenticationRepository
-import com.koala.messagebottle.login.data.GetCreateUserDataModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "LoginViewModel"
+
+private const val NONE = 0
+private const val LOADING = 1
+private const val DONE = 2
+
 
 /**
  * ViewModel for the Details screen.
@@ -19,14 +23,13 @@ class LoginViewModel @Inject constructor(
     private val authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
 
-    private val _isDataAvailable = MutableLiveData<Boolean>()
-    val isDataAvailable: LiveData<Boolean> = _isDataAvailable
+    private val _state = MutableLiveData<Int>()
 
-    private val _dataLoading = MutableLiveData<Boolean>()
-    val dataLoading: LiveData<Boolean> = _dataLoading
+    // TODO: subscribe for changes to the viewmodel state
+    val state: LiveData<Int> = _state
 
     fun initiateLoginWithGoogle() {
-        _dataLoading.value = true
+        _state.value = LOADING
 
         googleSignInProvider.initiateSignIn(object : ThirdPartyLoginProvider.Callback {
             override fun onThirdPartyLoginComplete(thirdPartyLoginCredential: ThirdPartyLoginCredential) {
@@ -39,35 +42,13 @@ class LoginViewModel @Inject constructor(
                     authenticationRepository.firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
                 }
 
-                _dataLoading.value = false
+                _state.value = DONE
             }
 
             override fun onThirdPartyLoginCancelled() {
-                _dataLoading.value = false
+                _state.value = NONE
             }
         })
     }
-
-    // complete sign in via our backend
-    // this should probably go through our backend
-    private fun start(thirdPartyLoginCredential: ThirdPartyLoginCredential) {
-
-        if (_isDataAvailable.value == true || _dataLoading.value == true) {
-            return
-        }
-
-        // Show loading indicator
-        _dataLoading.value = true
-        viewModelScope.launch {
-            val getCreateUserDataModel = GetCreateUserDataModel(thirdPartyLoginCredential.code)
-            //val result = userService.getCreateUser(getCreateUserDataModel)
-            //Log.w(TAG, "Successful retrieval of the user ${result.jwtToken}")
-
-            _isDataAvailable.value = true
-            _dataLoading.value = false
-        }
-
-    }
-
-
 }
+

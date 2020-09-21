@@ -1,24 +1,25 @@
 package com.koala.messagebottle
 
-import com.koala.messagebottle.di.ApplicationComponent
-import com.koala.messagebottle.di.DaggerApplicationComponent
-import dagger.android.DaggerApplication
+import android.app.Application
+import com.koala.messagebottle.di.AppComponent
+import com.koala.messagebottle.di.DaggerAppComponent
 
-open class BaseApplication : DaggerApplication() {
+
+open class BaseApplication : Application() {
 
 //    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
 //        return DaggerApplicationComponent.factory().create(applicationContext)
 //    }
 
     // Instance of the AppComponent that will be used by all the Activities in the project
-    val appComponent: ApplicationComponent by lazy {
+    val appComponent: AppComponent by lazy {
         initializeComponent()
     }
 
-    open fun initializeComponent(): ApplicationComponent {
+    open fun initializeComponent(): AppComponent {
         // Creates an instance of AppComponent using its Factory constructor
         // We pass the applicationContext that will be used as Context in the graph
-        return DaggerApplicationComponent.factory().create(applicationContext)
+        return DaggerAppComponent.factory().create(applicationContext)
     }
 
 

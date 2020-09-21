@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.SignInButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.koala.messagebottle.BaseApplication
 import com.koala.messagebottle.R
-import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 private const val TAG = "LoginActivity"
 
-class LoginActivity : DaggerAppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var btnSignInGoogle: SignInButton
     private lateinit var progressBar: ProgressBar
@@ -25,18 +25,19 @@ class LoginActivity : DaggerAppCompatActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel by viewModels<LoginViewModel> { viewModelFactory }
-//    @Inject
-//    lateinit var viewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
         // Creates an instance of Login component by grabbing the factory from the app graph
         // and injects this activity to that Component
         //(application as BaseApplication).appComponent.loginComponent().create().inject(this)
-        (application as BaseApplication).appComponent.loginComponent()
-            .create().inject(this)
+        val application = (application as BaseApplication)
+        val loginComponent = application.appComponent.loginComponent().create(this)
+        loginComponent.inject(this)
+
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
+        btnSignInGoogle = findViewById(R.id.btnSignInGoogle)
+        progressBar = findViewById(R.id.progressBar)
 
         btnSignInGoogle.setSize(SignInButton.SIZE_STANDARD)
         btnSignInGoogle.setOnClickListener {
