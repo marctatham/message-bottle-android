@@ -5,5 +5,5 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class GetCreateUserDataModel(
-    @field:Json(name = "id") val myId: String
+    @field:Json(name = "idToken") val myId: String
 )
