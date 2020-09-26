@@ -1,4 +1,4 @@
-package com.koala.messagebottle
+package com.koala.messagebottle.home
 
 import android.app.Activity
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.koala.messagebottle.R
 import com.koala.messagebottle.login.LoginActivity
 
 private const val TAG = "MainActivity"

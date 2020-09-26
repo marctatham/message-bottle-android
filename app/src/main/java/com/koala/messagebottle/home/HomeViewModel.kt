@@ -1,4 +1,4 @@
-package com.koala.messagebottle
+package com.koala.messagebottle.home
 
 import androidx.lifecycle.ViewModel
 

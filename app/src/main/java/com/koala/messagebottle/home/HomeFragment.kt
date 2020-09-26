@@ -1,4 +1,4 @@
-package com.koala.messagebottle
+package com.koala.messagebottle.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.koala.messagebottle.R
 import com.koala.messagebottle.login.LoginActivity
 
 private const val REQUEST_CODE_LOGIN = 100
