@@ -18,7 +18,7 @@ class AuthenticationRepository @Inject constructor(
     // TODO: let's write this to somewhere safe
     // shared prefs is probably OK for now until we've got a better usecase to introduce DB support
     // for now we'll just store this in memory since it's useful for testing auth functionality 🤷‍
-    var user: UserEntity? = null
+    var user: UserEntity = UserEntity.Anonymous
 
     suspend fun firebaseAuthWithGoogle(idToken: String) {
         Log.v(TAG, "authenticating with Firebase using Google IDToken")
