@@ -2,6 +2,7 @@ package com.koala.messagebottle.common.data.authentication
 
 import android.util.Log
 import com.koala.messagebottle.common.data.authentication.firebase.FirebaseAuthenticator
+import com.koala.messagebottle.common.domain.UserEntity
 import javax.inject.Inject
 
 private const val TAG = "AuthenticationRepository"
@@ -10,31 +11,26 @@ private const val TAG = "AuthenticationRepository"
 // user is currently signed into the application
 class AuthenticationRepository @Inject constructor(
     private val firebaseAuthenticator: FirebaseAuthenticator,
-    private val userService: UserService
+    private val userService: UserService,
+    private val mapper: UserDataModelMapper
 ) {
 
     // TODO: let's write this to somewhere safe
     // shared prefs is probably OK for now until we've got a better usecase to introduce DB support
     // for now we'll just store this in memory since it's useful for testing auth functionality 🤷‍
-    private var user: GetCreateUserResponseDataModel? = null
+    var user: UserEntity? = null
 
-    suspend fun isUserSignedIn(): Boolean {
-        return false
-    }
-
-    // TO CONSIDER:
-    // should we define our very own model for the repository?
-    //  - it's probably OK that this is the DOMAIN layer defined entity
     suspend fun firebaseAuthWithGoogle(idToken: String) {
         Log.v(TAG, "authenticating with Firebase using Google IDToken")
         val firebaseAuthResult = firebaseAuthenticator.authenticateViaGoogle(idToken)
 
         Log.v(TAG, "authenticating with our backend using firebase token")
         val getCreateUserDataModel = GetCreateUserDataModel(firebaseAuthResult.token)
-        val getCreateUserResponse = userService.getCreateUser(getCreateUserDataModel)
+        val userDataModel = userService.getCreateUser(getCreateUserDataModel)
+        val userEntity = mapper.map(userDataModel)
 
         // temporarily persist this to memory until we've got persistence mechanism in place
-        user = getCreateUserResponse
+        user = userEntity
     }
 
 }

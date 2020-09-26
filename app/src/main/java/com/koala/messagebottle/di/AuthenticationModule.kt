@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.common.data.authentication.AuthenticationRepository
+import com.koala.messagebottle.common.data.authentication.UserDataModelMapper
 import com.koala.messagebottle.common.data.authentication.UserService
 import com.koala.messagebottle.common.data.authentication.firebase.FirebaseAuthenticator
 import dagger.Module
@@ -36,6 +37,6 @@ object AuthenticationModule {
     fun provideAuthenticationRepository(
         firebaseAuthenticator: FirebaseAuthenticator,
         userService: UserService
-    ) = AuthenticationRepository(firebaseAuthenticator, userService)
+    ) = AuthenticationRepository(firebaseAuthenticator, userService, UserDataModelMapper())
 
 }
