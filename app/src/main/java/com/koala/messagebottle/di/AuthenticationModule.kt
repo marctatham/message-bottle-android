@@ -3,9 +3,9 @@ package com.koala.messagebottle.di
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.koala.messagebottle.data.authentication.AuthenticationRepository
-import com.koala.messagebottle.data.authentication.firebase.FirebaseAuthenticator
-import com.koala.messagebottle.login.data.UserService
+import com.koala.messagebottle.common.data.authentication.AuthenticationRepository
+import com.koala.messagebottle.common.data.authentication.UserService
+import com.koala.messagebottle.common.data.authentication.firebase.FirebaseAuthenticator
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

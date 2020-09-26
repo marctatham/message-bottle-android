@@ -1,4 +1,4 @@
-package com.koala.messagebottle.data.authentication.firebase
+package com.koala.messagebottle.common.data.authentication.firebase
 
 import android.util.Log
 import com.google.android.gms.tasks.Task

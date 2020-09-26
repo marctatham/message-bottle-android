@@ -1,10 +1,7 @@
-package com.koala.messagebottle.data.authentication
+package com.koala.messagebottle.common.data.authentication
 
 import android.util.Log
-import com.koala.messagebottle.data.authentication.firebase.FirebaseAuthenticator
-import com.koala.messagebottle.login.data.GetCreateUserDataModel
-import com.koala.messagebottle.login.data.GetCreateUserResponseDataModel
-import com.koala.messagebottle.login.data.UserService
+import com.koala.messagebottle.common.data.authentication.firebase.FirebaseAuthenticator
 import javax.inject.Inject
 
 private const val TAG = "AuthenticationRepository"
