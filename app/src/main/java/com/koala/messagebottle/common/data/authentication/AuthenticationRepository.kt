@@ -33,4 +33,8 @@ class AuthenticationRepository @Inject constructor(
         user = userEntity
     }
 
+    suspend fun signOut() {
+        user = UserEntity.Anonymous
+    }
+
 }
