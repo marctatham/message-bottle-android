@@ -50,6 +50,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun initiateSignOut() = viewModelScope.launch {
+        _state.value = State.Loading
         authenticationRepository.signOut()
         _state.value = authenticationRepository.user.toState()
     }
