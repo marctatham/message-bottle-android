@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
             viewModel.initiateLoginWithGoogle()
         }
 
-        btnSignInGoogle.setOnClickListener {
+        btnSignOut.setOnClickListener {
             viewModel.initiateSignOut()
         }
 
