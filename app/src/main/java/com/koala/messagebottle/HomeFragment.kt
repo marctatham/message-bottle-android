@@ -12,17 +12,17 @@ import com.koala.messagebottle.login.LoginActivity
 
 private const val REQUEST_CODE_LOGIN = 100
 
-class MainFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = HomeFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: HomeViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
@@ -30,7 +30,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val rootView = inflater.inflate(R.layout.main_fragment, container, false)
+        val rootView = inflater.inflate(R.layout.home_fragment, container, false)
 
         val btnSignIn = rootView.findViewById<Button>(R.id.btnSignIn)
         val btnGetMessage = rootView.findViewById<Button>(R.id.btnGetMessage)
