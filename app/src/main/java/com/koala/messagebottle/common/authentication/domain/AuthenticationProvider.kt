@@ -1,4 +1,4 @@
-package com.koala.messagebottle.common.domain
+package com.koala.messagebottle.common.authentication.domain
 
 sealed class AuthenticationProvider(val providerIdentifier: Int) {
 

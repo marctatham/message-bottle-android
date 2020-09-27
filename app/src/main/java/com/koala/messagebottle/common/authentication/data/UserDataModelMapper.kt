@@ -1,7 +1,7 @@
-package com.koala.messagebottle.common.data.authentication
+package com.koala.messagebottle.common.authentication.data
 
-import com.koala.messagebottle.common.domain.AuthenticationProvider
-import com.koala.messagebottle.common.domain.UserEntity
+import com.koala.messagebottle.common.authentication.domain.AuthenticationProvider
+import com.koala.messagebottle.common.authentication.domain.UserEntity
 import javax.inject.Inject
 
 class UserDataModelMapper @Inject constructor() {

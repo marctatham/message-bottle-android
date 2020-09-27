@@ -1,4 +1,4 @@
-package com.koala.messagebottle.common.data.authentication
+package com.koala.messagebottle.common.authentication.data
 
 import retrofit2.http.Body
 import retrofit2.http.POST

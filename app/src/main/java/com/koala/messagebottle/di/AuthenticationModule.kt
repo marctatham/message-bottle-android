@@ -3,10 +3,10 @@ package com.koala.messagebottle.di
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.koala.messagebottle.common.data.authentication.AuthenticationRepository
-import com.koala.messagebottle.common.data.authentication.UserDataModelMapper
-import com.koala.messagebottle.common.data.authentication.UserService
-import com.koala.messagebottle.common.data.authentication.firebase.FirebaseAuthenticator
+import com.koala.messagebottle.common.authentication.data.AuthenticationRepository
+import com.koala.messagebottle.common.authentication.data.UserDataModelMapper
+import com.koala.messagebottle.common.authentication.data.UserService
+import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

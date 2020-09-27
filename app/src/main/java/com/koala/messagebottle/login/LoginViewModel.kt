@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.koala.messagebottle.common.data.authentication.AuthenticationRepository
-import com.koala.messagebottle.common.domain.AuthenticationProvider
-import com.koala.messagebottle.common.domain.UserEntity
+import com.koala.messagebottle.common.authentication.data.AuthenticationRepository
+import com.koala.messagebottle.common.authentication.domain.AuthenticationProvider
+import com.koala.messagebottle.common.authentication.domain.UserEntity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

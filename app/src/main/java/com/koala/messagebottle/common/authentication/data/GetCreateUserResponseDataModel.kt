@@ -1,4 +1,4 @@
-package com.koala.messagebottle.common.data.authentication
+package com.koala.messagebottle.common.authentication.data
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

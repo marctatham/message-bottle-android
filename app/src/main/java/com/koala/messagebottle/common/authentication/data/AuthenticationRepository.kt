@@ -1,9 +1,9 @@
-package com.koala.messagebottle.common.data.authentication
+package com.koala.messagebottle.common.authentication.data
 
 import android.util.Log
-import com.koala.messagebottle.common.data.authentication.firebase.FirebaseAuthenticator
-import com.koala.messagebottle.common.domain.AuthenticationProvider
-import com.koala.messagebottle.common.domain.UserEntity
+import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
+import com.koala.messagebottle.common.authentication.domain.AuthenticationProvider
+import com.koala.messagebottle.common.authentication.domain.UserEntity
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
