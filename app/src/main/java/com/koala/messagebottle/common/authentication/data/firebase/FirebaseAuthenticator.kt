@@ -32,4 +32,11 @@ class FirebaseAuthenticator @Inject constructor(
         val token = tokenResult.token!!
         return FirebaseAuthenticationResult(token)
     }
+
+    // TODO: forget stored JWT token
+    // at some point we can extend our backend to invalidate the JWT token that was issued to the client
+    // for now simply "forgetting" the JWT token we've been issued (which isn't currently being stored)
+    // and officially signing out via firebase should be sufficient
+    suspend fun signOut() = firebaseAuth.signOut()
+
 }

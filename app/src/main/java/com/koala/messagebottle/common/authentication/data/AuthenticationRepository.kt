@@ -4,7 +4,6 @@ import android.util.Log
 import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
 import com.koala.messagebottle.common.authentication.domain.AuthenticationProvider
 import com.koala.messagebottle.common.authentication.domain.UserEntity
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 private const val TAG = "AuthenticationRepository"
@@ -35,19 +34,16 @@ class AuthenticationRepository @Inject constructor(
         user = userEntity
     }
 
-    suspend fun signOut() = when (user) {
-        UserEntity.Anonymous -> println("no sign out required for an anonymous user")
+    suspend fun signOut() {
+        when (user) {
+            UserEntity.Anonymous -> Log.d(TAG, "no sign out required for an anonymous user")
 
-        is UserEntity.LoggedInUser -> when ((user as UserEntity.LoggedInUser).authenticationProvider) {
-            AuthenticationProvider.Google -> {
-                // reset the user into anonymous mode
-                user = UserEntity.Anonymous
-
-                // TODO: we need to clear the Google auth status
-                // https://developers.google.com/identity/sign-in/android/disconnect
-                // in the meantime let's simply simulate the delay
-                println("TODO: sign the user out of google")
-                delay(1000L)
+            is UserEntity.LoggedInUser -> when ((user as UserEntity.LoggedInUser).authenticationProvider) {
+                AuthenticationProvider.Google -> {
+                    // reset the user into anonymous mode
+                    firebaseAuthenticator.signOut()
+                    user = UserEntity.Anonymous
+                }
             }
         }
     }
