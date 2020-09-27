@@ -1,4 +1,4 @@
-package com.koala.messagebottle.di
+package com.koala.messagebottle.common.authentication.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

@@ -1,4 +1,4 @@
-package com.koala.messagebottle.di
+package com.koala.messagebottle.common.network.di
 
 import com.koala.messagebottle.BuildConfig
 import com.squareup.moshi.Moshi

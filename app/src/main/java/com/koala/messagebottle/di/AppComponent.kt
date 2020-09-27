@@ -2,7 +2,9 @@ package com.koala.messagebottle.di
 
 import android.content.Context
 import com.koala.messagebottle.BaseApplication
+import com.koala.messagebottle.common.authentication.di.AuthenticationModule
 import com.koala.messagebottle.common.messages.di.MessageModule
+import com.koala.messagebottle.common.network.di.NetworkModule
 import com.koala.messagebottle.home.di.HomeComponent
 import com.koala.messagebottle.login.di.LoginComponent
 import dagger.BindsInstance
