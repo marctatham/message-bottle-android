@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
         val btnSignIn = rootView.findViewById<Button>(R.id.btnSignIn)
         val btnGetMessage = rootView.findViewById<Button>(R.id.btnGetMessage)
         val btnPostMessage = rootView.findViewById<Button>(R.id.btnPostMessage)
+        val btnViewMessages = rootView.findViewById<Button>(R.id.btnViewMessages)
 
         btnSignIn.setOnClickListener {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
@@ -54,6 +55,10 @@ class HomeFragment : Fragment() {
 
         btnPostMessage.setOnClickListener {
             (requireActivity() as HomeActivity).showPostMessage()
+        }
+
+        btnViewMessages.setOnClickListener {
+            (requireActivity() as HomeActivity).showViewMessages()
         }
 
         return rootView

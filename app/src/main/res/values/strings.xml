@@ -1,6 +1,5 @@
 <resources>
 
-    <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -17,6 +16,8 @@
     <string name="btnSignIn">sign in</string>
     <string name="btnGetMessage">Get a message from a bottle</string>
     <string name="btnPostMessage">Put a message in a bottle</string>
+    <string name="btnViewMessages">View messages</string>
+    <string name="btnPurge">Purge</string>
     <string name="snack_posted_message">"Posted Message:\n%1$s!"</string>
     <string name="txtMessageLoading">…</string>
 

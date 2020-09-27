@@ -10,6 +10,7 @@ import com.koala.messagebottle.R
 import com.koala.messagebottle.getmessage.GetMessageFragment
 import com.koala.messagebottle.home.di.HomeComponent
 import com.koala.messagebottle.postmessage.PostMessageFragment
+import com.koala.messagebottle.viewmessages.ViewMessagesFragment
 
 private const val TAG = "MainActivity"
 private const val REQUEST_CODE_LOGIN = 100
@@ -41,7 +42,14 @@ class HomeActivity : AppCompatActivity() {
     fun showPostMessage() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, PostMessageFragment.newInstance())
-            .addToBackStack("GetMessageFragment")
+            .addToBackStack("PostMessageFragment")
+            .commit()
+    }
+
+    fun showViewMessages() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, ViewMessagesFragment.newInstance())
+            .addToBackStack("ViewMessagesFragment")
             .commit()
     }
 

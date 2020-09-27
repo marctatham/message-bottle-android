@@ -5,6 +5,7 @@ import com.koala.messagebottle.getmessage.GetMessageFragment
 import com.koala.messagebottle.home.HomeActivity
 import com.koala.messagebottle.home.HomeFragment
 import com.koala.messagebottle.postmessage.PostMessageFragment
+import com.koala.messagebottle.viewmessages.ViewMessagesFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -24,4 +25,5 @@ interface HomeComponent {
     fun inject(homeFragment: HomeFragment)
     fun inject(getMessageFragment: GetMessageFragment)
     fun inject(postMessageFragment: PostMessageFragment)
+    fun inject(viewMessagesFragment: ViewMessagesFragment)
 }
