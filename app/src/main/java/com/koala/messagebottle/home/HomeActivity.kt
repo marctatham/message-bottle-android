@@ -33,6 +33,7 @@ class HomeActivity : AppCompatActivity() {
     fun showGetMessage() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, GetMessageFragment.newInstance())
+            .addToBackStack("GetMessageFragment")
             .commit()
     }
 
