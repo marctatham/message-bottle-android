@@ -48,6 +48,10 @@ class HomeFragment : Fragment() {
             startActivityForResult(intent, REQUEST_CODE_LOGIN)
         }
 
+        btnGetMessage.setOnClickListener {
+            (requireActivity() as HomeActivity).showGetMessage()
+        }
+
         return rootView
     }
 

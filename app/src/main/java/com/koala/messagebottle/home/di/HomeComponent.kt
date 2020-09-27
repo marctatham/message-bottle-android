@@ -1,6 +1,7 @@
 package com.koala.messagebottle.home.di
 
 import com.koala.messagebottle.di.scope.ActivityScope
+import com.koala.messagebottle.getmessage.GetMessageFragment
 import com.koala.messagebottle.home.HomeActivity
 import com.koala.messagebottle.home.HomeFragment
 import dagger.BindsInstance
@@ -20,4 +21,6 @@ interface HomeComponent {
     }
 
     fun inject(activity: HomeFragment)
+
+    fun inject(activity: GetMessageFragment)
 }

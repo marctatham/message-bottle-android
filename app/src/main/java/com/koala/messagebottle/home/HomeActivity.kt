@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.koala.messagebottle.BaseApplication
 import com.koala.messagebottle.R
+import com.koala.messagebottle.getmessage.GetMessageFragment
 import com.koala.messagebottle.home.di.HomeComponent
 
 private const val TAG = "MainActivity"
@@ -27,6 +28,12 @@ class HomeActivity : AppCompatActivity() {
                 .replace(R.id.container, HomeFragment.newInstance())
                 .commit()
         }
+    }
+
+    fun showGetMessage() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, GetMessageFragment.newInstance())
+            .commit()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

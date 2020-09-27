@@ -3,6 +3,7 @@ package com.koala.messagebottle.home.di
 import androidx.lifecycle.ViewModel
 import com.koala.messagebottle.di.ViewModelBuilder
 import com.koala.messagebottle.di.ViewModelKey
+import com.koala.messagebottle.getmessage.GetMessageViewModel
 import com.koala.messagebottle.home.HomeActivity
 import com.koala.messagebottle.home.HomeViewModel
 import dagger.Binds
@@ -23,6 +24,11 @@ abstract class HomeModule {
     @Binds
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
-    abstract fun bindViewModel(viewModel: HomeViewModel): ViewModel
+    abstract fun bindHomeViewModel(viewModel: HomeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GetMessageViewModel::class)
+    abstract fun bindGetMessageViewModel(viewModel: GetMessageViewModel): ViewModel
 
 }
