@@ -47,9 +47,9 @@ class GetMessageFragment : Fragment() {
                 MessageState.Loading -> showProgressBar()
 
                 is MessageState.MessageReceived -> {
-                    val message = state.message
+                    val messageEntity = state.messageEntity
                     hideProgressBar()
-                    txtMessage.text = message
+                    txtMessage.text = messageEntity.message
                 }
             }
         }
