@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ class GetMessageFragment : Fragment() {
 
     private lateinit var progressBar: ProgressBar
     private lateinit var txtMessage: TextView
+    private lateinit var btnGetAnotherMessage: Button
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -31,6 +33,12 @@ class GetMessageFragment : Fragment() {
         (requireActivity() as HomeActivity).homeComponent.inject(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.getNewMessage()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,8 +47,10 @@ class GetMessageFragment : Fragment() {
 
         txtMessage = rootView.findViewById(R.id.txtMessage)
         progressBar = rootView.findViewById(R.id.progressBar)
-
-        viewModel.initialise()
+        btnGetAnotherMessage = rootView.findViewById(R.id.btnGetMessage)
+        btnGetAnotherMessage.setOnClickListener {
+            viewModel.getNewMessage()
+        }
 
         viewModel.state.observe(viewLifecycleOwner) { state: MessageState ->
             when (state) {

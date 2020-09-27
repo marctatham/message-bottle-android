@@ -17,7 +17,9 @@ class GetMessageViewModel @Inject constructor(
     private val _state = MutableLiveData<MessageState>(MessageState.Loading)
     val state: LiveData<MessageState> = _state
 
-    fun initialise() = viewModelScope.launch {
+    fun getNewMessage() = viewModelScope.launch {
+        _state.value = MessageState.Loading
+
         val messageEntity = messageRepository.getMessage()
         _state.value = MessageState.MessageReceived(messageEntity)
     }
