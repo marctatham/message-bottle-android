@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
 import com.koala.messagebottle.home.HomeActivity
 import javax.inject.Inject
@@ -23,6 +23,8 @@ class ViewMessagesFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var btnPurge: Button
+
+    private lateinit var messagesAdapter: MessagesAdapter
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -49,7 +51,12 @@ class ViewMessagesFragment : Fragment() {
             viewModel.purgeMessages()
         }
 
-        val messages = viewModel.initialise()
+        // configure the ol' recycler view & adapter
+        messagesAdapter = MessagesAdapter(LayoutInflater.from(requireContext()))
+        recyclerView.adapter = messagesAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.initialise()
 
         viewModel.state.observe(viewLifecycleOwner) { state: MessagesState ->
             when (state) {
@@ -57,12 +64,8 @@ class ViewMessagesFragment : Fragment() {
 
                 is MessagesState.MessagesReceived -> {
                     hideProgressBar()
-
-                    Snackbar.make(
-                        containerView,
-                        "TODO: Populate the ol' recycler view",
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                    messagesAdapter.messages = state.messageEntities
+                    messagesAdapter.notifyDataSetChanged()
                 }
             }
         }
