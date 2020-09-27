@@ -10,12 +10,14 @@
     <string name="sign_in_using">Sign in using one of the below providers</string>
     <string name="sign_in_failed">Sign in failed</string>
     <string name="sign_in_success">"Welcome %1$s!"</string>
+
     <string name="sign_out">Sign out</string>
     <string name="access_revoked">Access has been revoked</string>
     <string name="more_sign_in_providers_soon">More sign in providers coming soon!</string>
     <string name="btnSignIn">sign in</string>
     <string name="btnGetMessage">Get a message from a bottle</string>
-    <string name="btnPostMessage">put a message in a bottle</string>
+    <string name="btnPostMessage">Put a message in a bottle</string>
+    <string name="snack_posted_message">"Posted Message:\n%1$s!"</string>
     <string name="txtMessageLoading">…</string>
 
 </resources>
