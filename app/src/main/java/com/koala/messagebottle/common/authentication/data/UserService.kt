@@ -9,8 +9,4 @@ interface UserService {
     @POST("user/")
     suspend fun getCreateUser(@Body getCreateUserDataModel: GetCreateUserDataModel): GetCreateUserResponseDataModel
 
-    companion object {
-        const val API_URL = "https://bottling-messages.nw.r.appspot.com/"
-    }
-
 }
