@@ -95,6 +95,9 @@ dependencies {
     // kotlin ktx
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versionKotlin"
 
+    // better logging
+    implementation "com.jakewharton.timber:timber:$versionTimber"
+
     // okhttp
     api "com.squareup.okhttp3:okhttp:$versionOkHttp"
     api "com.squareup.okhttp3:logging-interceptor:$versionOkHttp"

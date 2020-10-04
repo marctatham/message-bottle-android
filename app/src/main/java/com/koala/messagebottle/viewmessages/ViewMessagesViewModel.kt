@@ -1,6 +1,5 @@
 package com.koala.messagebottle.viewmessages
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.common.messages.data.MessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 private const val TAG = "ViewMessagesViewModel"
@@ -31,7 +31,7 @@ class ViewMessagesViewModel @Inject constructor(
     }
 
     fun purgeMessages() = viewModelScope.launch {
-        Log.d(TAG, "TODO: purge all the messages")
+        Timber.d("TODO: purge all the messages")
     }
 }
 

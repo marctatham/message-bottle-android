@@ -5,7 +5,6 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.os.ResultReceiver
-import android.util.Log
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -16,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.R
+import timber.log.Timber
 
 private const val TAG = "GoogleLoginFragment"
 
@@ -50,7 +50,7 @@ class GoogleLoginFragment : Fragment() {
         if (requestCode == REQUEST_CODE_GOOGLE) {
             handleGoogleLoginResult(data)
         } else {
-            Log.w(TAG, "unhandled request code: [$requestCode], resultCode: [$resultCode]")
+            Timber.w("unhandled request code: [$requestCode], resultCode: [$resultCode]")
         }
     }
 

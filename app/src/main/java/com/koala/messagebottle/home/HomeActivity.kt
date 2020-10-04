@@ -3,7 +3,6 @@ package com.koala.messagebottle.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.koala.messagebottle.BaseApplication
 import com.koala.messagebottle.R
@@ -11,6 +10,7 @@ import com.koala.messagebottle.getmessage.GetMessageFragment
 import com.koala.messagebottle.home.di.HomeComponent
 import com.koala.messagebottle.postmessage.PostMessageFragment
 import com.koala.messagebottle.viewmessages.ViewMessagesFragment
+import timber.log.Timber
 
 private const val TAG = "MainActivity"
 private const val REQUEST_CODE_LOGIN = 100
@@ -61,15 +61,15 @@ class HomeActivity : AppCompatActivity() {
                 handleLogin(resultCode)
             }
 
-            else -> Log.w(TAG, "Unhandled request code")
+            else -> Timber.w("Unhandled request code")
         }
     }
 
     private fun handleLogin(resultCode: Int) {
         if (Activity.RESULT_OK == resultCode) {
-            Log.i(TAG, "Login is successful")
+            Timber.i("Login is successful")
         } else {
-            Log.w(TAG, "Login has failed, killing app")
+            Timber.w("Login has failed, killing app")
         }
     }
 }
