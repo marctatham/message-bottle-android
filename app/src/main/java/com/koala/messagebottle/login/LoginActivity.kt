@@ -63,17 +63,25 @@ class LoginActivity : AppCompatActivity() {
                 State.LoggedInUser -> {
                     showSignedInContainer()
                     hideProgressBar()
-                    displayGoogleSignSuccess()
+                    displayLoginSuccessful()
+                }
+
+                State.Failure -> {
+                    displayLoginFailed()
+                    hideProgressBar()
                 }
             }
         }
     }
 
-    private fun displayGoogleSignSuccess() {
+    private fun displayLoginSuccessful() {
         val welcomeMessage = getString(R.string.sign_in_success, "Dear Tester")
-        val snackbar = Snackbar.make(container, welcomeMessage, Snackbar.LENGTH_LONG)
-        snackbar.show()
+        Snackbar.make(container, welcomeMessage, Snackbar.LENGTH_LONG).show()
     }
+
+    private fun displayLoginFailed() = Snackbar
+        .make(container, R.string.sign_in_failed, Snackbar.LENGTH_LONG)
+        .show()
 
     private fun showSignedInContainer() {
         containerLoggedIn.visibility = View.VISIBLE

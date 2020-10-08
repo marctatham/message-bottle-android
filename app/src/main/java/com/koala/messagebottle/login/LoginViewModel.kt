@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.common.authentication.data.AuthenticationRepository
 import com.koala.messagebottle.common.authentication.domain.AuthenticationProvider
 import com.koala.messagebottle.common.authentication.domain.UserEntity
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -24,7 +26,12 @@ class LoginViewModel @Inject constructor(
     fun initiateLoginWithGoogle() {
         _state.value = State.Loading
 
-        viewModelScope.launch {
+        val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+            Timber.e(exception, "There was a problem signing into your account")
+            _state.value = State.Failure
+        }
+
+        viewModelScope.launch(exceptionHandler) {
             val thirdPartyLoginCredential = thirdPartyLoginProvider.initiateSignIn()
             val userEntity =
                 authenticationRepository.firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
@@ -52,6 +59,7 @@ sealed class State {
 
     object LoggedInUser : State()
 
+    object Failure : State()
 }
 
 /**
