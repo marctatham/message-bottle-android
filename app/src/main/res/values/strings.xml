@@ -20,7 +20,8 @@
     <string name="btnViewMessages">View messages</string>
     <string name="get_messages_failed">Failed to get all messages!</string>
     <string name="btnPurge">Purge</string>
-    <string name="snack_posted_message">"Posted Message:\n%1$s!"</string>
+    <string name="snack_posted_message">Posted Message: "\n%1$s"</string>
+    <string name="snack_post_message_failed">Failed to post your message!"</string>
     <string name="txtMessageLoading">…</string>
 
 </resources>

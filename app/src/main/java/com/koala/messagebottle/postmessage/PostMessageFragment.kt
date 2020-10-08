@@ -15,6 +15,7 @@ import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
 import com.koala.messagebottle.home.HomeActivity
+import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class PostMessageFragment : Fragment() {
@@ -68,6 +69,11 @@ class PostMessageFragment : Fragment() {
 
                     Snackbar.make(containerView, notification, Snackbar.LENGTH_SHORT).show()
                 }
+
+                MessageState.Failure -> {
+                    hideProgressBar()
+                    displayPostMessageFailed()
+                }
             }
         }
 
@@ -81,6 +87,10 @@ class PostMessageFragment : Fragment() {
     private fun hideProgressBar() {
         progressBar.visibility = View.INVISIBLE
     }
+
+    private fun displayPostMessageFailed() = Snackbar
+        .make(container, R.string.snack_post_message_failed, Snackbar.LENGTH_SHORT)
+        .show()
 
     companion object {
         fun newInstance() = PostMessageFragment()

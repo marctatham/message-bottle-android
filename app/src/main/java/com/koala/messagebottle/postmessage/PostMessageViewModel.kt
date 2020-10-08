@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.common.messages.data.MessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class PostMessageViewModel @Inject constructor(
@@ -17,13 +19,20 @@ class PostMessageViewModel @Inject constructor(
     private val _state = MutableLiveData<MessageState>(MessageState.Idle)
     val state: LiveData<MessageState> = _state
 
-    fun postMessage(message: String) = viewModelScope.launch {
-        _state.value = MessageState.Loading
+    fun postMessage(message: String) {
+        val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+            Timber.e(exception, "There was a problem posting your message")
+            _state.value = MessageState.Failure
+        }
 
-        val messageEntity = MessageEntity(message)
-        messageRepository.postMessage(messageEntity)
+        viewModelScope.launch(exceptionHandler) {
+            _state.value = MessageState.Loading
 
-        _state.value = MessageState.MessagePosted(messageEntity)
+            val messageEntity = MessageEntity(message)
+            messageRepository.postMessage(messageEntity)
+
+            _state.value = MessageState.MessagePosted(messageEntity)
+        }
     }
 }
 
@@ -34,5 +43,7 @@ sealed class MessageState {
     object Loading : MessageState()
 
     data class MessagePosted(val messageEntity: MessageEntity) : MessageState()
+
+    object Failure : MessageState()
 
 }
