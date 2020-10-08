@@ -13,8 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
 import com.koala.messagebottle.home.HomeActivity
+import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class ViewMessagesFragment : Fragment() {
@@ -67,6 +69,11 @@ class ViewMessagesFragment : Fragment() {
                     messagesAdapter.messages = state.messageEntities
                     messagesAdapter.notifyDataSetChanged()
                 }
+
+                MessagesState.Failure -> {
+                    hideProgressBar()
+                    displayGetMessagesFailed()
+                }
             }
         }
 
@@ -80,6 +87,10 @@ class ViewMessagesFragment : Fragment() {
     private fun hideProgressBar() {
         progressBar.visibility = View.INVISIBLE
     }
+
+    private fun displayGetMessagesFailed() = Snackbar
+        .make(container, R.string.get_messages_failed, Snackbar.LENGTH_LONG)
+        .show()
 
     companion object {
         fun newInstance() = ViewMessagesFragment()

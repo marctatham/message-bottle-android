@@ -18,6 +18,7 @@
     <string name="snack_get_message_failed">"There was a problem fetching the message"</string>
     <string name="btnPostMessage">Put a message in a bottle</string>
     <string name="btnViewMessages">View messages</string>
+    <string name="get_messages_failed">Failed to get all messages!</string>
     <string name="btnPurge">Purge</string>
     <string name="snack_posted_message">"Posted Message:\n%1$s!"</string>
     <string name="txtMessageLoading">…</string>

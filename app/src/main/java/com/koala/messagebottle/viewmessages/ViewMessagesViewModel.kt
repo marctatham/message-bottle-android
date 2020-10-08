@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.common.messages.data.MessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,7 +22,13 @@ class ViewMessagesViewModel @Inject constructor(
     val state: LiveData<MessagesState> = _state
 
     fun initialise() {
-        viewModelScope.launch {
+
+        val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+            Timber.e(exception, "There was a problem fetching all messages")
+            _state.value = MessagesState.Failure
+        }
+
+        viewModelScope.launch(exceptionHandler) {
             _state.value = MessagesState.Loading
 
             val messages = messageRepository.getMessages()
@@ -40,5 +47,7 @@ sealed class MessagesState {
     object Loading : MessagesState()
 
     data class MessagesReceived(val messageEntities: List<MessageEntity>) : MessagesState()
+
+    object Failure : MessagesState()
 
 }
