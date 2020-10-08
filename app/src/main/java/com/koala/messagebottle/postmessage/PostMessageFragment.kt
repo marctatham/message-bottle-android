@@ -66,7 +66,7 @@ class PostMessageFragment : Fragment() {
 
                     edtMessage.text.clear()
 
-                    Snackbar.make(containerView, notification, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(containerView, notification, Snackbar.LENGTH_SHORT).show()
                 }
             }
         }

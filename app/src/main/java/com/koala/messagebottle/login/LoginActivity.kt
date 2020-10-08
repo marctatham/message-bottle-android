@@ -76,11 +76,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun displayLoginSuccessful() {
         val welcomeMessage = getString(R.string.sign_in_success, "Dear Tester")
-        Snackbar.make(container, welcomeMessage, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(container, welcomeMessage, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun displayLoginFailed() = Snackbar
-        .make(container, R.string.sign_in_failed, Snackbar.LENGTH_LONG)
+        .make(container, R.string.sign_in_failed, Snackbar.LENGTH_SHORT)
         .show()
 
     private fun showSignedInContainer() {

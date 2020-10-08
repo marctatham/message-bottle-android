@@ -89,7 +89,7 @@ class ViewMessagesFragment : Fragment() {
     }
 
     private fun displayGetMessagesFailed() = Snackbar
-        .make(container, R.string.get_messages_failed, Snackbar.LENGTH_LONG)
+        .make(container, R.string.get_messages_failed, Snackbar.LENGTH_SHORT)
         .show()
 
     companion object {

@@ -85,7 +85,7 @@ class GetMessageFragment : Fragment() {
     }
 
     private fun notifyFailure() = Snackbar
-        .make(container, R.string.snack_get_message_failed, Snackbar.LENGTH_LONG)
+        .make(container, R.string.snack_get_message_failed, Snackbar.LENGTH_SHORT)
         .show()
 
     companion object {
