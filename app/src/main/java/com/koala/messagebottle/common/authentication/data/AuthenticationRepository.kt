@@ -19,7 +19,7 @@ class AuthenticationRepository @Inject constructor(
     // for now we'll just store this in memory since it's useful for testing auth functionality 🤷‍
     var user: UserEntity = UserEntity.Anonymous
 
-    suspend fun firebaseAuthWithGoogle(idToken: String) {
+    suspend fun firebaseAuthWithGoogle(idToken: String): UserEntity {
         Timber.v("authenticating with Firebase using Google IDToken")
         val firebaseAuthResult = firebaseAuthenticator.authenticateViaGoogle(idToken)
 
@@ -30,9 +30,10 @@ class AuthenticationRepository @Inject constructor(
 
         // temporarily persist this to memory until we've got persistence mechanism in place
         user = userEntity
+        return user
     }
 
-    suspend fun signOut() {
+    suspend fun signOut(): UserEntity {
         when (user) {
             UserEntity.Anonymous -> Timber.d("no sign out required for an anonymous user")
 
@@ -44,6 +45,8 @@ class AuthenticationRepository @Inject constructor(
                 }
             }
         }
+
+        return user
     }
 
 }
