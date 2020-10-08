@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.common.messages.data.MessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class GetMessageViewModel @Inject constructor(
@@ -17,11 +19,20 @@ class GetMessageViewModel @Inject constructor(
     private val _state = MutableLiveData<MessageState>(MessageState.Loading)
     val state: LiveData<MessageState> = _state
 
-    fun getNewMessage() = viewModelScope.launch {
-        _state.value = MessageState.Loading
 
-        val messageEntity = messageRepository.getMessage()
-        _state.value = MessageState.MessageReceived(messageEntity)
+    fun getNewMessage() {
+        val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+            Timber.e(exception, "There was a problem retrieving the message")
+            _state.value = MessageState.Failure
+        }
+
+        viewModelScope.launch(exceptionHandler) {
+            _state.value = MessageState.Loading
+
+            val messageEntity = messageRepository.getMessage()
+
+            _state.value = MessageState.MessageReceived(messageEntity)
+        }
     }
 }
 
@@ -31,4 +42,5 @@ sealed class MessageState {
 
     data class MessageReceived(val messageEntity: MessageEntity) : MessageState()
 
+    object Failure : MessageState()
 }

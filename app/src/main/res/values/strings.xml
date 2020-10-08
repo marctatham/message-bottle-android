@@ -15,6 +15,7 @@
     <string name="more_sign_in_providers_soon">More sign in providers coming soon!</string>
     <string name="btnSignIn">sign in</string>
     <string name="btnGetMessage">Get a message from a bottle</string>
+    <string name="snack_get_message_failed">"There was a problem fetching the message"</string>
     <string name="btnPostMessage">Put a message in a bottle</string>
     <string name="btnViewMessages">View messages</string>
     <string name="btnPurge">Purge</string>

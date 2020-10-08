@@ -12,8 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
 import com.koala.messagebottle.home.HomeActivity
+import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class GetMessageFragment : Fragment() {
@@ -54,12 +56,17 @@ class GetMessageFragment : Fragment() {
 
         viewModel.state.observe(viewLifecycleOwner) { state: MessageState ->
             when (state) {
-                MessageState.Loading -> showProgressBar()
+                MessageState.Loading -> showLoadingState()
 
                 is MessageState.MessageReceived -> {
                     val messageEntity = state.messageEntity
-                    hideProgressBar()
+                    hideLoadingState()
                     txtMessage.text = messageEntity.message
+                }
+
+                MessageState.Failure -> {
+                    hideLoadingState()
+                    notifyFailure()
                 }
             }
         }
@@ -67,13 +74,19 @@ class GetMessageFragment : Fragment() {
         return rootView
     }
 
-    private fun showProgressBar() {
+    private fun showLoadingState() {
         progressBar.visibility = View.VISIBLE
+        btnGetAnotherMessage.isEnabled = false
     }
 
-    private fun hideProgressBar() {
+    private fun hideLoadingState() {
         progressBar.visibility = View.INVISIBLE
+        btnGetAnotherMessage.isEnabled = true
     }
+
+    private fun notifyFailure() = Snackbar
+        .make(container, R.string.snack_get_message_failed, Snackbar.LENGTH_LONG)
+        .show()
 
     companion object {
         fun newInstance() = GetMessageFragment()
