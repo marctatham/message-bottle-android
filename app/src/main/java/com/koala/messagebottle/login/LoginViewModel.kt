@@ -10,8 +10,6 @@ import com.koala.messagebottle.common.authentication.domain.UserEntity
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "LoginViewModel"
-
 /**
  * ViewModel for the Details screen.
  */
@@ -20,9 +18,7 @@ class LoginViewModel @Inject constructor(
     private val authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
 
-    private val _state = MutableLiveData(
-        authenticationRepository.user.toState()
-    )
+    private val _state: MutableLiveData<State> = MutableLiveData(getCurrentState())
     val state: LiveData<State> = _state
 
     fun initiateLoginWithGoogle() {
@@ -30,17 +26,21 @@ class LoginViewModel @Inject constructor(
 
         viewModelScope.launch {
             val thirdPartyLoginCredential = googleSignInProvider.initiateSignIn()
-            authenticationRepository.firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
-
-            _state.value = authenticationRepository.user.toState()
+            val userEntity =
+                authenticationRepository.firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
+            _state.value = userEntity.toState()
         }
     }
 
     fun initiateSignOut() = viewModelScope.launch {
         _state.value = State.Loading
         authenticationRepository.signOut()
-        _state.value = authenticationRepository.user.toState()
+        _state.value = getCurrentState()
     }
+
+    // explicitly go and fetch the state
+    private fun getCurrentState(): State = authenticationRepository.user.toState()
+
 }
 
 // the different states the login screen can be in
