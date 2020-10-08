@@ -3,8 +3,6 @@ package com.koala.messagebottle.common.authentication.di
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.koala.messagebottle.common.authentication.data.AuthenticationRepository
-import com.koala.messagebottle.common.authentication.data.UserDataModelMapper
 import com.koala.messagebottle.common.authentication.data.UserService
 import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
 import dagger.Module
@@ -31,12 +29,5 @@ object AuthenticationModule {
     ): UserService {
         return retrofit.create(UserService::class.java)
     }
-
-    @Provides
-    @Singleton
-    fun provideAuthenticationRepository(
-        firebaseAuthenticator: FirebaseAuthenticator,
-        userService: UserService
-    ) = AuthenticationRepository(firebaseAuthenticator, userService, UserDataModelMapper())
 
 }
