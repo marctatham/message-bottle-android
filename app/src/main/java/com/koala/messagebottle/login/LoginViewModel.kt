@@ -20,7 +20,7 @@ class LoginViewModel @Inject constructor(
     private val authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<State>(
+    private val _state = MutableLiveData(
         authenticationRepository.user.toState()
     )
     val state: LiveData<State> = _state
@@ -28,25 +28,12 @@ class LoginViewModel @Inject constructor(
     fun initiateLoginWithGoogle() {
         _state.value = State.Loading
 
-        googleSignInProvider.initiateSignIn(object : ThirdPartyLoginProvider.Callback {
-            override fun onThirdPartyLoginComplete(thirdPartyLoginCredential: ThirdPartyLoginCredential) {
+        viewModelScope.launch {
+            val thirdPartyLoginCredential = googleSignInProvider.initiateSignIn()
+            authenticationRepository.firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
 
-                // google sign in is complete
-                // control is back in our side, we want to
-                // display spinner, make request
-                // upon successful completion
-                viewModelScope.launch {
-                    authenticationRepository.firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
-
-                    _state.value = authenticationRepository.user.toState()
-                }
-            }
-
-            override fun onThirdPartyLoginCancelled() {
-
-                _state.value = authenticationRepository.user.toState()
-            }
-        })
+            _state.value = authenticationRepository.user.toState()
+        }
     }
 
     fun initiateSignOut() = viewModelScope.launch {

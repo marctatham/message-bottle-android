@@ -6,13 +6,19 @@ import android.os.Handler
 import android.os.Looper
 import android.os.ResultReceiver
 import androidx.fragment.app.FragmentManager
+import kotlinx.coroutines.CancellationException
 import javax.inject.Inject
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class GoogleLoginProvider @Inject constructor(
     private val fragmentManager: FragmentManager
 ) : ThirdPartyLoginProvider {
 
-    private val callbacksMap: MutableMap<String, ThirdPartyLoginProvider.Callback> = mutableMapOf()
+    private val callbacksMap: MutableMap<String, Continuation<ThirdPartyLoginCredential>> =
+        mutableMapOf()
     private val resultReceiver: ResultReceiver = object : ResultReceiver(
         Handler(Looper.getMainLooper())
     ) {
@@ -22,26 +28,23 @@ class GoogleLoginProvider @Inject constructor(
         }
     }
 
-    override fun initiateSignIn(callback: ThirdPartyLoginProvider.Callback) {
-        val identifier = System.currentTimeMillis().toString()
-        val cardScannerFragment = GoogleLoginFragment.newInstance(identifier, resultReceiver)
-        callbacksMap.put(identifier, callback)
-        addFragment(identifier, cardScannerFragment)
-    }
+    override suspend fun initiateSignIn(): ThirdPartyLoginCredential =
+        suspendCoroutine { continuation ->
+            val identifier = System.currentTimeMillis().toString()
+            val cardScannerFragment = GoogleLoginFragment.newInstance(identifier, resultReceiver)
+            callbacksMap[identifier] = continuation
+            addFragment(identifier, cardScannerFragment)
+        }
 
     private fun processResult(resultCode: Int, resultData: Bundle) {
         val fragmentTag = resultData.getString(GoogleLoginFragment.RESULT_EXTRA_IDENTIFIER)!!
-        val thirdPartyLoginCallbackList = callbacksMap.remove(fragmentTag)
-
-
-        // notify the callback
-        thirdPartyLoginCallbackList?.let { callback ->
+        callbacksMap.remove(fragmentTag)?.let { continuation ->
             if (resultCode == Activity.RESULT_OK) {
                 val thirdPartyLoginCredential =
                     resultData.getParcelable<ThirdPartyLoginCredential>(GoogleLoginFragment.RESULT_EXTRA_THIRD_PARTY_CREDENTIAL)!!
-                callback.onThirdPartyLoginComplete(thirdPartyLoginCredential)
+                continuation.resume(thirdPartyLoginCredential)
             } else {
-                callback.onThirdPartyLoginCancelled()
+                continuation.resumeWithException(CancellationException())
             }
         }
 
@@ -75,5 +78,4 @@ class GoogleLoginProvider @Inject constructor(
         null -> false
         else -> !activity.isFinishing
     }
-
 }
