@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
 
                 State.Loading -> showProgressBar()
 
-                State.GoogleUser -> {
+                State.LoggedInUser -> {
                     showSignedInContainer()
                     hideProgressBar()
                     displayGoogleSignSuccess()

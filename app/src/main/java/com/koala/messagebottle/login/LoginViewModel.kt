@@ -14,7 +14,7 @@ import javax.inject.Inject
  * ViewModel for the Details screen.
  */
 class LoginViewModel @Inject constructor(
-    private val googleSignInProvider: ThirdPartyLoginProvider,
+    private val thirdPartyLoginProvider: ThirdPartyLoginProvider,
     private val authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
 
@@ -25,7 +25,7 @@ class LoginViewModel @Inject constructor(
         _state.value = State.Loading
 
         viewModelScope.launch {
-            val thirdPartyLoginCredential = googleSignInProvider.initiateSignIn()
+            val thirdPartyLoginCredential = thirdPartyLoginProvider.initiateSignIn()
             val userEntity =
                 authenticationRepository.firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
             _state.value = userEntity.toState()
@@ -50,7 +50,7 @@ sealed class State {
 
     object Loading : State()
 
-    object GoogleUser : State()
+    object LoggedInUser : State()
 
 }
 
@@ -61,6 +61,6 @@ private fun UserEntity.toState(): State = when (this) {
     UserEntity.Anonymous -> State.Anonymous
 
     is UserEntity.LoggedInUser -> when (this.authenticationProvider) {
-        AuthenticationProvider.Google -> State.GoogleUser
+        AuthenticationProvider.Google -> State.LoggedInUser
     }
 }
