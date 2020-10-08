@@ -6,7 +6,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MessageRepository @Inject constructor(
     private val messageService: MessageService,
     private val mapper: MessageDataModelMapper,
