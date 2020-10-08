@@ -5,6 +5,7 @@ import com.koala.messagebottle.BaseApplication
 import com.koala.messagebottle.common.authentication.di.AuthenticationModule
 import com.koala.messagebottle.common.messages.di.MessageModule
 import com.koala.messagebottle.common.network.di.NetworkModule
+import com.koala.messagebottle.common.threading.DispatchersModule
 import com.koala.messagebottle.home.di.HomeComponent
 import com.koala.messagebottle.login.di.LoginComponent
 import dagger.BindsInstance
@@ -19,15 +20,16 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         AppSubcomponents::class,
 
-        // plumbing / infrastructure
+        // common plumbing/infrastructure
+        DispatchersModule::class,
         NetworkModule::class,
-
-        // view model
         ViewModelBuilder::class,
 
-        // common
+        // feature: auth
         AuthenticationModule::class,
-        MessageModule::class
+
+        // feature: messaging
+        MessageModule::class,
     ]
 )
 interface AppComponent : AndroidInjector<BaseApplication> {
