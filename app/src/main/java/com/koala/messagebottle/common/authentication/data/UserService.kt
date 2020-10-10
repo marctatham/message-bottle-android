@@ -6,7 +6,7 @@ import retrofit2.http.POST
 
 interface UserService {
 
-    @POST("user/")
+    @POST("user")
     suspend fun getCreateUser(@Body getCreateUserDataModel: GetCreateUserDataModel): GetCreateUserResponseDataModel
 
 }

@@ -6,13 +6,13 @@ import retrofit2.http.POST
 
 interface MessageService {
 
-    @GET("message/")
+    @GET("secure-message")
     suspend fun getMessage(): MessageDataModel
 
-    @GET("messages/")
+    @GET("messages")
     suspend fun getMessages(): List<MessageDataModel>
 
-    @POST("message/")
+    @POST("secure-message")
     suspend fun postMessage(@Body message: MessageDataModel)
 
 }
