@@ -12,6 +12,7 @@ buildscript {
     ext.versionDagger = '2.29.1'
 
     ext.versionTimber = '4.7.1'
+    ext.versionLottie = '3.4.4'
 
     ext.versionCoreKtx = '1.3.2'
     ext.versionLifecycle = "2.2.0"
