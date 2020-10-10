@@ -29,7 +29,7 @@ import javax.inject.Singleton
         AuthenticationModule::class,
 
         // feature: messaging
-        MessageModule::class,
+        MessageModule::class
     ]
 )
 interface AppComponent : AndroidInjector<BaseApplication> {

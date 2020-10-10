@@ -8,7 +8,7 @@ class UserDataModelMapper @Inject constructor() {
 
     fun map(userDataModel: GetCreateUserResponseDataModel): UserEntity.LoggedInUser =
         when (userDataModel.authProvider) {
-            1 -> UserEntity.LoggedInUser(AuthenticationProvider.Google)
+            1 -> UserEntity.LoggedInUser(AuthenticationProvider.Google, userDataModel.jwtToken)
             else -> throw IllegalArgumentException("")
         }
 }

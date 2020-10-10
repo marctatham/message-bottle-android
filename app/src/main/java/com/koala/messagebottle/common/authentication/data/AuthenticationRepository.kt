@@ -1,6 +1,8 @@
 package com.koala.messagebottle.common.authentication.data
 
 import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
+import com.koala.messagebottle.common.authentication.data.jwt.IJwtTokenPersister
+import com.koala.messagebottle.common.authentication.data.jwt.JwtToken
 import com.koala.messagebottle.common.authentication.domain.AuthenticationProvider
 import com.koala.messagebottle.common.authentication.domain.UserEntity
 import com.koala.messagebottle.common.threading.DispatcherIO
@@ -17,6 +19,7 @@ class AuthenticationRepository @Inject constructor(
     private val firebaseAuthenticator: FirebaseAuthenticator,
     private val userService: UserService,
     private val mapper: UserDataModelMapper,
+    private val jwtPersister: IJwtTokenPersister,
     @DispatcherIO private val dispatcherNetwork: CoroutineDispatcher
 ) {
 
@@ -35,6 +38,10 @@ class AuthenticationRepository @Inject constructor(
             val userDataModel = userService.getCreateUser(getCreateUserDataModel)
             mapper.map(userDataModel)
         }
+
+
+        val jwtToken = JwtToken(userEntity.jwtToken)
+        jwtPersister.store(jwtToken)
 
         // temporarily persist this to memory until we've got persistence mechanism in place
         user = userEntity
