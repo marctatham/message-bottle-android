@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         containerLoggedIn = findViewById(R.id.containerLoggedIn)
         containerLoggedOut = findViewById(R.id.containerLoggedOut)
         btnSignInGoogle = findViewById(R.id.btnSignInGoogle)

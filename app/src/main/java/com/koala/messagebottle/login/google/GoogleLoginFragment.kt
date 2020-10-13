@@ -1,4 +1,4 @@
-package com.koala.messagebottle.login
+package com.koala.messagebottle.login.google
 
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.R
+import com.koala.messagebottle.login.ThirdPartyLoginCredential
 import timber.log.Timber
 
 private const val TAG = "GoogleLoginFragment"

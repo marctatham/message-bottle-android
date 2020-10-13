@@ -1,4 +1,4 @@
-package com.koala.messagebottle.login
+package com.koala.messagebottle.login.google
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.os.Handler
 import android.os.Looper
 import android.os.ResultReceiver
 import androidx.fragment.app.FragmentManager
+import com.koala.messagebottle.login.ThirdPartyLoginCredential
+import com.koala.messagebottle.login.ThirdPartyLoginProvider
 import kotlinx.coroutines.CancellationException
 import javax.inject.Inject
 import kotlin.coroutines.Continuation
