@@ -4,7 +4,7 @@ import javax.inject.Qualifier
 import kotlin.annotation.AnnotationRetention.RUNTIME
 
 /**
- * Identifies a dispatcher corresponding to main/UI thread operations.
+ * Identifies a dispatcher corresponding to IO thread operations.
  */
 @Qualifier
 @Retention(RUNTIME)
