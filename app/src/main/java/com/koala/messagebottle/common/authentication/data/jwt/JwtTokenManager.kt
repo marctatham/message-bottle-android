@@ -1,16 +1,35 @@
 package com.koala.messagebottle.common.authentication.data.jwt
 
+import com.koala.messagebottle.common.threading.DispatcherIO
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class JwtTokenManager @Inject constructor() : IJwtTokenPersister, IJwtTokenProvider {
+class JwtTokenManager @Inject constructor(
+    private val jwtSharedPrefs: JwtSharedPrefs,
+    @DispatcherIO private val dispatcherIO: CoroutineDispatcher
+) : IJwtTokenPersister, IJwtTokenProvider {
 
-    lateinit var jwtToken: JwtToken
+    private var jwtToken: JwtToken? = null
 
-    override fun store(jwtToken: JwtToken) {
-        this.jwtToken = jwtToken
+    override suspend fun store(jwtToken: JwtToken) {
+        jwtSharedPrefs.store(jwtToken)
     }
 
-    override fun get(): JwtToken = jwtToken
+    override suspend fun get(): JwtToken? {
+        if (jwtToken == null) {
+            Timber.v("No cached jwt token")
+            withContext(dispatcherIO) {
+                jwtSharedPrefs.get()?.let {
+                    jwtToken = it
+                    Timber.v("Jwt Token has been retrieved & cached")
+                }
+            }
+        }
+
+        return jwtToken
+    }
 }
