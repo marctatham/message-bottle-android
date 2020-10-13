@@ -16,26 +16,31 @@ import javax.inject.Inject
  * ViewModel for the Details screen.
  */
 class LoginViewModel @Inject constructor(
-    private val thirdPartyLoginProvider: ThirdPartyLoginProvider,
+    private val googleLoginProvider: ThirdPartyLoginProvider,
     private val authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
 
     private val _state: MutableLiveData<State> = MutableLiveData(getCurrentState())
     val state: LiveData<State> = _state
 
-    fun initiateLoginWithGoogle() {
-        val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-            Timber.e(exception, "There was a problem signing into your account")
-            _state.value = State.Failure
-        }
+    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        Timber.e(exception, "There was a problem signing into your account")
+        _state.value = State.Failure
+    }
 
-        viewModelScope.launch(exceptionHandler) {
-            val thirdPartyLoginCredential = thirdPartyLoginProvider.initiateSignIn()
-            _state.value = State.Loading
-            _state.value = authenticationRepository
-                .firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
-                .toState()
-        }
+    fun initiateLoginWithGoogle() = viewModelScope.launch(exceptionHandler) {
+        val thirdPartyLoginCredential = googleLoginProvider.initiateSignIn()
+        _state.value = State.Loading
+        _state.value = authenticationRepository
+            .firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
+            .toState()
+    }
+
+    fun initiateAnonymousLogin() = viewModelScope.launch(exceptionHandler) {
+        _state.value = State.Loading
+        _state.value = authenticationRepository
+            .signInAnonymously()
+            .toState()
     }
 
     fun initiateSignOut() = viewModelScope.launch {

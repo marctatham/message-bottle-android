@@ -30,15 +30,34 @@ class AuthenticationRepository @Inject constructor(
 
     suspend fun firebaseAuthWithGoogle(idToken: String): UserEntity {
         val userEntity = withContext(dispatcherNetwork) {
-            Timber.v("authenticating with Firebase using Google IDToken")
-            val firebaseAuthResult = firebaseAuthenticator.authenticateViaGoogle(idToken)
+            Timber.d("authenticating with Firebase using Google IDToken")
+            val firebaseAuthResult = firebaseAuthenticator.authenticateWithGoogle(idToken)
 
-            Timber.v("authenticating with our backend using firebase token")
+            Timber.d("authenticating with our backend using firebase token")
             val getCreateUserDataModel = GetCreateUserDataModel(firebaseAuthResult.token)
             val userDataModel = userService.getCreateUser(getCreateUserDataModel)
             mapper.map(userDataModel)
         }
 
+        // persist jwt token
+        val jwtToken = JwtToken(userEntity.jwtToken)
+        jwtPersister.store(jwtToken)
+
+        // temporarily persist this to memory until we've got persistence mechanism in place
+        user = userEntity
+        return user
+    }
+
+    suspend fun signInAnonymously(): UserEntity {
+        val userEntity = withContext(dispatcherNetwork) {
+            Timber.d("authenticating with Firebase anonymously")
+            val firebaseAuthResult = firebaseAuthenticator.authenticateAnonymously()
+
+            Timber.d("authenticating with our backend using firebase token")
+            val getCreateUserDataModel = GetCreateUserDataModel(firebaseAuthResult.token)
+            val userDataModel = userService.getCreateUser(getCreateUserDataModel)
+            mapper.map(userDataModel)
+        }
 
         val jwtToken = JwtToken(userEntity.jwtToken)
         jwtPersister.store(jwtToken)
@@ -60,6 +79,8 @@ class AuthenticationRepository @Inject constructor(
                 }
             }
         }
+
+        jwtPersister.clear()
 
         return user
     }

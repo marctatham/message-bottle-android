@@ -20,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var containerLoggedIn: View
     private lateinit var containerLoggedOut: View
     private lateinit var btnSignInGoogle: SignInButton
+    private lateinit var btnSignInAnonymous: Button
     private lateinit var btnSignOut: Button
     private lateinit var progressBar: ProgressBar
 
@@ -39,12 +40,17 @@ class LoginActivity : AppCompatActivity() {
         containerLoggedIn = findViewById(R.id.containerLoggedIn)
         containerLoggedOut = findViewById(R.id.containerLoggedOut)
         btnSignInGoogle = findViewById(R.id.btnSignInGoogle)
+        btnSignInAnonymous = findViewById(R.id.btnSignInAnonymous)
         btnSignOut = findViewById(R.id.btnSignOut)
         progressBar = findViewById(R.id.progressBar)
 
         btnSignInGoogle.setSize(SignInButton.SIZE_STANDARD)
         btnSignInGoogle.setOnClickListener {
             viewModel.initiateLoginWithGoogle()
+        }
+
+        btnSignInAnonymous.setOnClickListener {
+            viewModel.initiateAnonymousLogin()
         }
 
         btnSignOut.setOnClickListener {

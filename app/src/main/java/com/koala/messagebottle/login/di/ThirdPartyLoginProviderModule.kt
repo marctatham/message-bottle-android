@@ -11,7 +11,6 @@ import dagger.Provides
 @Module
 class ThirdPartyLoginProviderModule {
 
-
     @ActivityScope
     @Provides
     fun provideFragmentManager(loginActivity: LoginActivity): FragmentManager {
