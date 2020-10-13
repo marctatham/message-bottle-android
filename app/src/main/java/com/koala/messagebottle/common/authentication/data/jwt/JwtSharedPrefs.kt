@@ -20,6 +20,12 @@ class JwtSharedPrefs @Inject constructor(
         editor.apply()
     }
 
+    override suspend fun clear() {
+        val editor = sharedPreferences.edit()
+        editor.remove(KEY_JWT_TOKEN)
+        editor.apply()
+    }
+
     override suspend fun get(): JwtToken? {
         if (sharedPreferences.contains(KEY_JWT_TOKEN)) {
             val token: String = sharedPreferences.getString(KEY_JWT_TOKEN, "")!!

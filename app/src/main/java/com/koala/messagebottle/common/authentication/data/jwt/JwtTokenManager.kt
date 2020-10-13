@@ -19,6 +19,11 @@ class JwtTokenManager @Inject constructor(
         jwtSharedPrefs.store(jwtToken)
     }
 
+    override suspend fun clear() {
+        jwtSharedPrefs.clear()
+        jwtToken = null
+    }
+
     override suspend fun get(): JwtToken? {
         if (jwtToken == null) {
             Timber.v("No cached jwt token")
