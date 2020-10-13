@@ -24,8 +24,6 @@ class LoginViewModel @Inject constructor(
     val state: LiveData<State> = _state
 
     fun initiateLoginWithGoogle() {
-        _state.value = State.Loading
-
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             Timber.e(exception, "There was a problem signing into your account")
             _state.value = State.Failure
@@ -33,9 +31,10 @@ class LoginViewModel @Inject constructor(
 
         viewModelScope.launch(exceptionHandler) {
             val thirdPartyLoginCredential = thirdPartyLoginProvider.initiateSignIn()
-            val userEntity =
-                authenticationRepository.firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
-            _state.value = userEntity.toState()
+            _state.value = State.Loading
+            _state.value = authenticationRepository
+                .firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
+                .toState()
         }
     }
 
