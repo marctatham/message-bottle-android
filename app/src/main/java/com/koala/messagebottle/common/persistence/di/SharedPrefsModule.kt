@@ -1,4 +1,4 @@
-package com.koala.messagebottle.common.sharedprefs.di
+package com.koala.messagebottle.common.persistence.di
 
 import android.content.Context
 import android.content.SharedPreferences
