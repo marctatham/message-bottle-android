@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
 import com.koala.messagebottle.home.HomeActivity
-import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class ViewMessagesFragment : Fragment() {
@@ -44,7 +43,6 @@ class ViewMessagesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val rootView = inflater.inflate(R.layout.view_messages_fragment, container, false)
-
         containerView = rootView.findViewById(R.id.container)
         recyclerView = rootView.findViewById(R.id.recyclerView)
         progressBar = rootView.findViewById(R.id.progressBar)
@@ -89,7 +87,7 @@ class ViewMessagesFragment : Fragment() {
     }
 
     private fun displayGetMessagesFailed() = Snackbar
-        .make(container, R.string.get_messages_failed, Snackbar.LENGTH_SHORT)
+        .make(containerView, R.string.get_messages_failed, Snackbar.LENGTH_SHORT)
         .show()
 
     companion object {

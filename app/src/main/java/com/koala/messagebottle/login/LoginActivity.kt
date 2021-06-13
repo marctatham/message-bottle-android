@@ -12,11 +12,11 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.BaseApplication
 import com.koala.messagebottle.R
-import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var container: View
     private lateinit var containerLoggedIn: View
     private lateinit var containerLoggedOut: View
     private lateinit var btnSignInGoogle: SignInButton
@@ -37,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        container = findViewById(R.id.container)
         containerLoggedIn = findViewById(R.id.containerLoggedIn)
         containerLoggedOut = findViewById(R.id.containerLoggedOut)
         btnSignInGoogle = findViewById(R.id.btnSignInGoogle)
