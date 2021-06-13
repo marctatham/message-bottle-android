@@ -74,5 +74,6 @@ private fun UserEntity.toState(): State = when (this) {
 
     is UserEntity.LoggedInUser -> when (this.authenticationProvider) {
         AuthenticationProvider.Google -> State.LoggedInUser
+        AuthenticationProvider.Anonymous -> State.LoggedInUser
     }
 }
