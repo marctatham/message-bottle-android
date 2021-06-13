@@ -1,2 +1,2 @@
-rootProject.name='MessageBottle'
+rootProject.name = 'MessageBottle'
 include ':app'

@@ -13,7 +13,6 @@ class MessagesAdapter(
     private val layoutInflater: LayoutInflater
 ) : RecyclerView.Adapter<MessageViewHolder>() {
 
-
     var messages: List<MessageEntity> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
@@ -22,7 +21,7 @@ class MessagesAdapter(
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        val messageEntity = messages.get(position)
+        val messageEntity = messages[position]
         holder.bind(messageEntity)
     }
 
