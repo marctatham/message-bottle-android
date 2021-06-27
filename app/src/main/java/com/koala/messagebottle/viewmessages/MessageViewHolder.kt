@@ -9,12 +9,7 @@ import com.koala.messagebottle.common.messages.domain.MessageEntity
 
 class MessageViewHolder(val testView: View) : RecyclerView.ViewHolder(testView) {
 
-    lateinit var test: TextView
-
-    init {
-        test = testView.findViewById(R.id.txtMessage)
-    }
-
+    var test: TextView = testView.findViewById(R.id.txtMessage)
 
     fun bind(messageEntity: MessageEntity) {
         test.text = messageEntity.message
