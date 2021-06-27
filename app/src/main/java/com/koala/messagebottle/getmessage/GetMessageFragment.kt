@@ -32,9 +32,8 @@ class GetMessageFragment : Fragment() {
     private val viewModel by viewModels<GetMessageViewModel> { viewModelFactory }
 
     override fun onAttach(context: Context) {
-        super.onAttach(context)
-
         (requireActivity() as HomeActivity).homeComponent.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
