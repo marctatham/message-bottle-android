@@ -3,55 +3,44 @@ package com.koala.messagebottle.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.koala.messagebottle.BaseApplication
 import com.koala.messagebottle.R
-import com.koala.messagebottle.getmessage.GetMessageFragment
 import com.koala.messagebottle.home.di.HomeComponent
-import com.koala.messagebottle.postmessage.PostMessageFragment
-import com.koala.messagebottle.viewmessages.ViewMessagesFragment
 import timber.log.Timber
+import javax.inject.Inject
 
 private const val TAG = "MainActivity"
 private const val REQUEST_CODE_LOGIN = 100
 
 class HomeActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var homeComponent: HomeComponent
 
+    private val viewModel by viewModels<HomeViewModel> { viewModelFactory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        homeComponent = (application as BaseApplication).appComponent.homeComponent().create(this)
+        homeComponent =
+            (application as BaseApplication).appComponent.homeComponent().create(this)
+        homeComponent.inject(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
-
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, HomeFragment.newInstance())
-                .commit()
-        }
     }
 
-    fun showGetMessage() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, GetMessageFragment.newInstance())
-            .addToBackStack("GetMessageFragment")
-            .commit()
-    }
+    fun showGetMessage() = findNavController(R.id.nav_host_fragment)
+        .navigate(R.id.action_homeToGetMessage)
 
-    fun showPostMessage() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, PostMessageFragment.newInstance())
-            .addToBackStack("PostMessageFragment")
-            .commit()
-    }
+    fun showPostMessage() = findNavController(R.id.nav_host_fragment)
+        .navigate(R.id.action_homeToPostMessage)
 
-    fun showViewMessages() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, ViewMessagesFragment.newInstance())
-            .addToBackStack("ViewMessagesFragment")
-            .commit()
-    }
+    fun showViewMessages() = findNavController(R.id.nav_host_fragment)
+        .navigate(R.id.action_homeToVewMessages)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -22,6 +22,7 @@ interface HomeComponent {
         fun create(@BindsInstance homeActivity: HomeActivity): HomeComponent
     }
 
+    fun inject(homeActivity: HomeActivity)
     fun inject(homeFragment: HomeFragment)
     fun inject(getMessageFragment: GetMessageFragment)
     fun inject(postMessageFragment: PostMessageFragment)
