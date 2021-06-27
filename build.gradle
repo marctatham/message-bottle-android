@@ -1,6 +1,7 @@
 buildscript {
 
     ext.versionKotlin = '1.5.20'
+    ext.version_nav = "2.3.5"
 
     ext.versionDagger = '2.35.1'
     ext.versionRetrofit = '2.9.0'
