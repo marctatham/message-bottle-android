@@ -13,7 +13,8 @@
     <string name="sign_out">Sign out</string>
     <string name="access_revoked">Access has been revoked</string>
     <string name="more_sign_in_providers_soon">More sign in providers coming soon!</string>
-    <string name="btnSignIn">Sign in Anonymously</string>
+    <string name="btnSignIn">Sign in</string>
+    <string name="btnSignInAnonymously">Sign in Anonymously</string>
     <string name="btnGetMessage">Get a message from a bottle</string>
     <string name="snack_get_message_failed">"There was a problem fetching the message"</string>
     <string name="btnPostMessage">Put a message in a bottle</string>
