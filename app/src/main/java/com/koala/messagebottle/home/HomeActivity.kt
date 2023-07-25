@@ -42,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
     fun showViewMessages() = findNavController(R.id.nav_host_fragment)
         .navigate(R.id.action_homeToVewMessages)
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
