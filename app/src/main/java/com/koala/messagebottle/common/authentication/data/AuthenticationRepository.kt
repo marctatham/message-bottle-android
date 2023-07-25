@@ -77,6 +77,8 @@ class AuthenticationRepository @Inject constructor(
                     firebaseAuthenticator.signOut()
                     user = UserEntity.Anonymous
                 }
+
+                AuthenticationProvider.Anonymous -> TODO() // action anonymous signout
             }
         }
 
