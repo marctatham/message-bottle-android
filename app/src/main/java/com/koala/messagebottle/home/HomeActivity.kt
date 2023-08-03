@@ -9,16 +9,11 @@ import com.koala.messagebottle.R
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
-private const val TAG = "MainActivity"
 private const val REQUEST_CODE_LOGIN = 100
 
 @AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-//        homeComponent =
-//            (application as Application).appComponent.homeComponent().create(this)
-//        homeComponent.inject(this)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
     }
