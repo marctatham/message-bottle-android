@@ -120,6 +120,10 @@ dependencies {
     implementation(libs.squareup.moshi.adapters)
     ksp(libs.squareup.moshi.kotlin.codegen)
 
+    // retrofit
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.retrofit.converter.moshi)
+
     // Tooling
     debugImplementation(libs.androidx.compose.ui.tooling)
     // Instrumented tests
