@@ -138,6 +138,9 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.auth.ktx)
 
+    // play services
+    implementation(libs.play.services.auth)
+
     // ui bits (worth revisiting & replacing with jetpack compose for the most part)
     implementation(libs.material)
     implementation(libs.constraintLayout)
