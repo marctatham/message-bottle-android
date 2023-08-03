@@ -1,9 +1,0 @@
-/build
-/release/output.json
-/debug/output.json
-
-# release files
-# these are stored securely, separately from the repo
-/message-bottle-release.jks
-/properties.properties
-
