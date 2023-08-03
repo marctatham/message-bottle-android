@@ -135,6 +135,10 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.auth.ktx)
 
+    // ui bits (worth revisiting & replacing with jetpack compose for the most part)
+    implementation(libs.material)
+    implementation(libs.constraintLayout)
+
     // Tooling
     debugImplementation(libs.androidx.compose.ui.tooling)
     // Instrumented tests
