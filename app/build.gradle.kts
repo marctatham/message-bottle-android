@@ -127,6 +127,9 @@ dependencies {
     // logging
     implementation(libs.timber)
 
+    // lottie
+    implementation(libs.airbnb.lottie)
+
     // Tooling
     debugImplementation(libs.androidx.compose.ui.tooling)
     // Instrumented tests
