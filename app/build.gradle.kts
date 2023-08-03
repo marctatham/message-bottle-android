@@ -130,6 +130,11 @@ dependencies {
     // lottie
     implementation(libs.airbnb.lottie)
 
+    // firebase
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.auth.ktx)
+
     // Tooling
     debugImplementation(libs.androidx.compose.ui.tooling)
     // Instrumented tests
