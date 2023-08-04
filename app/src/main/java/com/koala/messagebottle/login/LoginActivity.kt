@@ -12,7 +12,7 @@
 //import dagger.hilt.android.AndroidEntryPoint
 //
 //@AndroidEntryPoint
-//class LoginActivity : AppCompatActivity() {
+//class LoginActivity : ComponentActivity() {
 //
 //    private lateinit var container: View
 //    private lateinit var containerLoggedIn: View
