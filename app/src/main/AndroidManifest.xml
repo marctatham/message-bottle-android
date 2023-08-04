@@ -29,6 +29,8 @@
         android:theme="@style/Theme.MessageInABottle"
         android:name=".MessageInABottle"
         tools:targetApi="31">
+
+<!--        TODO: Introduce new activies -->
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
