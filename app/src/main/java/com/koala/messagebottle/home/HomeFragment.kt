@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.koala.messagebottle.R
-import com.koala.messagebottle.login.LoginActivity
+
 
 private const val REQUEST_CODE_LOGIN = 100
 
