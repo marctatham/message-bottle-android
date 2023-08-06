@@ -30,17 +30,28 @@
         android:name=".MessageInABottle"
         tools:targetApi="31">
 
-<!--        TODO: Introduce new activies -->
+<!--        TODO: Introduce new activies / remove old activities -->
+<!--        <activity-->
+<!--            android:name=".ui.MainActivity"-->
+<!--            android:exported="true"-->
+<!--            android:theme="@style/Theme.MessageInABottle">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".home.HomeActivity"
             android:exported="true"
-            android:theme="@style/Theme.MessageInABottle">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
