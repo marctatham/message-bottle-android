@@ -67,17 +67,13 @@ class AuthenticationRepository @Inject constructor(
     }
 
     suspend fun signOut(): UserEntity {
+        // reset the user into anonymous mode
         when (user) {
             UserEntity.Anonymous -> Timber.d("no sign out required for an anonymous user")
 
-            is UserEntity.LoggedInUser -> when ((user as UserEntity.LoggedInUser).authenticationProvider) {
-                AuthenticationProvider.Google -> {
-                    // reset the user into anonymous mode
-                    firebaseAuthenticator.signOut()
-                    user = UserEntity.Anonymous
-                }
-
-                AuthenticationProvider.Anonymous -> TODO() // action anonymous signout
+            is UserEntity.LoggedInUser -> {
+                firebaseAuthenticator.signOut()
+                user = UserEntity.Anonymous
             }
         }
 
