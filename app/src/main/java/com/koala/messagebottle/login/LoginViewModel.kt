@@ -75,7 +75,7 @@ sealed class State {
 private fun UserEntity.toState(): State = when (this) {
     UserEntity.UnauthenticatedUser -> State.Anonymous
 
-    is UserEntity.LoggedInUser -> when (this.authenticationProvider) {
+    is UserEntity.AuthenticatedUser -> when (this.authenticationProvider) {
         AuthenticationProvider.Google -> State.LoggedInUser
         AuthenticationProvider.Anonymous -> State.LoggedInUser
     }

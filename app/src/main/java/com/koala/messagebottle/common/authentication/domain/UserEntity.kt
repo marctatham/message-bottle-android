@@ -4,7 +4,7 @@ package com.koala.messagebottle.common.authentication.domain
 // this is destined to change in the near future, it's being integrated as a 1st class citizen
 sealed class UserEntity {
 
-    data class LoggedInUser(
+    data class AuthenticatedUser(
         val authenticationProvider: AuthenticationProvider,
         val jwtToken: String
     ) : UserEntity()

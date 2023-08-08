@@ -36,7 +36,7 @@ class AuthenticationRepository @Inject constructor(
 //            val getCreateUserDataModel = GetCreateUserDataModel(firebaseAuthResult.token)
 //            val userDataModel = userService.getCreateUser(getCreateUserDataModel)
             //mapper.map(userDataModel)
-            UserEntity.LoggedInUser(AuthenticationProvider.Google, firebaseAuthResult.token)
+            UserEntity.AuthenticatedUser(AuthenticationProvider.Google, firebaseAuthResult.token)
         }
 
         // persist jwt token
@@ -54,7 +54,7 @@ class AuthenticationRepository @Inject constructor(
             val firebaseAuthResult: FirebaseAuthenticationResult = firebaseAuthenticator.authenticateAnonymously()
 
             Timber.d("User has now been authenticated")
-            UserEntity.LoggedInUser(AuthenticationProvider.Anonymous, firebaseAuthResult.token)
+            UserEntity.AuthenticatedUser(AuthenticationProvider.Anonymous, firebaseAuthResult.token)
         }
 
         // TODO: revisit persistence
@@ -71,7 +71,7 @@ class AuthenticationRepository @Inject constructor(
         when (user) {
             UserEntity.UnauthenticatedUser -> Timber.d("no sign out required for an anonymous user")
 
-            is UserEntity.LoggedInUser -> {
+            is UserEntity.AuthenticatedUser -> {
                 Timber.i("Signing user out...")
                 firebaseAuthenticator.signOut()
                 user = UserEntity.UnauthenticatedUser
