@@ -17,6 +17,7 @@
 package com.koala.messagebottle
 
 import android.app.Application
+import android.content.pm.ApplicationInfo
 import android.util.Log
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber.*
@@ -28,11 +29,13 @@ class MessageInABottle : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        val isDebug = true //BuildConfig.DEBUG
-        if (isDebug) {
+        // setup the appropriate Timber tree
+        val isDebuggableBuild = applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+        if (isDebuggableBuild) {
             plant(DebugTree())
         } else {
-            plant(CrashReportingTree())
+            // TODO: plugin production CrashReportingTree
+            //plant(CrashReportingTree())
         }
     }
 
