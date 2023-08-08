@@ -42,7 +42,7 @@
         <!--        </activity>-->
 
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".main.HomeActivity"
             android:exported="true"
             android:theme="@style/AppTheme">
             <intent-filter>

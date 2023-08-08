@@ -1,4 +1,4 @@
-package com.koala.messagebottle.home
+package com.koala.messagebottle.main
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

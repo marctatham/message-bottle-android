@@ -1,4 +1,4 @@
-package com.koala.messagebottle.home
+package com.koala.messagebottle.main
 
 import android.app.Activity
 import android.content.Intent
