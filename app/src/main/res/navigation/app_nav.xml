@@ -31,6 +31,6 @@
 
     <fragment
         android:id="@+id/viewMessagesFragment"
-        android:name="com.koala.messagebottle.viewmessages.ViewMessagesFragment"
+        android:name="com.koala.messagebottle.main.viewmessages.ViewMessagesFragment"
         android:label="ViewMessagesFragment" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.koala.messagebottle.viewmessages
+package com.koala.messagebottle.main.viewmessages
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

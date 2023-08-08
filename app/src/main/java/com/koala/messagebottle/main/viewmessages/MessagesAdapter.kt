@@ -1,4 +1,4 @@
-package com.koala.messagebottle.viewmessages
+package com.koala.messagebottle.main.viewmessages
 
 import android.view.LayoutInflater
 import android.view.View
