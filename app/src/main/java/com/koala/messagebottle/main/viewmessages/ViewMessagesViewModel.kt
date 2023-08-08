@@ -12,8 +12,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-private const val TAG = "ViewMessagesViewModel"
-
 @HiltViewModel
 class ViewMessagesViewModel @Inject constructor(
     private val messageRepository: MessageRepository

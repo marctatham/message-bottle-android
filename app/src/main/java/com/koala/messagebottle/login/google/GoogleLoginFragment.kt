@@ -19,8 +19,6 @@ import com.koala.messagebottle.R
 import com.koala.messagebottle.login.ThirdPartyLoginCredential
 import timber.log.Timber
 
-private const val TAG = "GoogleLoginFragment"
-
 private const val REQUEST_CODE_GOOGLE = 1000
 
 private const val ARG_EXTRA_IDENTIFIER = "identifier"
