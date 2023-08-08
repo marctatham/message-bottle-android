@@ -26,7 +26,7 @@ class ViewMessagesFragment : Fragment() {
 //
 //    private lateinit var messagesAdapter: MessagesAdapter
 //
-//    private val viewModel: ViewMessagesViewModel by hiltNavGraphViewModels(R.id.nav_host_fragment)
+//    private val viewModel: ViewMessagesViewModel by hiltNavGraphViewModels(R.id.app_nav)
 //
 //    override fun onCreateView(
 //        inflater: LayoutInflater, container: ViewGroup?,
