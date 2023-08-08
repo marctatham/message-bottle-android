@@ -1,4 +1,4 @@
-package com.koala.messagebottle.main
+package com.koala.messagebottle.main.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.koala.messagebottle.R
 import com.koala.messagebottle.login.LoginActivity
 import com.koala.messagebottle.main.Constants.REQUEST_CODE_LOGIN
+import com.koala.messagebottle.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
