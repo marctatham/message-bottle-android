@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.ResultReceiver
 import androidx.fragment.app.Fragment
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -77,6 +78,19 @@ class GoogleLoginFragment : Fragment() {
     }
 
     private fun handleGoogleLoginResult(data: Intent?) {
+        val signInRequest: BeginSignInRequest = BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    // Your server's client ID, not your Android client ID.
+                    //.setServerClientId(getString(R.string.your_web_client_id)) TODO: circle back around to this
+                    // Only show accounts previously used to sign in.
+                    .setFilterByAuthorizedAccounts(true)
+                    .build())
+            .build()
+
+
+
         val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
         val activity = requireActivity()
         task.addOnSuccessListener(activity) { googleSignInAccount: GoogleSignInAccount ->
