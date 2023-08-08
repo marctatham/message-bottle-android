@@ -10,8 +10,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@Module(includes = [JwtTokenPersisterModule::class, UserServiceModule::class])
-@InstallIn(SingletonComponent::class) // TODO: revisit this
+//@Module(includes = [JwtTokenPersisterModule::class, UserServiceModule::class])
+@Module
+@InstallIn(SingletonComponent::class)
 object AuthenticationModule {
 
     @Provides
