@@ -72,12 +72,15 @@ class AuthenticationRepository @Inject constructor(
             UserEntity.Anonymous -> Timber.d("no sign out required for an anonymous user")
 
             is UserEntity.LoggedInUser -> {
+                Timber.i("Signing user out...")
                 firebaseAuthenticator.signOut()
                 user = UserEntity.Anonymous
             }
         }
 
         jwtPersister.clear()
+
+        Timber.i("User has been signed out")
 
         return user
     }
