@@ -13,6 +13,7 @@ private const val REQUEST_CODE_LOGIN = 100
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
