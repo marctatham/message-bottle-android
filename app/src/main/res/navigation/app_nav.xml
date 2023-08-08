@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/getMessageFragment"
-        android:name="com.koala.messagebottle.getmessage.GetMessageFragment"
+        android:name="com.koala.messagebottle.main.getmessage.GetMessageFragment"
         android:label="GetMessageFragment" />
 
     <fragment

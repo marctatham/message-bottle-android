@@ -1,4 +1,4 @@
-package com.koala.messagebottle.getmessage
+package com.koala.messagebottle.main.getmessage
 
 import androidx.fragment.app.Fragment
 
