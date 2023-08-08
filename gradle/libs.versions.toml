@@ -26,6 +26,7 @@ firebaseAuth = "22.1.0"
 constraintLayout = "2.1.4"
 material = "1.4.0"
 googleServices = "4.3.15"
+playServices="20.6.0"
 firebase="32.2.2"
 
 [libraries]
@@ -70,6 +71,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" } # when using the BoM, don't specify versions in the Firebase dependencies
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServices" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

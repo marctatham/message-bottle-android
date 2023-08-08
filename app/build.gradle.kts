@@ -140,7 +140,7 @@ dependencies {
     implementation(libs.firebase.analytics.ktx)
 
     // play services
-    //implementation(libs.play.services.auth)
+    implementation(libs.play.services.auth)
 
     // ui bits (worth revisiting & replacing with jetpack compose for the most part)
     implementation(libs.material)
