@@ -15,7 +15,7 @@ class MessageModule {
 
     @Provides
     @Singleton
-    fun providesMessageService(retrofit: Retrofit): MessageService {
+    fun providesMessageService(): MessageService {
         return MessageServiceFakeImpl()
     }
 
