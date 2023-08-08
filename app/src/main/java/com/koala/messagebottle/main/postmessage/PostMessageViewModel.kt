@@ -1,4 +1,4 @@
-package com.koala.messagebottle.postmessage
+package com.koala.messagebottle.main.postmessage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

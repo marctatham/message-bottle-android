@@ -1,4 +1,4 @@
-package com.koala.messagebottle.postmessage
+package com.koala.messagebottle.main.postmessage
 
 import android.os.Bundle
 import android.view.LayoutInflater
