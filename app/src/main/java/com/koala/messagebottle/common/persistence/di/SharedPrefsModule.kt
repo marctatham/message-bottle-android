@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 private const val FILE_NAME = "ApplicationPreferences"
@@ -14,7 +15,7 @@ private const val FILE_NAME = "ApplicationPreferences"
 class SharedPrefsModule {
 
     @Provides
-    fun providesSharedPreferences(context: Context): SharedPreferences {
+    fun providesSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)
     }
 

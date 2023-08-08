@@ -7,22 +7,21 @@ import com.koala.messagebottle.login.google.GoogleLoginProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ActivityScoped
-import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 class ThirdPartyLoginProviderModule {
 
-//    @ViewModelScoped
     @Provides
+    @ActivityRetainedScoped
     fun provideFragmentManager(loginActivity: LoginActivity): FragmentManager {
         return loginActivity.supportFragmentManager
     }
 
-//    @ActivityScoped
     @Provides
+    @ActivityRetainedScoped
     fun providesThirdPartyLoginProvider(fragmentManager: FragmentManager): ThirdPartyLoginProvider {
         return GoogleLoginProvider(fragmentManager)
     }

@@ -18,7 +18,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val googleLoginProvider: ThirdPartyLoginProvider,
+    //private val googleLoginProvider: ThirdPartyLoginProvider,
     private val authenticationRepository: AuthenticationRepository
 ) : ViewModel() {
 
@@ -31,11 +31,12 @@ class LoginViewModel @Inject constructor(
     }
 
     fun initiateLoginWithGoogle() = viewModelScope.launch(exceptionHandler) {
-        val thirdPartyLoginCredential = googleLoginProvider.initiateSignIn()
-        _state.value = State.Loading
-        _state.value = authenticationRepository
-            .firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
-            .toState()
+//        val thirdPartyLoginCredential = googleLoginProvider.initiateSignIn()
+//        _state.value = State.Loading
+//        _state.value = authenticationRepository
+//            .firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
+//            .toState()
+        _state.value = State.Failure
     }
 
     fun initiateAnonymousLogin() = viewModelScope.launch(exceptionHandler) {
