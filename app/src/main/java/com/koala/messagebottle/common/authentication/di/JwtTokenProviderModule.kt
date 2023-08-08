@@ -1,5 +1,6 @@
 package com.koala.messagebottle.common.authentication.di
 
+import com.koala.messagebottle.common.authentication.data.jwt.IJwtTokenPersister
 import com.koala.messagebottle.common.authentication.data.jwt.IJwtTokenProvider
 import com.koala.messagebottle.common.authentication.data.jwt.JwtTokenManager
 import dagger.Module
@@ -18,4 +19,9 @@ class JwtTokenProviderModule {
         jwtTokenManager: JwtTokenManager
     ): IJwtTokenProvider = jwtTokenManager
 
+    @Provides
+    @Singleton
+    fun providesJwtTokenPersister(
+        jwtTokenManager: JwtTokenManager
+    ): IJwtTokenPersister = jwtTokenManager
 }
