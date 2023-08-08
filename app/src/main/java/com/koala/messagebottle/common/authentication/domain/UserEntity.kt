@@ -9,8 +9,7 @@ sealed class UserEntity {
         val jwtToken: String
     ) : UserEntity()
 
-    // TODO: rename to UNKNOWN
     // as opposed to anonymously authenticated user
-    object Anonymous : UserEntity()
+    object UnauthenticatedUser : UserEntity()
 
 }

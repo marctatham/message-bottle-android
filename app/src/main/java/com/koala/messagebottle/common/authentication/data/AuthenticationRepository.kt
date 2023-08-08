@@ -25,7 +25,7 @@ class AuthenticationRepository @Inject constructor(
     // TODO: let's write this to somewhere safe
     // shared prefs is probably OK for now until we've got a better usecase to introduce DB support
     // for now we'll just store this in memory since it's useful for testing auth functionality 🤷‍
-    var user: UserEntity = UserEntity.Anonymous
+    var user: UserEntity = UserEntity.UnauthenticatedUser
 
     suspend fun firebaseAuthWithGoogle(idToken: String): UserEntity {
         val userEntity = withContext(dispatcherNetwork) {
@@ -69,12 +69,12 @@ class AuthenticationRepository @Inject constructor(
     suspend fun signOut(): UserEntity {
         // reset the user into anonymous mode
         when (user) {
-            UserEntity.Anonymous -> Timber.d("no sign out required for an anonymous user")
+            UserEntity.UnauthenticatedUser -> Timber.d("no sign out required for an anonymous user")
 
             is UserEntity.LoggedInUser -> {
                 Timber.i("Signing user out...")
                 firebaseAuthenticator.signOut()
-                user = UserEntity.Anonymous
+                user = UserEntity.UnauthenticatedUser
             }
         }
 

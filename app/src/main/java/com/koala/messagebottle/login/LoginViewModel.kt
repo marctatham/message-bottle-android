@@ -73,7 +73,7 @@ sealed class State {
  * Simple method to convert a user entity into a meaningful state
  */
 private fun UserEntity.toState(): State = when (this) {
-    UserEntity.Anonymous -> State.Anonymous
+    UserEntity.UnauthenticatedUser -> State.Anonymous
 
     is UserEntity.LoggedInUser -> when (this.authenticationProvider) {
         AuthenticationProvider.Google -> State.LoggedInUser
