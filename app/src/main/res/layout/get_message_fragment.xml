@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="message-from-bottle.json"
+        app:lottie_rawRes="@raw/message_from_bottle"
         app:lottie_loop="false"
         app:lottie_speed="1" />
 
