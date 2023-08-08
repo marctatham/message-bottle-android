@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
+import com.koala.messagebottle.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -40,13 +40,8 @@ class HomeFragment : Fragment() {
         viewModel.test()
 
         btnSignIn.setOnClickListener {
-            Snackbar
-                .make(rootView, "Launch Login Flow", Snackbar.LENGTH_SHORT)
-                .show()
-
-            // TODO: re-introduce
-            // val intent = Intent(requireActivity(), LoginActivity::class.java)
-            // startActivityForResult(intent, REQUEST_CODE_LOGIN)
+             val intent = Intent(requireActivity(), LoginActivity::class.java)
+             startActivityForResult(intent, REQUEST_CODE_LOGIN)
         }
 
         btnGetMessage.setOnClickListener {

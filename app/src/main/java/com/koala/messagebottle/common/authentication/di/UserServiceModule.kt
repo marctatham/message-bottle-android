@@ -13,7 +13,6 @@ import javax.inject.Singleton
 class UserServiceModule {
 
     @Provides
-    @Singleton
     fun providesUserService(
         retrofit: Retrofit
     ): UserService {
