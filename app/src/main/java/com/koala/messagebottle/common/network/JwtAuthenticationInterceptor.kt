@@ -9,6 +9,8 @@ import javax.inject.Singleton
 
 private const val HEADER_AUTH = "Authorization"
 
+// TODO: let's revisit this
+// this is because this is likely going to fall away as we move to the Firebase-only implementation
 @Singleton
 class JwtAuthenticationInterceptor @Inject constructor(
     private val jwtTokenProvider: IJwtTokenProvider
