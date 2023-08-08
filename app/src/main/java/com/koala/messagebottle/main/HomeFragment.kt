@@ -45,15 +45,15 @@ class HomeFragment : Fragment() {
         }
 
         btnGetMessage.setOnClickListener {
-            (requireActivity() as HomeActivity).showGetMessage()
+            (requireActivity() as MainActivity).showGetMessage()
         }
 
         btnPostMessage.setOnClickListener {
-            (requireActivity() as HomeActivity).showPostMessage()
+            (requireActivity() as MainActivity).showPostMessage()
         }
 
         btnViewMessages.setOnClickListener {
-            (requireActivity() as HomeActivity).showViewMessages()
+            (requireActivity() as MainActivity).showViewMessages()
         }
 
         return rootView

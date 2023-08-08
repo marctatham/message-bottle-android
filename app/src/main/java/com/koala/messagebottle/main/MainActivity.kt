@@ -12,7 +12,7 @@ import timber.log.Timber
 private const val REQUEST_CODE_LOGIN = 100
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
