@@ -10,11 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.koala.messagebottle.R
 import com.koala.messagebottle.login.LoginActivity
+import com.koala.messagebottle.main.Constants.REQUEST_CODE_LOGIN
 import dagger.hilt.android.AndroidEntryPoint
-
-
-private const val REQUEST_CODE_LOGIN = 100
-
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {

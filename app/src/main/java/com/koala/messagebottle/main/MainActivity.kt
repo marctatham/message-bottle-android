@@ -6,10 +6,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.koala.messagebottle.R
+import com.koala.messagebottle.main.Constants.REQUEST_CODE_LOGIN
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-
-private const val REQUEST_CODE_LOGIN = 100
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
