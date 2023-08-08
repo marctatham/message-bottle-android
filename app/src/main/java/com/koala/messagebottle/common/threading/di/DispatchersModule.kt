@@ -1,5 +1,9 @@
-package com.koala.messagebottle.common.threading
+package com.koala.messagebottle.common.threading.di
 
+import com.koala.messagebottle.common.threading.DispatcherDefault
+import com.koala.messagebottle.common.threading.DispatcherIO
+import com.koala.messagebottle.common.threading.DispatcherMain
+import com.koala.messagebottle.common.threading.DispatcherUnconfined
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
