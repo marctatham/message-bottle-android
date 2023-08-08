@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.koala.messagebottle.common.authentication.data.AuthenticationRepository
 import com.koala.messagebottle.common.authentication.domain.AuthenticationProvider
+import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
 import com.koala.messagebottle.common.authentication.domain.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     //private val googleLoginProvider: ThirdPartyLoginProvider,
-    private val authenticationRepository: AuthenticationRepository
+    private val authenticationRepository: IAuthenticationRepository
 ) : ViewModel() {
 
     private val _state: MutableLiveData<State> = MutableLiveData(getCurrentState())

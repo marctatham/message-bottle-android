@@ -5,29 +5,27 @@ import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthe
 import com.koala.messagebottle.common.authentication.data.jwt.IJwtTokenPersister
 import com.koala.messagebottle.common.authentication.data.jwt.JwtToken
 import com.koala.messagebottle.common.authentication.domain.AuthenticationProvider
+import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
 import com.koala.messagebottle.common.authentication.domain.UserEntity
-import com.koala.messagebottle.common.threading.DispatcherIO
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import javax.inject.Inject
-import javax.inject.Singleton
 
 // Serves as a single source of truth to indicate whether the
 // user is currently signed into the application
-@Singleton
-class AuthenticationRepository @Inject constructor(
+class AuthenticationRepository constructor(
     private val firebaseAuthenticator: FirebaseAuthenticator,
     private val jwtPersister: IJwtTokenPersister,
-    @DispatcherIO private val dispatcherNetwork: CoroutineDispatcher
-) {
+    private val dispatcherNetwork: CoroutineDispatcher
+) : IAuthenticationRepository {
 
     // TODO: let's write this to somewhere safe
     // shared prefs is probably OK for now until we've got a better usecase to introduce DB support
     // for now we'll just store this in memory since it's useful for testing auth functionality 🤷‍
-    var user: UserEntity = UserEntity.UnauthenticatedUser
+    private var _user: UserEntity = UserEntity.UnauthenticatedUser
+    override val user: UserEntity get() = _user
 
-    suspend fun firebaseAuthWithGoogle(idToken: String): UserEntity {
+    override suspend fun firebaseAuthWithGoogle(idToken: String): UserEntity {
         val userEntity = withContext(dispatcherNetwork) {
             Timber.d("authenticating with Firebase using Google IDToken")
             val firebaseAuthResult = firebaseAuthenticator.authenticateWithGoogle(idToken)
@@ -44,14 +42,15 @@ class AuthenticationRepository @Inject constructor(
         jwtPersister.store(jwtToken)
 
         // temporarily persist this to memory until we've got persistence mechanism in place
-        user = userEntity
+        _user = userEntity
         return user
     }
 
-    suspend fun signInAnonymously(): UserEntity {
+    override suspend fun signInAnonymously(): UserEntity {
         val userEntity = withContext(dispatcherNetwork) {
             Timber.d("authenticating with Firebase anonymously")
-            val firebaseAuthResult: FirebaseAuthenticationResult = firebaseAuthenticator.authenticateAnonymously()
+            val firebaseAuthResult: FirebaseAuthenticationResult =
+                firebaseAuthenticator.authenticateAnonymously()
 
             Timber.d("User has now been authenticated")
             UserEntity.AuthenticatedUser(AuthenticationProvider.Anonymous, firebaseAuthResult.token)
@@ -62,19 +61,19 @@ class AuthenticationRepository @Inject constructor(
         jwtPersister.store(jwtToken)
 
         // temporarily persist this to memory until we've got persistence mechanism in place
-        user = userEntity
+        _user = userEntity
         return user
     }
 
-    suspend fun signOut(): UserEntity {
+    override suspend fun signOut(): UserEntity {
         // reset the user into anonymous mode
-        when (user) {
+        when (_user) {
             UserEntity.UnauthenticatedUser -> Timber.d("no sign out required for an anonymous user")
 
             is UserEntity.AuthenticatedUser -> {
                 Timber.i("Signing user out...")
                 firebaseAuthenticator.signOut()
-                user = UserEntity.UnauthenticatedUser
+                _user = UserEntity.UnauthenticatedUser
             }
         }
 
