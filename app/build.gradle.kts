@@ -22,6 +22,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.gradle)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -134,12 +135,12 @@ dependencies {
     implementation(libs.airbnb.lottie)
 
     // firebase
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.auth)
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.analytics.ktx)
 
     // play services
-    implementation(libs.play.services.auth)
+    //implementation(libs.play.services.auth)
 
     // ui bits (worth revisiting & replacing with jetpack compose for the most part)
     implementation(libs.material)
