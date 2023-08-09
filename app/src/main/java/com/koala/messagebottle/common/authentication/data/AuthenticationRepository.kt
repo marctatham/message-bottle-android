@@ -1,6 +1,6 @@
 package com.koala.messagebottle.common.authentication.data
 
-import com.koala.messagebottle.common.authentication.data.firebase.AuthenticationResult
+import com.koala.messagebottle.common.authentication.domain.AuthenticationResult
 import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
 import com.koala.messagebottle.common.authentication.data.jwt.IJwtTokenPersister
 import com.koala.messagebottle.common.authentication.data.jwt.JwtToken
