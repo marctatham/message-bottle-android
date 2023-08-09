@@ -36,7 +36,6 @@ class LoginViewModel @Inject constructor(
         _state.value = State.Loading
         _state.value = authenticationRepository.firebaseAuthWithGoogle(idToken)
             .toState()
-        _state.value = State.Failure
     }
 
     fun initiateAnonymousLogin() = viewModelScope.launch(exceptionHandler) {
