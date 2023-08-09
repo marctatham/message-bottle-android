@@ -2,8 +2,6 @@ package com.koala.messagebottle.common.authentication.data
 
 import com.koala.messagebottle.common.authentication.domain.AuthenticationResult
 import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
-import com.koala.messagebottle.common.authentication.data.jwt.IJwtTokenPersister
-import com.koala.messagebottle.common.authentication.data.jwt.JwtToken
 import com.koala.messagebottle.common.authentication.domain.ProviderType
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
 import com.koala.messagebottle.common.authentication.domain.UserEntity
@@ -15,7 +13,6 @@ import timber.log.Timber
 // user is currently signed into the application
 class AuthenticationRepository constructor(
     private val firebaseAuthenticator: FirebaseAuthenticator,
-    private val jwtPersister: IJwtTokenPersister,
     private val dispatcherNetwork: CoroutineDispatcher
 ) : IAuthenticationRepository {
 
@@ -34,10 +31,6 @@ class AuthenticationRepository constructor(
             UserEntity.AuthenticatedUser(ProviderType.Google, firebaseAuthResult.token)
         }
 
-        // persist jwt token
-        val jwtToken = JwtToken(userEntity.jwtToken)
-        jwtPersister.store(jwtToken)
-
         // temporarily persist this to memory until we've got persistence mechanism in place
         _user = userEntity
         return user
@@ -53,10 +46,6 @@ class AuthenticationRepository constructor(
             UserEntity.AuthenticatedUser(ProviderType.Anonymous, firebaseAuthResult.token)
         }
 
-        // TODO: revisit persistence
-        val jwtToken = JwtToken(userEntity.jwtToken)
-        jwtPersister.store(jwtToken)
-
         // temporarily persist this to memory until we've got persistence mechanism in place
         _user = userEntity
         return user
@@ -65,7 +54,7 @@ class AuthenticationRepository constructor(
     override suspend fun signOut(): UserEntity {
         // reset the user into anonymous mode
         when (_user) {
-            UserEntity.UnauthenticatedUser -> Timber.d("no sign out required for an anonymous user")
+            UserEntity.UnauthenticatedUser -> Timber.d("[signOut] user is already unauthenticated, no sign-out required")
 
             is UserEntity.AuthenticatedUser -> {
                 Timber.i("Signing user out...")
@@ -73,8 +62,6 @@ class AuthenticationRepository constructor(
                 _user = UserEntity.UnauthenticatedUser
             }
         }
-
-        jwtPersister.clear()
 
         Timber.i("User has been signed out")
 
