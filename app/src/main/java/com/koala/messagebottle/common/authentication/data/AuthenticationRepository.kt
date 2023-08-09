@@ -1,6 +1,6 @@
 package com.koala.messagebottle.common.authentication.data
 
-import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticationResult
+import com.koala.messagebottle.common.authentication.data.firebase.AuthenticationResult
 import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
 import com.koala.messagebottle.common.authentication.data.jwt.IJwtTokenPersister
 import com.koala.messagebottle.common.authentication.data.jwt.JwtToken
@@ -49,7 +49,7 @@ class AuthenticationRepository constructor(
     override suspend fun signInAnonymously(): UserEntity {
         val userEntity = withContext(dispatcherNetwork) {
             Timber.d("authenticating with Firebase anonymously")
-            val firebaseAuthResult: FirebaseAuthenticationResult =
+            val firebaseAuthResult: AuthenticationResult =
                 firebaseAuthenticator.authenticateAnonymously()
 
             Timber.d("User has now been authenticated")

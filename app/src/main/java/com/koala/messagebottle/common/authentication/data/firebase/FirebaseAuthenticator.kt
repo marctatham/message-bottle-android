@@ -10,7 +10,7 @@ class FirebaseAuthenticator @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) {
 
-    suspend fun authenticateWithGoogle(idToken: String): FirebaseAuthenticationResult {
+    suspend fun authenticateWithGoogle(idToken: String): AuthenticationResult {
         Timber.i("[authenticateWithGoogle] Authenticating into FirebaseUser's for user's Google Provided IdToken")
         val authCredential: AuthCredential = GoogleAuthProvider.getCredential(idToken, null)
         val taskSignInWithCredential: Task<AuthResult> =
@@ -24,10 +24,10 @@ class FirebaseAuthenticator @Inject constructor(
             Timber.d("[${it.key}] - [${it.value}]")
         }
 
-        return FirebaseAuthenticationResult(tokenResult.token!!)
+        return AuthenticationResult(tokenResult.token!!)
     }
 
-    suspend fun authenticateAnonymously(): FirebaseAuthenticationResult {
+    suspend fun authenticateAnonymously(): AuthenticationResult {
         Timber.i("[authenticateAnonymously] Authenticating Anonymously")
         val taskSignInWithCredential: Task<AuthResult> = firebaseAuth.signInAnonymously()
 
@@ -40,7 +40,7 @@ class FirebaseAuthenticator @Inject constructor(
             Timber.d("[${it.key}] - [${it.value}]")
         }
 
-        return FirebaseAuthenticationResult(tokenResult.token!!)
+        return AuthenticationResult(tokenResult.token!!)
     }
 
     // TODO: forget stored JWT token

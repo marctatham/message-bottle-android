@@ -1,5 +1,5 @@
 package com.koala.messagebottle.common.authentication.data.firebase
 
-data class FirebaseAuthenticationResult(
+data class AuthenticationResult(
     val token: String
 )
