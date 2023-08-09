@@ -11,46 +11,36 @@ class FirebaseAuthenticator @Inject constructor(
 ) {
 
     suspend fun authenticateWithGoogle(idToken: String): FirebaseAuthenticationResult {
+        Timber.i("[authenticateWithGoogle] Authenticating into FirebaseUser's for user's Google Provided IdToken")
         val authCredential: AuthCredential = GoogleAuthProvider.getCredential(idToken, null)
-        val taskSignInWithCredential: Task<AuthResult> = firebaseAuth.signInWithCredential(authCredential)
-        val authResult = Tasks.await(taskSignInWithCredential)
-
-        Timber.i("retrieving FirebaseUser's IdToken")
-        val firebaseUser: FirebaseUser = authResult.user!!
-        val taskGetIdToken: Task<GetTokenResult> = firebaseUser.getIdToken(false)
+        val taskSignInWithCredential: Task<AuthResult> =
+            firebaseAuth.signInWithCredential(authCredential)
+        val authResult: AuthResult = Tasks.await(taskSignInWithCredential)
+        val taskGetIdToken: Task<GetTokenResult> = authResult.user!!.getIdToken(false)
         val tokenResult: GetTokenResult = Tasks.await(taskGetIdToken)
 
-        Timber.w("Received token result...")
-        Timber.w("Token - [${tokenResult.token}]")
-        Timber.w("Signin Provider - [${tokenResult.signInProvider}]")
+        Timber.i("[authenticateWithGoogle] Received token result: Signin Provider - [${tokenResult.signInProvider}] Token - [${tokenResult.token}]")
         tokenResult.claims.forEach {
-            Timber.w("[${it.key}] - [${it.value}]")
+            Timber.d("[${it.key}] - [${it.value}]")
         }
 
-        return authenticateAgainstBackend(authResult)
+        return FirebaseAuthenticationResult(tokenResult.token!!)
     }
 
     suspend fun authenticateAnonymously(): FirebaseAuthenticationResult {
-        val taskSignInWithCredential = firebaseAuth.signInAnonymously()
-        val authResult = Tasks.await(taskSignInWithCredential)
-        return authenticateAgainstBackend(authResult)
-    }
+        Timber.i("[authenticateAnonymously] Authenticating Anonymously")
+        val taskSignInWithCredential: Task<AuthResult> = firebaseAuth.signInAnonymously()
 
-    private suspend fun authenticateAgainstBackend(authResult: AuthResult): FirebaseAuthenticationResult {
-        Timber.i("retrieving FirebaseUser's IdToken")
-        val firebaseUser: FirebaseUser = authResult.user!!
-        val taskGetIdToken: Task<GetTokenResult> = firebaseUser.getIdToken(false)
+        val authResult: AuthResult = Tasks.await(taskSignInWithCredential)
+        val taskGetIdToken: Task<GetTokenResult> = authResult.user!!.getIdToken(false)
         val tokenResult: GetTokenResult = Tasks.await(taskGetIdToken)
 
-        Timber.w("Received token result...")
-        Timber.w("Token - [${tokenResult.token}]")
-        Timber.w("Signin Provider - [${tokenResult.signInProvider}]")
+        Timber.i("[authenticateAnonymously] Received token result: Signin Provider - [${tokenResult.signInProvider}] Token - [${tokenResult.token}]")
         tokenResult.claims.forEach {
-            Timber.w("[${it.key}] - [${it.value}]")
+            Timber.d("[${it.key}] - [${it.value}]")
         }
 
-        val token = tokenResult.token!!
-        return FirebaseAuthenticationResult(token)
+        return FirebaseAuthenticationResult(tokenResult.token!!)
     }
 
     // TODO: forget stored JWT token
