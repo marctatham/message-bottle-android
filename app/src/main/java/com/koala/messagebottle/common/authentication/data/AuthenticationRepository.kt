@@ -31,9 +31,6 @@ class AuthenticationRepository constructor(
             val firebaseAuthResult = firebaseAuthenticator.authenticateWithGoogle(idToken)
 
             Timber.d("authenticating with our backend using firebase token")
-//            val getCreateUserDataModel = GetCreateUserDataModel(firebaseAuthResult.token)
-//            val userDataModel = userService.getCreateUser(getCreateUserDataModel)
-            //mapper.map(userDataModel)
             UserEntity.AuthenticatedUser(ProviderType.Google, firebaseAuthResult.token)
         }
 
