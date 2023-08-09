@@ -52,11 +52,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1045543875849-n7lvkseu1sr9sh0tdpd6s74blp8kqi4a.apps.googleusercontent.com",
+          "client_id": "1045543875849-1jekufsjigqs8tgalkgj785ci9i8seu7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.koala.messagebottle.debug",
-            "certificate_hash": "6907a0a354da544697c7e930ec3f5f73dd0c0ccd"
+            "certificate_hash": "dd54a4d8c23cae2b2069aa012400fdc48240f2c2"
           }
         },
         {
