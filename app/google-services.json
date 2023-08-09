@@ -23,39 +23,10 @@
           }
         },
         {
-          "client_id": "1045543875849-j6vu8625p7qnuhjsdkql4s0ga1dg30sf.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCSGUDOdcQ8YxRtAJ2Hu4txPYfiOHxhPjQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1045543875849-j6vu8625p7qnuhjsdkql4s0ga1dg30sf.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1045543875849:android:1c4fb28804df5bbd8b8fd8",
-        "android_client_info": {
-          "package_name": "com.koala.messagebottle.debug"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1045543875849-1jekufsjigqs8tgalkgj785ci9i8seu7.apps.googleusercontent.com",
+          "client_id": "1045543875849-cjr2ndjdomclg3sqdgmid1pk2jr9lrjt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.koala.messagebottle.debug",
+            "package_name": "com.koala.messagebottle",
             "certificate_hash": "dd54a4d8c23cae2b2069aa012400fdc48240f2c2"
           }
         },

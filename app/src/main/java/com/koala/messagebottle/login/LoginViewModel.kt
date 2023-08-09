@@ -18,7 +18,6 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    //private val googleLoginProvider: ThirdPartyLoginProvider,
     private val authenticationRepository: IAuthenticationRepository
 ) : ViewModel() {
 
@@ -30,12 +29,13 @@ class LoginViewModel @Inject constructor(
         _state.value = State.Failure
     }
 
-    fun initiateLoginWithGoogle() = viewModelScope.launch(exceptionHandler) {
-//        val thirdPartyLoginCredential = googleLoginProvider.initiateSignIn()
-//        _state.value = State.Loading
-//        _state.value = authenticationRepository
-//            .firebaseAuthWithGoogle(thirdPartyLoginCredential.code)
-//            .toState()
+    // TODO: let's revisit how much sense this makes here
+    // perhaps this makes more sense to keep at the periphery of the architecture,
+    // and only upon completion does it then interact with our authentication repo
+    fun initiateLoginWithGoogle(idToken: String) = viewModelScope.launch(exceptionHandler) {
+        _state.value = State.Loading
+        _state.value = authenticationRepository.firebaseAuthWithGoogle(idToken)
+            .toState()
         _state.value = State.Failure
     }
 

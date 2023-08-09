@@ -1,18 +1,29 @@
 package com.koala.messagebottle.login
 
+import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.SignInButton
 import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import java.lang.RuntimeException
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
+
+    companion object {
+        private val REQ_GOOGLE_ONE_TAP = 2
+    }
 
     private lateinit var container: View
     private lateinit var containerLoggedIn: View
@@ -22,7 +33,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnSignOut: Button
     private lateinit var progressBar: ProgressBar
 
+
+    private lateinit var oneTapClient: SignInClient
+    private lateinit var signInRequest: BeginSignInRequest
+
     private val viewModel: LoginViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +53,7 @@ class LoginActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
 
         btnSignInGoogle.setSize(SignInButton.SIZE_STANDARD)
-        btnSignInGoogle.setOnClickListener {
-            viewModel.initiateLoginWithGoogle()
-        }
+        btnSignInGoogle.setOnClickListener { initiateLoginWithGoogle() }
 
         btnSignInAnonymous.setOnClickListener {
             viewModel.initiateAnonymousLogin()
@@ -71,6 +85,71 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // TODO: let's get it working, then let's clean it up
+        oneTapClient = Identity.getSignInClient(this)
+        signInRequest = BeginSignInRequest.builder()
+            .setPasswordRequestOptions(
+                BeginSignInRequest.PasswordRequestOptions.builder()
+                    .setSupported(true)
+                    .build()
+            )
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    .setServerClientId(getString(R.string.firebase_webclient_id)) // Your server's client ID, not your Android client ID.
+                    .setFilterByAuthorizedAccounts(false) // Only show accounts previously used to sign in.
+                    .build()
+            )
+            // Automatically sign in when exactly one credential is retrieved.
+            .setAutoSelectEnabled(true)
+            .build()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQ_GOOGLE_ONE_TAP -> {
+                try {
+                    val credential = oneTapClient.getSignInCredentialFromIntent(data)
+                    val idToken = credential.googleIdToken
+                    when {
+                        idToken != null -> {
+                            Timber.d("Token received from successful Google SignIn.")
+                            viewModel.initiateLoginWithGoogle(idToken)
+                        }
+
+                        else -> {
+                            // Shouldn't happen.
+                            Timber.e("No ID token!")
+                        }
+                    }
+                } catch (e: RuntimeException) {
+                    Timber.e("There was a problem initiating Google One Tap Sign in!")
+                }
+            }
+        }
+    }
+
+
+    private fun initiateLoginWithGoogle() {
+        oneTapClient.beginSignIn(signInRequest)
+            .addOnSuccessListener(this) { result ->
+                try {
+                    startIntentSenderForResult(
+                        result.pendingIntent.intentSender, REQ_GOOGLE_ONE_TAP,
+                        null, 0, 0, 0, null
+                    )
+                } catch (e: IntentSender.SendIntentException) {
+                    Timber.e("Couldn't start One Tap UI: ${e.localizedMessage}", e)
+                }
+            }
+            .addOnFailureListener(this) { e ->
+                // No saved credentials found. Launch the One Tap sign-up flow, or
+                // do nothing and continue presenting the signed-out UI.
+                Timber.w(e.localizedMessage)
+            }
+
     }
 
     private fun displayLoginSuccessful() {
