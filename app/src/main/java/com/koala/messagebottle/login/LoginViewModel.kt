@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.koala.messagebottle.common.authentication.domain.AuthenticationProvider
+import com.koala.messagebottle.common.authentication.domain.ProviderType
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
 import com.koala.messagebottle.common.authentication.domain.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -74,8 +74,8 @@ sealed class State {
 private fun UserEntity.toState(): State = when (this) {
     UserEntity.UnauthenticatedUser -> State.Anonymous
 
-    is UserEntity.AuthenticatedUser -> when (this.authenticationProvider) {
-        AuthenticationProvider.Google -> State.LoggedInUser
-        AuthenticationProvider.Anonymous -> State.LoggedInUser
+    is UserEntity.AuthenticatedUser -> when (this.providerType) {
+        ProviderType.Google -> State.LoggedInUser
+        ProviderType.Anonymous -> State.LoggedInUser
     }
 }

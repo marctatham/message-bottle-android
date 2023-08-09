@@ -4,7 +4,7 @@ import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthe
 import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
 import com.koala.messagebottle.common.authentication.data.jwt.IJwtTokenPersister
 import com.koala.messagebottle.common.authentication.data.jwt.JwtToken
-import com.koala.messagebottle.common.authentication.domain.AuthenticationProvider
+import com.koala.messagebottle.common.authentication.domain.ProviderType
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
 import com.koala.messagebottle.common.authentication.domain.UserEntity
 import kotlinx.coroutines.CoroutineDispatcher
@@ -34,7 +34,7 @@ class AuthenticationRepository constructor(
 //            val getCreateUserDataModel = GetCreateUserDataModel(firebaseAuthResult.token)
 //            val userDataModel = userService.getCreateUser(getCreateUserDataModel)
             //mapper.map(userDataModel)
-            UserEntity.AuthenticatedUser(AuthenticationProvider.Google, firebaseAuthResult.token)
+            UserEntity.AuthenticatedUser(ProviderType.Google, firebaseAuthResult.token)
         }
 
         // persist jwt token
@@ -53,7 +53,7 @@ class AuthenticationRepository constructor(
                 firebaseAuthenticator.authenticateAnonymously()
 
             Timber.d("User has now been authenticated")
-            UserEntity.AuthenticatedUser(AuthenticationProvider.Anonymous, firebaseAuthResult.token)
+            UserEntity.AuthenticatedUser(ProviderType.Anonymous, firebaseAuthResult.token)
         }
 
         // TODO: revisit persistence
