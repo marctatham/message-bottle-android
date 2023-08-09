@@ -28,12 +28,6 @@ class GetMessageFragment : Fragment() {
 
     private val viewModel: GetMessageViewModel by hiltNavGraphViewModels(R.id.app_nav)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel.getNewMessage()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

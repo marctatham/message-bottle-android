@@ -17,9 +17,13 @@ class GetMessageViewModel @Inject constructor(
     private val messageRepository: MessageRepository
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<MessageState>(MessageState.Loading)
+    // TODO: let's move away from live data
+    private val _state: MutableLiveData<MessageState> = MutableLiveData(MessageState.Loading)
     val state: LiveData<MessageState> = _state
 
+    init {
+        getNewMessage()
+    }
 
     fun getNewMessage() {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
