@@ -56,6 +56,11 @@ class PostMessageFragment : Fragment() {
                             hideProgressBar()
                             displayPostMessageFailed()
                         }
+
+                        MessageState.NotAuthenticated -> {
+                            hideProgressBar()
+                            displayLoginToPost()
+                        }
                     }
                 }
             }
@@ -90,5 +95,9 @@ class PostMessageFragment : Fragment() {
 
     private fun displayPostMessageFailed() = Snackbar
         .make(containerView, R.string.snack_post_message_failed, Snackbar.LENGTH_SHORT)
+        .show()
+
+    private fun displayLoginToPost() = Snackbar
+        .make(containerView, R.string.snack_post_message_requires_auth, Snackbar.LENGTH_SHORT)
         .show()
 }

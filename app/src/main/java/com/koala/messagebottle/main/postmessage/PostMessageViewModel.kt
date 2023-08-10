@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.common.messages.domain.IMessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
+import com.koala.messagebottle.common.messages.domain.PostMessageResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,11 +30,11 @@ class PostMessageViewModel @Inject constructor(
 
         viewModelScope.launch(exceptionHandler) {
             _state.value = MessageState.Loading
-
             val messageEntity = MessageEntity(message)
-            messageRepository.postMessage(messageEntity)
-
-            _state.value = MessageState.MessagePosted(messageEntity)
+            when (messageRepository.postMessage(messageEntity)) {
+                PostMessageResult.Success -> _state.value = MessageState.MessagePosted(messageEntity)
+                PostMessageResult.Unauthenticated -> _state.value = MessageState.NotAuthenticated
+            }
         }
     }
 }
@@ -47,5 +48,7 @@ sealed class MessageState {
     data class MessagePosted(val messageEntity: MessageEntity) : MessageState()
 
     object Failure : MessageState()
+
+    object NotAuthenticated : MessageState()
 
 }

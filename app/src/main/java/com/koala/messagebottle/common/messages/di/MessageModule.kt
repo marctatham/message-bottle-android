@@ -3,9 +3,10 @@ package com.koala.messagebottle.common.messages.di
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.koala.messagebottle.common.messages.data.MessageFirestoreSource
+import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
 import com.koala.messagebottle.common.messages.data.IMessageDataSource
 import com.koala.messagebottle.common.messages.data.MessageDataModelMapper
+import com.koala.messagebottle.common.messages.data.MessageFirestoreSource
 import com.koala.messagebottle.common.messages.data.MessageRepository
 import com.koala.messagebottle.common.messages.domain.IMessageRepository
 import com.koala.messagebottle.common.threading.DispatcherIO
@@ -35,11 +36,13 @@ class MessageModule {
     fun providesMessageRepository(
         messageDataSource: IMessageDataSource,
         messageDataModelMapper: MessageDataModelMapper,
+        authenticationRepository: IAuthenticationRepository,
         @DispatcherIO dispatcher: CoroutineDispatcher
     ): IMessageRepository {
         return MessageRepository(
             messageDataSource,
             messageDataModelMapper,
+            authenticationRepository,
             dispatcher
         )
     }
