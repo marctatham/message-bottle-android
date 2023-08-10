@@ -4,6 +4,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.IdTokenListener
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GetTokenResult
 import com.google.firebase.auth.GoogleAuthProvider
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
@@ -34,19 +35,29 @@ class AuthenticationRepository constructor(
     override fun onIdTokenChanged(auth: FirebaseAuth) {
         if (auth.currentUser !== null) {
             Timber.i("[onIdTokenChanged] - fetching user's current token")
-            val taskGetIdToken: Task<GetTokenResult> = auth.currentUser!!.getIdToken(false)
+
+            val currentUser: FirebaseUser = auth.currentUser!!
+            val taskGetIdToken: Task<GetTokenResult> = currentUser.getIdToken(false)
             taskGetIdToken.addOnSuccessListener { tokenResult ->
                 Timber.d("Received token result...")
                 Timber.d("Token - [${tokenResult.token}]")
                 Timber.d("Signin Provider - [${tokenResult.signInProvider}]")
 
-                // TODO: plug in the user ID here too!
-                _user.value = UserEntity.AuthenticatedUser(ProviderType.Google, tokenResult.token!!, "TODO: user ID here too")
+                val providerType: ProviderType = getProviderTypeForSignInProvider(tokenResult.signInProvider!!)
+                _user.value = UserEntity.AuthenticatedUser(providerType, tokenResult.token!!, currentUser.uid)
             }
 
         } else {
             Timber.i("[onIdTokenChanged] - no token")
             _user.value = UserEntity.UnauthenticatedUser
+        }
+    }
+
+    private fun getProviderTypeForSignInProvider(signInProvider:String):ProviderType {
+        return when (signInProvider) {
+            ProviderType.PROVIDER_GOOGLE -> ProviderType.Google
+            ProviderType.PROVIDER_ANONYMOUS -> ProviderType.Anonymous
+            else -> throw IllegalArgumentException("Unsupported SignInProvider $signInProvider")
         }
     }
 

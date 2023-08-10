@@ -34,8 +34,7 @@ class MessageRepository(
         when (val user: UserEntity = authenticationRepository.user.value) {
             is UserEntity.AuthenticatedUser -> {
                 return withContext(dispatcherNetwork) {
-                    // TODO: replace with user ID
-                    val messageEntity = MessageEntity(messageToPost, user.jwtToken)
+                    val messageEntity = MessageEntity(messageToPost, user.userId)
                     messageDataSource.postMessage(messageEntity)
                     Timber.i("[postMessage] Message posted successfully")
                     return@withContext PostMessageResult.Success(messageEntity)

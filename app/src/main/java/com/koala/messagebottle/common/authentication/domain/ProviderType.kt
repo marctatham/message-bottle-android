@@ -1,8 +1,14 @@
 package com.koala.messagebottle.common.authentication.domain
 
-sealed class ProviderType(val providerIdentifier: Int) {
 
-    object Anonymous : ProviderType(0)
+sealed class ProviderType(val signInProvider: String) {
 
-    object Google : ProviderType(1)
+    companion object {
+        const val PROVIDER_ANONYMOUS = "anonymous"
+        const val PROVIDER_GOOGLE = "google.com"
+    }
+
+    object Anonymous : ProviderType(PROVIDER_ANONYMOUS)
+
+    object Google : ProviderType(PROVIDER_GOOGLE)
 }
