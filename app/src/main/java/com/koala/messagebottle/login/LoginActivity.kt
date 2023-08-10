@@ -42,11 +42,11 @@ class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // configure views
         container = findViewById(R.id.container)
         containerLoggedIn = findViewById(R.id.containerLoggedIn)
         containerLoggedOut = findViewById(R.id.containerLoggedOut)
@@ -55,11 +55,14 @@ class LoginActivity : AppCompatActivity() {
         btnSignOut = findViewById(R.id.btnSignOut)
         progressBar = findViewById(R.id.progressBar)
 
+        // configure click handlers
         btnSignInGoogle.setSize(SignInButton.SIZE_STANDARD)
         btnSignInGoogle.setOnClickListener { initiateLoginWithGoogle() }
         btnSignInAnonymous.setOnClickListener { viewModel.initiateAnonymousLogin() }
         btnSignOut.setOnClickListener { viewModel.initiateSignOut() }
 
+
+        // observe state
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state: State ->
@@ -87,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // TODO: let's get it working, then let's clean it up
+        // configure google
         oneTapClient = Identity.getSignInClient(this)
         signInRequest = BeginSignInRequest.builder()
             .setPasswordRequestOptions(
@@ -102,8 +105,7 @@ class LoginActivity : AppCompatActivity() {
                     .setFilterByAuthorizedAccounts(false) // Only show accounts previously used to sign in.
                     .build()
             )
-            // Automatically sign in when exactly one credential is retrieved.
-            .setAutoSelectEnabled(true)
+            .setAutoSelectEnabled(true) // Automatically sign in when exactly one credential is retrieved.
             .build()
     }
 
@@ -131,7 +133,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun initiateLoginWithGoogle() {
         oneTapClient.beginSignIn(signInRequest)
