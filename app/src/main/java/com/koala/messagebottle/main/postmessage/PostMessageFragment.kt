@@ -79,8 +79,4 @@ class PostMessageFragment : Fragment() {
     private fun displayPostMessageFailed() = Snackbar
         .make(containerView, R.string.snack_post_message_failed, Snackbar.LENGTH_SHORT)
         .show()
-
-    companion object {
-        fun newInstance() = PostMessageFragment()
-    }
 }

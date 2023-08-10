@@ -113,9 +113,4 @@ class GetMessageFragment : Fragment() {
     private fun notifyFailure() = Snackbar
         .make(containerView, R.string.snack_get_message_failed, Snackbar.LENGTH_SHORT)
         .show()
-
-
-    companion object {
-        fun newInstance() = GetMessageFragment()
-    }
 }

@@ -75,8 +75,4 @@ class ViewMessagesFragment : Fragment() {
     private fun displayGetMessagesFailed() = Snackbar
         .make(containerView, R.string.get_messages_failed, Snackbar.LENGTH_SHORT)
         .show()
-
-    companion object {
-        fun newInstance() = ViewMessagesFragment()
-    }
 }
