@@ -16,6 +16,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GetMessageFragment : Fragment() {
@@ -27,6 +31,31 @@ class GetMessageFragment : Fragment() {
     private lateinit var btnGetAnotherMessage: Button
 
     private val viewModel: GetMessageViewModel by hiltNavGraphViewModels(R.id.app_nav)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state: MessageState ->
+                    when (state) {
+                        MessageState.Loading -> showLoadingState()
+
+                        is MessageState.MessageReceived -> {
+                            val messageEntity = state.messageEntity
+                            hideLoadingState()
+                            beginDisplayingMessage(messageEntity.message)
+                        }
+
+                        MessageState.Failure -> {
+                            hideLoadingState()
+                            notifyFailure()
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,28 +69,8 @@ class GetMessageFragment : Fragment() {
         progressBar = rootView.findViewById(R.id.progressBar)
         btnGetAnotherMessage = rootView.findViewById(R.id.btnGetMessage)
 
-        animView.enableMergePathsForKitKatAndAbove(true)
-        btnGetAnotherMessage.setOnClickListener {
-            viewModel.getNewMessage()
-        }
-
-        viewModel.state.observe(viewLifecycleOwner) { state: MessageState ->
-            when (state) {
-                MessageState.Loading -> showLoadingState()
-
-                is MessageState.MessageReceived -> {
-                    val messageEntity = state.messageEntity
-                    hideLoadingState()
-                    beginDisplayingMessage(messageEntity.message)
-                }
-
-                MessageState.Failure -> {
-                    hideLoadingState()
-                    notifyFailure()
-                }
-            }
-        }
-
+        //animView.enableMergePathsForKitKatAndAbove(true)
+        btnGetAnotherMessage.setOnClickListener { viewModel.getNewMessage() }
         return rootView
     }
 
