@@ -39,7 +39,9 @@ class AuthenticationRepository constructor(
                 Timber.d("Received token result...")
                 Timber.d("Token - [${tokenResult.token}]")
                 Timber.d("Signin Provider - [${tokenResult.signInProvider}]")
-                _user.value = UserEntity.AuthenticatedUser(ProviderType.Google, tokenResult.token!!)
+
+                // TODO: plug in the user ID here too!
+                _user.value = UserEntity.AuthenticatedUser(ProviderType.Google, tokenResult.token!!, "TODO: user ID here too")
             }
 
         } else {

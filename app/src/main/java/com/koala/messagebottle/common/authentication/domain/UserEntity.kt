@@ -4,7 +4,8 @@ sealed class UserEntity {
 
     data class AuthenticatedUser(
         val providerType: ProviderType,
-        val jwtToken: String
+        val jwtToken: String,
+        val userId: String
     ) : UserEntity()
 
     object UnauthenticatedUser : UserEntity()

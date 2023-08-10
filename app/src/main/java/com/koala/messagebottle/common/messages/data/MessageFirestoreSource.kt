@@ -11,19 +11,20 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.util.Util.autoId
 import com.koala.messagebottle.common.messages.data.model.MessageFirestoreDataModel
+import com.koala.messagebottle.common.messages.domain.MessageEntity
 import timber.log.Timber
 import javax.inject.Inject
 
 private const val COLLECTION = "messages"
 
-// TODO: we'll clean all of this up, let's just see if it works
 class MessageFirestoreSource @Inject constructor(
-    firestore: FirebaseFirestore
+    firestore: FirebaseFirestore,
+    private val mapper: MessageDataModelMapper,
 ) : IMessageDataSource {
 
     private val collectionReference: CollectionReference = firestore.collection(COLLECTION)
 
-    override suspend fun getMessage(): MessageDataModel {
+    override suspend fun getMessage(): MessageEntity {
 
         // generate a random ID within the index
         val random = getRandomIndexId()
@@ -46,24 +47,31 @@ class MessageFirestoreSource @Inject constructor(
         }
 
         val messageContent: String = querySnapshot.documents[0].data!!["messageContent"].toString()
-        return MessageDataModel(messageContent)
+        val userId: String = querySnapshot.documents[0].data!!["userId"].toString()
+        val dataModel = MessageFirestoreDataModel(messageContent, userId)
+        return mapper.mapFrom(dataModel)
     }
 
-    override suspend fun getMessages(): List<MessageDataModel> {
+    override suspend fun getMessages(): List<MessageEntity> {
         Timber.i("Getting messages")
         val querySnapshot: QuerySnapshot = Tasks.await(collectionReference.get())
-        return querySnapshot.documents.map {
-            MessageDataModel(
-                it.data!!["messageContent"].toString()
-            )
-        }
+        return querySnapshot
+            .documents
+            .map {
+                MessageFirestoreDataModel(
+                    it.data!!["messageContent"].toString(),
+                    it.data!!["userId"].toString()
+                )
+            }.map {
+                mapper.mapFrom(it)
+            }
     }
 
-    override suspend fun postMessage(message: MessageDataModel) {
+    override suspend fun postMessage(message: MessageEntity) {
         val addTask: Task<DocumentReference> = collectionReference.add(
             MessageFirestoreDataModel(
                 message.message,
-                "GxSib4PSfLgfL8IQzPDmjQcgpSk1"
+                message.userId
             )
         )
 

@@ -27,21 +27,19 @@ class MessageModule {
 
     @Provides
     @Singleton
-    fun providesMessageService(firestore: FirebaseFirestore): IMessageDataSource {
-        return MessageFirestoreSource(firestore)
+    fun providesMessageService(firestore: FirebaseFirestore, mapper:MessageDataModelMapper): IMessageDataSource {
+        return MessageFirestoreSource(firestore, mapper)
     }
 
     @Provides
     @Singleton
     fun providesMessageRepository(
         messageDataSource: IMessageDataSource,
-        messageDataModelMapper: MessageDataModelMapper,
         authenticationRepository: IAuthenticationRepository,
         @DispatcherIO dispatcher: CoroutineDispatcher
     ): IMessageRepository {
         return MessageRepository(
             messageDataSource,
-            messageDataModelMapper,
             authenticationRepository,
             dispatcher
         )

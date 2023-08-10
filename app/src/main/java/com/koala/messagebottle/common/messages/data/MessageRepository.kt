@@ -11,36 +11,34 @@ import timber.log.Timber
 
 class MessageRepository(
     private val messageDataSource: IMessageDataSource,
-    private val mapper: MessageDataModelMapper,
     private val authenticationRepository: IAuthenticationRepository,
     private val dispatcherNetwork: CoroutineDispatcher
 ) : IMessageRepository {
 
     override suspend fun getMessage(): MessageEntity {
-        Timber.v("Retrieving message from remote service")
-        val messageDataModel = withContext(dispatcherNetwork) {
-            messageDataSource.getMessage()
+        Timber.v("[getMessage] Retrieving message from datasource")
+        return withContext(dispatcherNetwork) {
+            return@withContext messageDataSource.getMessage()
         }
-
-        Timber.v("returning response ${Thread.currentThread().name}")
-        return mapper.mapFrom(messageDataModel)
     }
 
     override suspend fun getMessages(): List<MessageEntity> {
-        Timber.v("Retrieving ALL messages from remote service")
-        val messageDataModels = withContext(dispatcherNetwork) { messageDataSource.getMessages() }
-        return messageDataModels.map { mapper.mapFrom(it) }
+        Timber.v("[getMessages] Retrieving ALL messages from datasource")
+        return withContext(dispatcherNetwork) {
+            return@withContext messageDataSource.getMessages()
+        }
     }
 
-    override suspend fun postMessage(messageEntity: MessageEntity): PostMessageResult {
-        Timber.i("[postMessage] Posting message")
-        when (authenticationRepository.user.value) {
+    override suspend fun postMessage(messageToPost: String): PostMessageResult {
+        Timber.i("[postMessage] Posting message to datasource")
+        when (val user: UserEntity = authenticationRepository.user.value) {
             is UserEntity.AuthenticatedUser -> {
                 return withContext(dispatcherNetwork) {
-                    val messageDataModel = mapper.mapTo(messageEntity)
-                    messageDataSource.postMessage(messageDataModel)
+                    // TODO: replace with user ID
+                    val messageEntity = MessageEntity(messageToPost, user.jwtToken)
+                    messageDataSource.postMessage(messageEntity)
                     Timber.i("[postMessage] Message posted successfully")
-                    return@withContext PostMessageResult.Success
+                    return@withContext PostMessageResult.Success(messageEntity)
                 }
             }
 

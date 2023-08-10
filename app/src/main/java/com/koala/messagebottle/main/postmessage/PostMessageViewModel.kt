@@ -22,7 +22,7 @@ class PostMessageViewModel @Inject constructor(
     private val _state: MutableStateFlow<MessageState> = MutableStateFlow(MessageState.Idle)
     val state: StateFlow<MessageState> = _state.asStateFlow()
 
-    fun postMessage(message: String) {
+    fun postMessage(messageToPost: String) {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             Timber.e(exception, "There was a problem posting your message")
             _state.value = MessageState.Failure
@@ -30,9 +30,10 @@ class PostMessageViewModel @Inject constructor(
 
         viewModelScope.launch(exceptionHandler) {
             _state.value = MessageState.Loading
-            val messageEntity = MessageEntity(message)
-            when (messageRepository.postMessage(messageEntity)) {
-                PostMessageResult.Success -> _state.value = MessageState.MessagePosted(messageEntity)
+
+            when (val res: PostMessageResult = messageRepository.postMessage(messageToPost)) {
+                is PostMessageResult.Success -> _state.value = MessageState.MessagePosted(res.messageEntity)
+
                 PostMessageResult.Unauthenticated -> _state.value = MessageState.NotAuthenticated
             }
         }

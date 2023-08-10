@@ -6,11 +6,11 @@ interface IMessageRepository {
 
     suspend fun getMessages(): List<MessageEntity>
 
-    suspend fun postMessage(messageEntity: MessageEntity):PostMessageResult
+    suspend fun postMessage(messageToPost: String): PostMessageResult
 
 }
 
 sealed class PostMessageResult {
-    object Success : PostMessageResult()
+    data class Success(val messageEntity: MessageEntity) : PostMessageResult()
     object Unauthenticated : PostMessageResult()
 }
