@@ -23,7 +23,6 @@ class ViewMessagesViewModel @Inject constructor(
     val state: StateFlow<MessagesState> = _state.asStateFlow()
 
     init {
-
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             Timber.e(exception, "There was a problem fetching all messages")
             _state.value = MessagesState.Failure

@@ -19,8 +19,8 @@ class ViewMessagesFragment : Fragment() {
 
     private lateinit var containerView: View
     private lateinit var recyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
     private lateinit var btnPurge: Button
+    private var progressBar: ProgressBar? = null
 
     private lateinit var messagesAdapter: MessagesAdapter
 
@@ -67,11 +67,11 @@ class ViewMessagesFragment : Fragment() {
     }
 
     private fun showProgressBar() {
-        progressBar.visibility = View.VISIBLE
+        progressBar?.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
-        progressBar.visibility = View.INVISIBLE
+        progressBar?.visibility = View.INVISIBLE
     }
 
     private fun displayGetMessagesFailed() = Snackbar
