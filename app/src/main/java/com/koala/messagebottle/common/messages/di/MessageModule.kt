@@ -5,7 +5,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
 import com.koala.messagebottle.common.messages.data.IMessageDataSource
-import com.koala.messagebottle.common.messages.data.MessageDataModelMapper
+import com.koala.messagebottle.common.messages.data.mapper.MessageDataModelMapper
 import com.koala.messagebottle.common.messages.data.MessageFirestoreSource
 import com.koala.messagebottle.common.messages.data.MessageRepository
 import com.koala.messagebottle.common.messages.domain.IMessageRepository
@@ -27,7 +27,7 @@ class MessageModule {
 
     @Provides
     @Singleton
-    fun providesMessageService(firestore: FirebaseFirestore, mapper:MessageDataModelMapper): IMessageDataSource {
+    fun providesMessageService(firestore: FirebaseFirestore, mapper: MessageDataModelMapper): IMessageDataSource {
         return MessageFirestoreSource(firestore, mapper)
     }
 

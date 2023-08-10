@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.util.Util.autoId
+import com.koala.messagebottle.common.messages.data.mapper.MessageDataModelMapper
 import com.koala.messagebottle.common.messages.data.model.MessageFirestoreDataModel
 import com.koala.messagebottle.common.messages.domain.MessageEntity
 import timber.log.Timber

@@ -1,4 +1,4 @@
-package com.koala.messagebottle.common.messages.data
+package com.koala.messagebottle.common.messages.data.mapper
 
 import com.koala.messagebottle.common.messages.data.model.MessageFirestoreDataModel
 import com.koala.messagebottle.common.messages.domain.MessageEntity
