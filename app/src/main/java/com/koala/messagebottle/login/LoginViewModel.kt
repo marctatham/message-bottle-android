@@ -1,7 +1,6 @@
 package com.koala.messagebottle.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.common.authentication.domain.ProviderType
@@ -9,6 +8,9 @@ import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepos
 import com.koala.messagebottle.common.authentication.domain.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,8 +23,8 @@ class LoginViewModel @Inject constructor(
     private val authenticationRepository: IAuthenticationRepository
 ) : ViewModel() {
 
-    private val _state: MutableLiveData<State> = MutableLiveData(getCurrentState())
-    val state: LiveData<State> = _state
+    private val _state: MutableStateFlow<State> = MutableStateFlow(getCurrentState())
+    val state: StateFlow<State> = _state.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         Timber.e(exception, "There was a problem signing into your account")

@@ -8,6 +8,9 @@ import android.widget.Button
 import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -15,6 +18,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.RuntimeException
 
@@ -32,7 +36,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnSignInAnonymous: Button
     private lateinit var btnSignOut: Button
     private lateinit var progressBar: ProgressBar
-
 
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
@@ -54,34 +57,32 @@ class LoginActivity : AppCompatActivity() {
 
         btnSignInGoogle.setSize(SignInButton.SIZE_STANDARD)
         btnSignInGoogle.setOnClickListener { initiateLoginWithGoogle() }
+        btnSignInAnonymous.setOnClickListener { viewModel.initiateAnonymousLogin() }
+        btnSignOut.setOnClickListener { viewModel.initiateSignOut() }
 
-        btnSignInAnonymous.setOnClickListener {
-            viewModel.initiateAnonymousLogin()
-        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state: State ->
+                    when (state) {
 
-        btnSignOut.setOnClickListener {
-            viewModel.initiateSignOut()
-        }
+                        State.Anonymous -> {
+                            showSignedOutContainer()
+                            hideProgressBar()
+                        }
 
-        viewModel.state.observe(this) { state: State ->
-            when (state) {
+                        State.Loading -> showProgressBar()
 
-                State.Anonymous -> {
-                    showSignedOutContainer()
-                    hideProgressBar()
-                }
+                        State.LoggedInUser -> {
+                            showSignedInContainer()
+                            hideProgressBar()
+                            displayLoginSuccessful()
+                        }
 
-                State.Loading -> showProgressBar()
-
-                State.LoggedInUser -> {
-                    showSignedInContainer()
-                    hideProgressBar()
-                    displayLoginSuccessful()
-                }
-
-                State.Failure -> {
-                    displayLoginFailed()
-                    hideProgressBar()
+                        State.Failure -> {
+                            displayLoginFailed()
+                            hideProgressBar()
+                        }
+                    }
                 }
             }
         }
