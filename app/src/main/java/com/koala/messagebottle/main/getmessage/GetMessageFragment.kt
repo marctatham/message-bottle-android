@@ -69,7 +69,6 @@ class GetMessageFragment : Fragment() {
         progressBar = rootView.findViewById(R.id.progressBar)
         btnGetAnotherMessage = rootView.findViewById(R.id.btnGetMessage)
 
-        //animView.enableMergePathsForKitKatAndAbove(true)
         btnGetAnotherMessage.setOnClickListener { viewModel.getNewMessage() }
         return rootView
     }
