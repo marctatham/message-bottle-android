@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.common.authentication.data.AuthenticationRepository
-import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
 import com.koala.messagebottle.common.threading.DispatcherIO
 import dagger.Module
@@ -24,17 +23,12 @@ object AuthenticationModule {
 
     @Provides
     @Singleton
-    fun providesFirebaseAuthenticator(firebaseAuth: FirebaseAuth) =
-        FirebaseAuthenticator(firebaseAuth)
-
-    @Provides
-    @Singleton
     fun providesAuthenticationRepository(
-        firebaseAuthenticator: FirebaseAuthenticator,
+        firebaseAuth: FirebaseAuth,
         @DispatcherIO dispatcher: CoroutineDispatcher
     ): IAuthenticationRepository =
         AuthenticationRepository(
-            firebaseAuthenticator,
+            firebaseAuth,
             dispatcher
         )
 }

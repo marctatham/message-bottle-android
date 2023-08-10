@@ -1,71 +1,71 @@
 package com.koala.messagebottle.common.authentication.data
 
-import com.koala.messagebottle.common.authentication.domain.AuthenticationResult
-import com.koala.messagebottle.common.authentication.data.firebase.FirebaseAuthenticator
-import com.koala.messagebottle.common.authentication.domain.ProviderType
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuth.IdTokenListener
+import com.google.firebase.auth.GetTokenResult
+import com.google.firebase.auth.GoogleAuthProvider
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
+import com.koala.messagebottle.common.authentication.domain.ProviderType
 import com.koala.messagebottle.common.authentication.domain.UserEntity
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 // Serves as a single source of truth to indicate whether the
 // user is currently signed into the application
 class AuthenticationRepository constructor(
-    private val firebaseAuthenticator: FirebaseAuthenticator,
+    private val firebaseAuth: FirebaseAuth,
     private val dispatcherNetwork: CoroutineDispatcher
-) : IAuthenticationRepository {
+) : IAuthenticationRepository, IdTokenListener {
 
-    // TODO: let's write this to somewhere safe
-    // shared prefs is probably OK for now until we've got a better usecase to introduce DB support
-    // for now we'll just store this in memory since it's useful for testing auth functionality 🤷‍
-    private var _user: UserEntity = UserEntity.UnauthenticatedUser
-    override val user: UserEntity get() = _user
+    private var _user: MutableStateFlow<UserEntity> =
+        MutableStateFlow(UserEntity.UnauthenticatedUser)
+    override val user: StateFlow<UserEntity> = _user.asStateFlow()
 
-    override suspend fun firebaseAuthWithGoogle(idToken: String): UserEntity {
-        val userEntity = withContext(dispatcherNetwork) {
-            Timber.d("authenticating with Firebase using Google IDToken")
-            val firebaseAuthResult = firebaseAuthenticator.authenticateWithGoogle(idToken)
-
-            Timber.d("authenticating with our backend using firebase token")
-            UserEntity.AuthenticatedUser(ProviderType.Google, firebaseAuthResult.token)
-        }
-
-        // temporarily persist this to memory until we've got persistence mechanism in place
-        _user = userEntity
-        return user
+    init {
+        firebaseAuth.addIdTokenListener(this)
     }
 
-    override suspend fun signInAnonymously(): UserEntity {
-        val userEntity = withContext(dispatcherNetwork) {
-            Timber.d("authenticating with Firebase anonymously")
-            val firebaseAuthResult: AuthenticationResult =
-                firebaseAuthenticator.authenticateAnonymously()
-
-            Timber.d("User has now been authenticated")
-            UserEntity.AuthenticatedUser(ProviderType.Anonymous, firebaseAuthResult.token)
-        }
-
-        // temporarily persist this to memory until we've got persistence mechanism in place
-        _user = userEntity
-        return user
-    }
-
-    override suspend fun signOut(): UserEntity {
-        // reset the user into anonymous mode
-        when (_user) {
-            UserEntity.UnauthenticatedUser -> Timber.d("[signOut] user is already unauthenticated, no sign-out required")
-
-            is UserEntity.AuthenticatedUser -> {
-                Timber.i("Signing user out...")
-                firebaseAuthenticator.signOut()
-                _user = UserEntity.UnauthenticatedUser
+    override fun onIdTokenChanged(auth: FirebaseAuth) {
+        if (auth.currentUser !== null) {
+            Timber.i("[onIdTokenChanged] - fetching user's current token")
+            val taskGetIdToken: Task<GetTokenResult> = auth.currentUser!!.getIdToken(false)
+            taskGetIdToken.addOnSuccessListener { tokenResult ->
+                Timber.d("Received token result...")
+                Timber.d("Token - [${tokenResult.token}]")
+                Timber.d("Signin Provider - [${tokenResult.signInProvider}]")
+                _user.value = UserEntity.AuthenticatedUser(ProviderType.Google, tokenResult.token!!)
             }
+
+        } else {
+            Timber.i("[onIdTokenChanged] - no token")
+            _user.value = UserEntity.UnauthenticatedUser
         }
+    }
 
-        Timber.i("User has been signed out")
+    override suspend fun firebaseAuthWithGoogle(idToken: String) = withContext(dispatcherNetwork) {
+        Timber.i("[authenticateWithGoogle] Authenticating into FirebaseUser's for user's Google Provided IdToken")
+        val authCredential = GoogleAuthProvider.getCredential(idToken, null)
+        val authResult = Tasks.await(firebaseAuth.signInWithCredential(authCredential))
+        Tasks.await(authResult.user!!.getIdToken(false))
+        Timber.i("[authenticateWithGoogle] Authenticated successfully!")
+    }
 
-        return user
+    override suspend fun signInAnonymously() = withContext(dispatcherNetwork) {
+        Timber.i("[authenticateAnonymously] Authenticating with Firebase anonymously...")
+        Tasks.await(firebaseAuth.signInAnonymously())
+        Timber.i("[authenticateAnonymously] Authenticated successfully!")
+    }
+
+    override suspend fun signOut() {
+        firebaseAuth.signOut()
+        _user.value = UserEntity.UnauthenticatedUser
+        Timber.i("[signOut] Signed out complete.")
     }
 
 }

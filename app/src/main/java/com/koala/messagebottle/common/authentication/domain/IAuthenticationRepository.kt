@@ -1,12 +1,14 @@
 package com.koala.messagebottle.common.authentication.domain
 
+import kotlinx.coroutines.flow.StateFlow
+
 interface IAuthenticationRepository {
 
-    val user: UserEntity
+    val user: StateFlow<UserEntity>
 
-    suspend fun firebaseAuthWithGoogle(idToken: String): UserEntity
+    suspend fun firebaseAuthWithGoogle(idToken: String)
 
-    suspend fun signInAnonymously(): UserEntity
+    suspend fun signInAnonymously()
 
-    suspend fun signOut(): UserEntity
+    suspend fun signOut()
 }
