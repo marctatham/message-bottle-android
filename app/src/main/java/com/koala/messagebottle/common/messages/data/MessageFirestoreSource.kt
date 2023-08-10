@@ -23,10 +23,6 @@ class MessageFirestoreSource @Inject constructor(
 
     private val collectionReference: CollectionReference = firestore.collection(COLLECTION)
 
-
-    @SuppressLint("RestrictedApi")
-    private fun getRandomIndexId() = autoId()
-
     override suspend fun getMessage(): MessageDataModel {
 
         // generate a random ID within the index
@@ -55,7 +51,7 @@ class MessageFirestoreSource @Inject constructor(
 
     override suspend fun getMessages(): List<MessageDataModel> {
         Timber.i("Getting messages")
-        var querySnapshot: QuerySnapshot = Tasks.await(collectionReference.get())
+        val querySnapshot: QuerySnapshot = Tasks.await(collectionReference.get())
         return querySnapshot.documents.map {
             MessageDataModel(
                 it.data!!["messageContent"].toString()
@@ -64,7 +60,6 @@ class MessageFirestoreSource @Inject constructor(
     }
 
     override suspend fun postMessage(message: MessageDataModel) {
-        Timber.i("Posting new message")
         val addTask: Task<DocumentReference> = collectionReference.add(
             MessageFirestoreDataModel(
                 message.message,
@@ -72,7 +67,10 @@ class MessageFirestoreSource @Inject constructor(
             )
         )
 
-        val docRef: DocumentReference = Tasks.await(addTask)
+        Tasks.await(addTask)
         Timber.i("New message posted")
     }
+
+    @SuppressLint("RestrictedApi") // this is actually the recommended way of retrieving random documents from firestore
+    private fun getRandomIndexId() = autoId()
 }
