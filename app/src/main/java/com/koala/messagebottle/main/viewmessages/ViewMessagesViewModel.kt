@@ -1,13 +1,15 @@
 package com.koala.messagebottle.main.viewmessages
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.common.messages.data.MessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -17,10 +19,10 @@ class ViewMessagesViewModel @Inject constructor(
     private val messageRepository: MessageRepository
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<MessagesState>(MessagesState.Loading)
-    val state: LiveData<MessagesState> = _state
+    private val _state: MutableStateFlow<MessagesState> = MutableStateFlow(MessagesState.Loading)
+    val state: StateFlow<MessagesState> = _state.asStateFlow()
 
-    fun initialise() {
+    init {
 
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             Timber.e(exception, "There was a problem fetching all messages")

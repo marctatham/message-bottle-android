@@ -8,10 +8,12 @@ import android.widget.Button
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
+import kotlinx.coroutines.launch
 
 class ViewMessagesFragment : Fragment() {
 
@@ -24,6 +26,29 @@ class ViewMessagesFragment : Fragment() {
 
     private val viewModel: ViewMessagesViewModel by hiltNavGraphViewModels(R.id.app_nav)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        lifecycleScope.launch {
+            viewModel.state.collect { state: MessagesState ->
+                when (state) {
+                    MessagesState.Loading -> showProgressBar()
+
+                    is MessagesState.MessagesReceived -> {
+                        hideProgressBar()
+                        messagesAdapter.messages = state.messageEntities
+                        messagesAdapter.notifyDataSetChanged()
+                    }
+
+                    MessagesState.Failure -> {
+                        hideProgressBar()
+                        displayGetMessagesFailed()
+                    }
+                }
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,34 +58,11 @@ class ViewMessagesFragment : Fragment() {
         recyclerView = rootView.findViewById(R.id.recyclerView)
         progressBar = rootView.findViewById(R.id.progressBar)
         btnPurge = rootView.findViewById(R.id.btnPurge)
-        btnPurge.setOnClickListener {
-            viewModel.purgeMessages()
-        }
+        btnPurge.setOnClickListener { viewModel.purgeMessages() }
 
-        // configure the ol' recycler view & adapter
         messagesAdapter = MessagesAdapter(LayoutInflater.from(requireContext()))
         recyclerView.adapter = messagesAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        viewModel.initialise()
-
-        viewModel.state.observe(viewLifecycleOwner) { state: MessagesState ->
-            when (state) {
-                MessagesState.Loading -> showProgressBar()
-
-                is MessagesState.MessagesReceived -> {
-                    hideProgressBar()
-                    messagesAdapter.messages = state.messageEntities
-                    messagesAdapter.notifyDataSetChanged()
-                }
-
-                MessagesState.Failure -> {
-                    hideProgressBar()
-                    displayGetMessagesFailed()
-                }
-            }
-        }
-
         return rootView
     }
 
