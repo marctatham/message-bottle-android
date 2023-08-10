@@ -17,9 +17,9 @@ import javax.inject.Inject
 private const val COLLECTION = "messages"
 
 // TODO: we'll clean all of this up, let's just see if it works
-class MessageFirestoreSource @Inject constructor(
+class IMessageFirestoreSource @Inject constructor(
     firestore: FirebaseFirestore
-) : MessageService {
+) : IMessageDataSource {
 
     private val collectionReference: CollectionReference = firestore.collection(COLLECTION)
 

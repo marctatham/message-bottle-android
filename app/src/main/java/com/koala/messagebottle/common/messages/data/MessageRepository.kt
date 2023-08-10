@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class MessageRepository @Inject constructor(
-    private val messageService: MessageService,
+    private val IMessageDataSource: IMessageDataSource,
     private val mapper: MessageDataModelMapper,
     @DispatcherIO private val dispatcherNetwork: CoroutineDispatcher
 ) {
@@ -18,7 +18,7 @@ class MessageRepository @Inject constructor(
     suspend fun getMessage(): MessageEntity {
         Timber.v("Retrieving message from remote service")
         val messageDataModel = withContext(dispatcherNetwork) {
-            messageService.getMessage()
+            IMessageDataSource.getMessage()
         }
 
         Timber.v("returning response ${Thread.currentThread().name}")
@@ -27,7 +27,7 @@ class MessageRepository @Inject constructor(
 
     suspend fun getMessages(): List<MessageEntity> {
         Timber.v("Retrieving ALL messages from remote service")
-        val messageDataModels = withContext(dispatcherNetwork) { messageService.getMessages() }
+        val messageDataModels = withContext(dispatcherNetwork) { IMessageDataSource.getMessages() }
         return messageDataModels.map { mapper.mapFrom(it) }
     }
 
@@ -35,7 +35,7 @@ class MessageRepository @Inject constructor(
         Timber.v("Posting message to remote service")
         withContext(dispatcherNetwork) {
             val messageDataModel = mapper.mapTo(messageEntity)
-            messageService.postMessage(messageDataModel)
+            IMessageDataSource.postMessage(messageDataModel)
         }
     }
 

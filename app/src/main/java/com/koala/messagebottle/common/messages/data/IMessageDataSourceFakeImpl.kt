@@ -3,7 +3,7 @@ package com.koala.messagebottle.common.messages.data
 import kotlin.random.Random
 
 // TODO: Let's create firebase-backed implementation
-class MessageServiceFakeImpl() : MessageService {
+class IMessageDataSourceFakeImpl() : IMessageDataSource {
 
     private val messages = ArrayList<MessageDataModel>()
 

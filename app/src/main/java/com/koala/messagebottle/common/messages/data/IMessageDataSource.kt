@@ -1,6 +1,6 @@
 package com.koala.messagebottle.common.messages.data
 
-interface MessageService {
+interface IMessageDataSource {
 
     suspend fun getMessage(): MessageDataModel
 
