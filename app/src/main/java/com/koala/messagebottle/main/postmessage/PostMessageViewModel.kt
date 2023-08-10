@@ -1,13 +1,14 @@
 package com.koala.messagebottle.main.postmessage
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.common.messages.data.MessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -17,8 +18,8 @@ class PostMessageViewModel @Inject constructor(
     private val messageRepository: MessageRepository
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<MessageState>(MessageState.Idle)
-    val state: LiveData<MessageState> = _state
+    private val _state: MutableStateFlow<MessageState> = MutableStateFlow(MessageState.Idle)
+    val state: StateFlow<MessageState> = _state.asStateFlow()
 
     fun postMessage(message: String) {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
