@@ -7,21 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.koala.messagebottle.R
 import com.koala.messagebottle.login.LoginActivity
 import com.koala.messagebottle.main.Constants.REQUEST_CODE_LOGIN
 import com.koala.messagebottle.main.MainActivity
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class HomeFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
-    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,9 +24,6 @@ class HomeFragment : Fragment() {
         val btnGetMessage = rootView.findViewById<Button>(R.id.btnGetMessage)
         val btnPostMessage = rootView.findViewById<Button>(R.id.btnPostMessage)
         val btnViewMessages = rootView.findViewById<Button>(R.id.btnViewMessages)
-
-        // let's see if it's been injected oK
-        viewModel.test()
 
         btnSignIn.setOnClickListener {
              val intent = Intent(requireActivity(), LoginActivity::class.java)
