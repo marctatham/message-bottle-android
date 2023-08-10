@@ -71,6 +71,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" } # when using the BoM, don't specify versions in the Firebase dependencies
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
+firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServices" }
 
 [plugins]
