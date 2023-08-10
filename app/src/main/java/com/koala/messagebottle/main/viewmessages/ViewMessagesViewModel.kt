@@ -3,7 +3,7 @@ package com.koala.messagebottle.main.viewmessages
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.koala.messagebottle.common.messages.data.MessageRepository
+import com.koala.messagebottle.common.messages.domain.IMessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewMessagesViewModel @Inject constructor(
-    private val messageRepository: MessageRepository
+    private val messageRepository: IMessageRepository
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<MessagesState> = MutableStateFlow(MessagesState.Loading)

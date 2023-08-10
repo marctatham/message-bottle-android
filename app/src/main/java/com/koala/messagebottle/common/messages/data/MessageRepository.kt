@@ -2,18 +2,14 @@ package com.koala.messagebottle.common.messages.data
 
 import com.koala.messagebottle.common.messages.domain.IMessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
-import com.koala.messagebottle.common.threading.DispatcherIO
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class MessageRepository @Inject constructor(
+class MessageRepository(
     private val messageDataSource: IMessageDataSource,
     private val mapper: MessageDataModelMapper,
-    @DispatcherIO private val dispatcherNetwork: CoroutineDispatcher
+    private val dispatcherNetwork: CoroutineDispatcher
 ) : IMessageRepository {
 
     override suspend fun getMessage(): MessageEntity {

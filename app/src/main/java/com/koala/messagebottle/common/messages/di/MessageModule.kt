@@ -5,10 +5,15 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.common.messages.data.MessageFirestoreSource
 import com.koala.messagebottle.common.messages.data.IMessageDataSource
+import com.koala.messagebottle.common.messages.data.MessageDataModelMapper
+import com.koala.messagebottle.common.messages.data.MessageRepository
+import com.koala.messagebottle.common.messages.domain.IMessageRepository
+import com.koala.messagebottle.common.threading.DispatcherIO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -25,4 +30,17 @@ class MessageModule {
         return MessageFirestoreSource(firestore)
     }
 
+    @Provides
+    @Singleton
+    fun providesMessageRepository(
+        messageDataSource: IMessageDataSource,
+        messageDataModelMapper: MessageDataModelMapper,
+        @DispatcherIO dispatcher: CoroutineDispatcher
+    ): IMessageRepository {
+        return MessageRepository(
+            messageDataSource,
+            messageDataModelMapper,
+            dispatcher
+        )
+    }
 }
