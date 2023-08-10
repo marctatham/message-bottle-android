@@ -1,1 +1,4 @@
 /build
+
+# do not commit sensitive firebase configuration to the project
+google-services.json
