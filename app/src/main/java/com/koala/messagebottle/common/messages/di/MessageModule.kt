@@ -3,7 +3,7 @@ package com.koala.messagebottle.common.messages.di
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.koala.messagebottle.common.messages.data.IMessageFirestoreSource
+import com.koala.messagebottle.common.messages.data.MessageFirestoreSource
 import com.koala.messagebottle.common.messages.data.IMessageDataSource
 import dagger.Module
 import dagger.Provides
@@ -22,7 +22,7 @@ class MessageModule {
     @Provides
     @Singleton
     fun providesMessageService(firestore: FirebaseFirestore): IMessageDataSource {
-        return IMessageFirestoreSource(firestore)
+        return MessageFirestoreSource(firestore)
     }
 
 }

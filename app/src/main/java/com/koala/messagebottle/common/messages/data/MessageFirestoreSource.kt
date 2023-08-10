@@ -17,7 +17,7 @@ import javax.inject.Inject
 private const val COLLECTION = "messages"
 
 // TODO: we'll clean all of this up, let's just see if it works
-class IMessageFirestoreSource @Inject constructor(
+class MessageFirestoreSource @Inject constructor(
     firestore: FirebaseFirestore
 ) : IMessageDataSource {
 
