@@ -26,7 +26,7 @@ import java.lang.RuntimeException
 class LoginActivity : AppCompatActivity() {
 
     companion object {
-        private val REQ_GOOGLE_ONE_TAP = 2
+        private const val REQ_GOOGLE_ONE_TAP = 2
     }
 
     private lateinit var container: View
