@@ -1,17 +1,13 @@
 package com.koala.messagebottle.common.messages.data
 
-import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
-import com.koala.messagebottle.common.authentication.domain.UserEntity
 import com.koala.messagebottle.common.messages.domain.IMessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
-import com.koala.messagebottle.common.messages.domain.PostMessageResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class MessageRepository(
     private val messageDataSource: IMessageDataSource,
-    private val authenticationRepository: IAuthenticationRepository,
     private val dispatcherNetwork: CoroutineDispatcher
 ) : IMessageRepository {
 
@@ -29,23 +25,11 @@ class MessageRepository(
         }
     }
 
-    override suspend fun postMessage(messageToPost: String): PostMessageResult {
+    override suspend fun postMessage(message: MessageEntity) {
         Timber.i("[postMessage] Posting message to datasource")
-        when (val user: UserEntity = authenticationRepository.user.value) {
-            is UserEntity.AuthenticatedUser -> {
-                return withContext(dispatcherNetwork) {
-                    val messageEntity = MessageEntity(messageToPost, user.userId)
-                    messageDataSource.postMessage(messageEntity)
-                    Timber.i("[postMessage] Message posted successfully")
-                    return@withContext PostMessageResult.Success(messageEntity)
-                }
-            }
-
-            UserEntity.UnauthenticatedUser -> {
-                Timber.e("[postMessage] User is not authenticated, no posting allowed")
-                return PostMessageResult.Unauthenticated
-            }
+        withContext(dispatcherNetwork) {
+            messageDataSource.postMessage(message)
+            Timber.i("[postMessage] Message posted successfully")
         }
     }
-
 }

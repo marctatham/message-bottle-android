@@ -2,9 +2,7 @@ package com.koala.messagebottle.main.postmessage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.koala.messagebottle.common.messages.domain.IMessageRepository
 import com.koala.messagebottle.common.messages.domain.MessageEntity
-import com.koala.messagebottle.common.messages.domain.PostMessageResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostMessageViewModel @Inject constructor(
-    private val messageRepository: IMessageRepository
+    private val useCase: PostMessageUseCase
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<MessageState> = MutableStateFlow(MessageState.Idle)
@@ -31,8 +29,8 @@ class PostMessageViewModel @Inject constructor(
         viewModelScope.launch(exceptionHandler) {
             _state.value = MessageState.Loading
 
-            when (val res: PostMessageResult = messageRepository.postMessage(messageToPost)) {
-                is PostMessageResult.Success -> _state.value = MessageState.MessagePosted(res.messageEntity)
+            when (val res: PostMessageResult = useCase.postMessage(messageToPost)) {
+                is PostMessageResult.Success -> _state.value = MessageState.MessagePosted(res.message)
 
                 PostMessageResult.Unauthenticated -> _state.value = MessageState.NotAuthenticated
             }
