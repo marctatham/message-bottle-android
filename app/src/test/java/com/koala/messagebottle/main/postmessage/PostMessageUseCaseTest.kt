@@ -8,7 +8,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
@@ -16,7 +15,6 @@ import org.junit.Test
 /**
  * Unit tests for [PostMessageUseCase].
  */
-@OptIn(ExperimentalCoroutinesApi::class) // TODO: Remove when stable
 class PostMessageUseCaseTest {
 
     @Test
