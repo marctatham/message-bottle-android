@@ -14,8 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
-import com.koala.messagebottle.main.postmessage.MessageState
-import com.koala.messagebottle.main.postmessage.PostMessageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

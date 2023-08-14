@@ -1,4 +1,4 @@
-package com.koala.messagebottle.main.postmessage
+package com.koala.messagebottle.main.postmessage.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,7 +32,8 @@ class PostMessageViewModel @Inject constructor(
             _state.value = MessageState.Loading
 
             when (val res: PostMessageResult = useCase.postMessage(messageToPost)) {
-                is PostMessageResult.Success -> _state.value = MessageState.MessagePosted(res.message)
+                is PostMessageResult.Success -> _state.value =
+                    MessageState.MessagePosted(res.message)
 
                 PostMessageResult.Unauthenticated -> _state.value = MessageState.NotAuthenticated
             }
