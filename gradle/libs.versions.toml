@@ -2,30 +2,29 @@
 androidGradlePlugin = "8.1.0"
 androidxCore = "1.10.1"
 androidxLifecycle = "2.6.1"
-androidxActivity = "1.7.1"
-androidxComposeBom = "2023.05.01"
-androidxComposeCompiler = "1.4.6"
+androidxActivity = "1.7.2"
+androidxComposeBom = "2023.08.00"
+androidxComposeCompiler = "1.5.1"
 androidxHilt = "1.0.0"
-androidxNavigation = "2.6.0"
-androidxRoom = "2.5.1"
+androidxNavigation = "2.7.0"
 androidxTest = "1.5.0"
 androidxTestExt = "1.1.5"
 androidxTestRunner = "1.5.2"
-coroutines = "1.6.4"
-hilt = "2.46"
+coroutines = "1.7.3"
+hilt = "2.47"
 junit = "4.13.2"
 mockk = "1.13.7"
-kotlin = "1.8.20"
-ksp = "1.8.20-1.0.11"
-parcelize = "1.8.0"
-moshi = "1.13.0"
+kotlin = "1.9.0"
+ksp = "1.9.0-1.0.13"
+parcelize = "1.9.0"
+moshi = "1.15.0"
 retrofit = "2.9.0"
 timber = "5.0.1"
 lottie = "4.1.0"
 firebaseAnalytics = "21.3.0"
 firebaseAuth = "22.1.0"
 constraintLayout = "2.1.4"
-material = "1.4.0"
+material = "1.9.0"
 googleServices = "4.3.15"
 playServices="20.6.0"
 firebase="32.2.2"
@@ -47,9 +46,6 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidxRoom" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
 squareup-moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 squareup-moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
 squareup-moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }

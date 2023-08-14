@@ -27,7 +27,7 @@ plugins {
 
 android {
     namespace = "com.koala.messagebottle"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.koala.messagebottle"
@@ -39,11 +39,6 @@ android {
         testInstrumentationRunner = "com.koala.messagebottle.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
-        }
-
-        // Enable room auto-migrations
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
 
@@ -103,10 +98,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.navigation.fragment)
-
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
 
     // Compose
     implementation(libs.androidx.compose.ui)
