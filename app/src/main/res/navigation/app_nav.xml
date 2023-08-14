@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/postMessageFragment"
-        android:name="com.koala.messagebottle.main.postmessage.PostMessageFragment"
+        android:name="com.koala.messagebottle.main.postmessage.ui.PostMessageFragment"
         android:label="PostMessageFragment" />
 
     <fragment

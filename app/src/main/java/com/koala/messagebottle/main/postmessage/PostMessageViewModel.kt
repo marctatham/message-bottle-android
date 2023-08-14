@@ -3,6 +3,8 @@ package com.koala.messagebottle.main.postmessage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koala.messagebottle.common.messages.domain.MessageEntity
+import com.koala.messagebottle.main.postmessage.ui.PostMessageResult
+import com.koala.messagebottle.main.postmessage.ui.PostMessageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
