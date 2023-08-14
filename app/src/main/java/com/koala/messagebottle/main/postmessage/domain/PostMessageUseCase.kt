@@ -1,4 +1,4 @@
-package com.koala.messagebottle.main.postmessage.ui
+package com.koala.messagebottle.main.postmessage.domain
 
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
 import com.koala.messagebottle.common.authentication.domain.UserEntity
