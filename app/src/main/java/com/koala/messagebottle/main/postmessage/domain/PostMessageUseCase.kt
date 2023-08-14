@@ -34,5 +34,5 @@ class PostMessageUseCase @Inject constructor(
 sealed class PostMessageResult {
     data class Success(val message: MessageEntity) : PostMessageResult()
 
-    object Unauthenticated : PostMessageResult()
+    data object Unauthenticated : PostMessageResult()
 }
