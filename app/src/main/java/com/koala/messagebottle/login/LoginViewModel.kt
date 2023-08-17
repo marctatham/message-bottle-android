@@ -22,7 +22,7 @@ class LoginViewModel @Inject constructor(
     private val authenticationRepository: IAuthenticationRepository
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<State> = MutableStateFlow(State.Anonymous)
+    private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     val state: StateFlow<State> = _state.asStateFlow()
 
     init {
