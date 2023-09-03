@@ -118,6 +118,7 @@ dependencies {
 
     // lottie
     implementation(libs.airbnb.lottie)
+    implementation(libs.airbnb.lottie.compose)
 
     // firebase
     implementation(platform(libs.firebase.bom))

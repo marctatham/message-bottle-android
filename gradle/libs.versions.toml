@@ -20,10 +20,10 @@ parcelize = "1.9.0"
 moshi = "1.15.0"
 retrofit = "2.9.0"
 timber = "5.0.1"
-lottie = "4.1.0"
+lottie = "6.1.0"
 firebaseAnalytics = "21.3.0"
 firebaseAuth = "22.1.0"
-constraintLayout = "2.1.4"
+constraintLayout = "2.1.4" #TODO: deprecate when everything has been migrated on over to compose
 material = "1.9.0"
 googleServices = "4.3.15"
 playServices="20.6.0"
@@ -64,6 +64,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlinx-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 airbnb-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
+airbnb-lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" } # when using the BoM, don't specify versions in the Firebase dependencies
