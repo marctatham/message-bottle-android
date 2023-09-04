@@ -43,9 +43,9 @@ class GetMessageViewModel @Inject constructor(
 
 sealed class MessageState {
 
-    object Loading : MessageState()
+    data object Loading : MessageState()
 
     data class MessageReceived(val messageEntity: MessageEntity) : MessageState()
 
-    object Failure : MessageState()
+    data object Failure : MessageState()
 }
