@@ -18,7 +18,7 @@ class GetMessageViewModel @Inject constructor(
     private val messageRepository: IMessageRepository
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<MessageState> = MutableStateFlow(MessageState.Loading)
+    private val _state: MutableStateFlow<MessageState> = MutableStateFlow(MessageState.PlayingAnimation)
     val state: StateFlow<MessageState> = _state.asStateFlow()
 
     init {
@@ -32,7 +32,7 @@ class GetMessageViewModel @Inject constructor(
         }
 
         viewModelScope.launch(exceptionHandler) {
-            _state.value = MessageState.Loading
+            _state.value = MessageState.PlayingAnimation
 
             val messageEntity = messageRepository.getMessage()
 
@@ -43,7 +43,7 @@ class GetMessageViewModel @Inject constructor(
 
 sealed class MessageState {
 
-    data object Loading : MessageState()
+    data object PlayingAnimation : MessageState()
 
     data class MessageReceived(val messageEntity: MessageEntity) : MessageState()
 

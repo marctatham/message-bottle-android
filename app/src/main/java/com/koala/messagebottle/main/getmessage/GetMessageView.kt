@@ -40,7 +40,7 @@ fun GetMessageView(
     return when (uiState) {
         MessageState.Failure -> GetMessageFailedView(onNewMessageHandler = viewModel::getNewMessage)
 
-        MessageState.Loading -> FullScreenLoadingView()
+        MessageState.PlayingAnimation -> FullScreenLoadingView()
 
         is MessageState.MessageReceived -> GetMessageSuccessView(
             message = (uiState as MessageState.MessageReceived).messageEntity.message,
