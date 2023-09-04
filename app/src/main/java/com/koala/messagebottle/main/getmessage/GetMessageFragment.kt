@@ -1,7 +1,5 @@
 package com.koala.messagebottle.main.getmessage
 
-import androidx.fragment.app.Fragment
-
 
 import android.animation.Animator
 import android.os.Bundle
@@ -11,15 +9,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GetMessageFragment : Fragment() {
@@ -30,47 +26,54 @@ class GetMessageFragment : Fragment() {
     private lateinit var txtMessage: TextView
     private lateinit var btnGetAnotherMessage: Button
 
-    private val viewModel: GetMessageViewModel by hiltNavGraphViewModels(R.id.app_nav)
+    // TODO: cleanup dead code
+    //private val viewModel: GetMessageViewModel by hiltNavGraphViewModels(R.id.app_nav)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { state: MessageState ->
-                    when (state) {
-                        MessageState.Loading -> showLoadingState()
-
-                        is MessageState.MessageReceived -> {
-                            val messageEntity = state.messageEntity
-                            hideLoadingState()
-                            beginDisplayingMessage(messageEntity.message)
-                        }
-
-                        MessageState.Failure -> {
-                            hideLoadingState()
-                            notifyFailure()
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.state.collect { state: MessageState ->
+//                    when (state) {
+//                        MessageState.Loading -> showLoadingState()
+//
+//                        is MessageState.MessageReceived -> {
+//                            val messageEntity = state.messageEntity
+//                            hideLoadingState()
+//                            beginDisplayingMessage(messageEntity.message)
+//                        }
+//
+//                        MessageState.Failure -> {
+//                            hideLoadingState()
+//                            notifyFailure()
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val rootView = inflater.inflate(R.layout.get_message_fragment, container, false)
 
-        containerView = rootView.findViewById(R.id.container)
-        animView = rootView.findViewById(R.id.animBottle)
-        txtMessage = rootView.findViewById(R.id.txtMessage)
-        progressBar = rootView.findViewById(R.id.progressBar)
-        btnGetAnotherMessage = rootView.findViewById(R.id.btnGetMessage)
-
-        btnGetAnotherMessage.setOnClickListener { viewModel.getNewMessage() }
-        return rootView
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                GetMessageView()
+            }
+        }
+//        val rootView = inflater.inflate(R.layout.get_message_fragment, container, false)
+//
+//        containerView = rootView.findViewById(R.id.container)
+//        animView = rootView.findViewById(R.id.animBottle)
+//        txtMessage = rootView.findViewById(R.id.txtMessage)
+//        progressBar = rootView.findViewById(R.id.progressBar)
+//        btnGetAnotherMessage = rootView.findViewById(R.id.btnGetMessage)
+//
+//        btnGetAnotherMessage.setOnClickListener { viewModel.getNewMessage() }
+//        return rootView
     }
 
     private fun beginDisplayingMessage(message: String) {
