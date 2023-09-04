@@ -18,8 +18,8 @@ class GetMessageViewModel @Inject constructor(
     private val messageRepository: IMessageRepository
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<MessageState> = MutableStateFlow(MessageState.PlayingAnimation)
-    val state: StateFlow<MessageState> = _state.asStateFlow()
+    private val _state: MutableStateFlow<MessageUiState> = MutableStateFlow(MessageUiState.PlayingAnimation)
+    val state: StateFlow<MessageUiState> = _state.asStateFlow()
 
     init {
         getNewMessage()
@@ -28,24 +28,24 @@ class GetMessageViewModel @Inject constructor(
     fun getNewMessage() {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             Timber.e(exception, "There was a problem retrieving the message")
-            _state.value = MessageState.Failure
+            _state.value = MessageUiState.Failure
         }
 
         viewModelScope.launch(exceptionHandler) {
-            _state.value = MessageState.PlayingAnimation
+            _state.value = MessageUiState.PlayingAnimation
 
             val messageEntity = messageRepository.getMessage()
 
-            _state.value = MessageState.MessageReceived(messageEntity)
+            _state.value = MessageUiState.MessageReceived(messageEntity)
         }
     }
 }
 
-sealed class MessageState {
+sealed class MessageUiState {
 
-    data object PlayingAnimation : MessageState()
+    data object PlayingAnimation : MessageUiState()
 
-    data class MessageReceived(val messageEntity: MessageEntity) : MessageState()
+    data class MessageReceived(val messageEntity: MessageEntity) : MessageUiState()
 
-    data object Failure : MessageState()
+    data object Failure : MessageUiState()
 }

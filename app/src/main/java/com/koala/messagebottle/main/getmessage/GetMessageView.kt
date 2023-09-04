@@ -36,14 +36,14 @@ import timber.log.Timber
 fun GetMessageView(
     viewModel: GetMessageViewModel = hiltViewModel(),
 ) {
-    val uiState: MessageState by viewModel.state.collectAsStateWithLifecycle()
+    val uiState: MessageUiState by viewModel.state.collectAsStateWithLifecycle()
     return when (uiState) {
-        MessageState.Failure -> GetMessageFailedView(onNewMessageHandler = viewModel::getNewMessage)
+        MessageUiState.Failure -> GetMessageFailedView(onNewMessageHandler = viewModel::getNewMessage)
 
-        MessageState.PlayingAnimation -> FullScreenLoadingView()
+        MessageUiState.PlayingAnimation -> FullScreenLoadingView()
 
-        is MessageState.MessageReceived -> GetMessageSuccessView(
-            message = (uiState as MessageState.MessageReceived).messageEntity.message,
+        is MessageUiState.MessageReceived -> GetMessageSuccessView(
+            message = (uiState as MessageUiState.MessageReceived).messageEntity.message,
             onNewMessageHandler = viewModel::getNewMessage
         )
     }
