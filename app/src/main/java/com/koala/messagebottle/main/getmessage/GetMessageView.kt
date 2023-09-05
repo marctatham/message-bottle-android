@@ -57,6 +57,7 @@ fun GetMessageView(
     Box(modifier = Modifier.fillMaxSize()) {
         LottieAnimation(
             composition = composition,
+            progress = { progress },
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .fillMaxSize(),
