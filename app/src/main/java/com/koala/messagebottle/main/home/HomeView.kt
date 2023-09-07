@@ -18,6 +18,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.koala.messagebottle.R
+import com.koala.messagebottle.common.compose.fakeClickHandler
 
 @Composable
 fun HomeView(
@@ -58,16 +59,13 @@ fun HomeView(
     }
 }
 
-
-
 @Preview
 @Composable
 fun HomeViewPreview() {
-    val fakeFunctionImplementation: () -> Unit = { println("I'm a fake function to satisfy preview requirements") }
     HomeView(
-        fakeFunctionImplementation,
-        fakeFunctionImplementation,
-        fakeFunctionImplementation,
-        fakeFunctionImplementation
+        fakeClickHandler,
+        fakeClickHandler,
+        fakeClickHandler,
+        fakeClickHandler
     )
 }
