@@ -63,11 +63,11 @@ class LoginViewModel @Inject constructor(
 // the different states the login screen can be in
 sealed class State {
 
-    object Anonymous : State()
+    data object Anonymous : State()
 
-    object Loading : State()
+    data object Loading : State()
 
-    object LoggedInUser : State()
+    data object LoggedInUser : State()
 
-    object Failure : State()
+    data object Failure : State()
 }
