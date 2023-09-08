@@ -17,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.airbnb.lottie.compose.LottieAnimation
@@ -70,10 +72,10 @@ fun GetMessageView(
                 Text(
                     text = (uiState as MessageUiState.MessageReceived).messageEntity.message,
                     color = Color.White.copy(alpha = alpha),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .alpha(alpha)
+                    fontSize = 36.sp,
+                    fontWeight = FontWeight.Normal,
+                    modifier = Modifier.padding(16.dp)
+                        .align(Alignment.Center),
                 )
             } else if (uiState is MessageUiState.Failure) {
                 Image(
