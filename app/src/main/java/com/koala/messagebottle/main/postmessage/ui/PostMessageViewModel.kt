@@ -19,38 +19,38 @@ class PostMessageViewModel @Inject constructor(
     private val useCase: PostMessageUseCase
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<MessageState> = MutableStateFlow(MessageState.Idle)
-    val state: StateFlow<MessageState> = _state.asStateFlow()
+    private val _state: MutableStateFlow<PostMessageUiState> = MutableStateFlow(PostMessageUiState.Idle)
+    val state: StateFlow<PostMessageUiState> = _state.asStateFlow()
 
     fun postMessage(messageToPost: String) {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             Timber.e(exception, "There was a problem posting your message")
-            _state.value = MessageState.Failure
+            _state.value = PostMessageUiState.Failure
         }
 
         viewModelScope.launch(exceptionHandler) {
-            _state.value = MessageState.Loading
+            _state.value = PostMessageUiState.Loading
 
             when (val res: PostMessageResult = useCase.postMessage(messageToPost)) {
                 is PostMessageResult.Success -> _state.value =
-                    MessageState.MessagePosted(res.message)
+                    PostMessageUiState.MessagePosted(res.message)
 
-                PostMessageResult.Unauthenticated -> _state.value = MessageState.NotAuthenticated
+                PostMessageResult.Unauthenticated -> _state.value = PostMessageUiState.NotAuthenticated
             }
         }
     }
 }
 
-sealed class MessageState {
+sealed class PostMessageUiState {
 
-    object Idle : MessageState()
+    data object Idle : PostMessageUiState()
 
-    object Loading : MessageState()
+    data object Loading : PostMessageUiState()
 
-    data class MessagePosted(val messageEntity: MessageEntity) : MessageState()
+    data class MessagePosted(val messageEntity: MessageEntity) : PostMessageUiState()
 
-    object Failure : MessageState()
+    data object Failure : PostMessageUiState()
 
-    object NotAuthenticated : MessageState()
+    data object NotAuthenticated : PostMessageUiState()
 
 }

@@ -27,14 +27,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun PostViewScreen(
     viewModel: PostMessageViewModel = hiltViewModel(),
 ) {
-    val state: MessageState by viewModel.state.collectAsStateWithLifecycle()
+    val state: PostMessageUiState by viewModel.state.collectAsStateWithLifecycle()
     val onPostHandler: (messageToPost: String) -> Unit = { viewModel.postMessage(it) }
     PostView(state, onPostHandler)
 }
 
 @Composable
 fun PostView(
-    uiState: MessageState,
+    uiState: PostMessageUiState,
     onPostHandler: (messageToPost: String) -> Unit,
 ) {
     val textState: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
@@ -45,7 +45,7 @@ fun PostView(
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
-        if (uiState is MessageState.Loading) {
+        if (uiState is PostMessageUiState.Loading) {
             CircularProgressIndicator(
                 modifier = Modifier.size(48.dp),
                 strokeWidth = 4.dp
@@ -71,12 +71,12 @@ fun PostView(
 @Preview
 @Composable
 fun PostViewPreviewLoading() {
-    PostView(MessageState.Loading, onPostHandler = {})
+    PostView(PostMessageUiState.Loading, onPostHandler = {})
 }
 
 
 @Preview
 @Composable
 fun PostViewPreviewIdle() {
-    PostView(MessageState.Idle, onPostHandler = {})
+    PostView(PostMessageUiState.Idle, onPostHandler = {})
 }
