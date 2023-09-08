@@ -43,20 +43,25 @@ class LoginViewModel @Inject constructor(
     }
 
 
-    fun initiateLoginWithGoogle(idToken: String) = viewModelScope.launch(exceptionHandler) {
-        _state.value = State.Loading
-        authenticationRepository.firebaseAuthWithGoogle(idToken)
+    fun initiateLoginWithGoogle(idToken: String) {
+        viewModelScope.launch(exceptionHandler) {
+            _state.value = State.Loading
+            authenticationRepository.firebaseAuthWithGoogle(idToken)
+        }
     }
 
-    fun initiateAnonymousLogin() = viewModelScope.launch(exceptionHandler) {
-        _state.value = State.Loading
-        authenticationRepository.signInAnonymously()
-
+    fun initiateAnonymousLogin() {
+        viewModelScope.launch(exceptionHandler) {
+            _state.value = State.Loading
+            authenticationRepository.signInAnonymously()
+        }
     }
 
-    fun initiateSignOut() = viewModelScope.launch {
-        _state.value = State.Loading
-        authenticationRepository.signOut()
+    fun initiateSignOut() {
+        viewModelScope.launch {
+            _state.value = State.Loading
+            authenticationRepository.signOut()
+        }
     }
 }
 
@@ -67,7 +72,8 @@ sealed class State {
 
     data object Loading : State()
 
-    data object LoggedInUser : State() // TODO: rename to AuthenticatedUser for consistency across codebase
+    data object LoggedInUser :
+        State() // TODO: rename to AuthenticatedUser for consistency across codebase
 
     data object Failure : State()
 }
