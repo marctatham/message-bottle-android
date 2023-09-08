@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.koala.messagebottle.common.compose.fakeChildComposable
+import com.koala.messagebottle.common.ui.fakeChildComposable
 
 @Preview
 @Composable

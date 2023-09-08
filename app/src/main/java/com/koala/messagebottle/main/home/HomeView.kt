@@ -16,7 +16,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.koala.messagebottle.R
-import com.koala.messagebottle.common.compose.fakeClickHandler
+import com.koala.messagebottle.common.ui.fakeClickHandler
 
 @Composable
 fun HomeView(

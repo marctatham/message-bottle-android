@@ -1,4 +1,4 @@
-package com.koala.messagebottle.common.compose
+package com.koala.messagebottle.common.ui
 
 import androidx.compose.runtime.Composable
 
