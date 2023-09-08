@@ -3,7 +3,6 @@ package com.koala.messagebottle.login
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -57,18 +56,11 @@ fun AuthenticatedView(
 ) {
     val context = LocalContext.current
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Spacer(modifier = Modifier.weight(1f))
-
+    Box(Modifier.fillMaxSize()) {
         Button(
             onClick = onLogoutHandler,
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.align(Alignment.Center),
         ) { Text(text = context.getString(R.string.sign_out)) }
-
-        Spacer(modifier = Modifier.weight(1f))
     }
 }
 
