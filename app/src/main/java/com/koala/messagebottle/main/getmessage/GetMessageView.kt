@@ -53,6 +53,7 @@ fun GetMessageView(
         animationSpec = tween(2000, 0, FastOutSlowInEasing),
         label = "Text Fade Animation"
     )
+    val inverseAlpha = 1f - alpha // Calculate the inverse value
 
     Box(modifier = Modifier.fillMaxSize()) {
         LottieAnimation(
@@ -60,7 +61,8 @@ fun GetMessageView(
             progress = { progress },
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .alpha(inverseAlpha),
         )
 
         if (isAnimationComplete) {
