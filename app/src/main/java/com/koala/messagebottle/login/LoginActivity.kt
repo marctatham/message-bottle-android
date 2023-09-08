@@ -8,19 +8,15 @@ import android.widget.Button
 import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.SignInButton
-import com.google.android.material.snackbar.Snackbar
 import com.koala.messagebottle.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.lang.RuntimeException
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -46,49 +42,37 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // configure views
-        container = findViewById(R.id.container)
-        containerLoggedIn = findViewById(R.id.containerLoggedIn)
-        containerLoggedOut = findViewById(R.id.containerLoggedOut)
-        btnSignInGoogle = findViewById(R.id.btnSignInGoogle)
-        btnSignInAnonymous = findViewById(R.id.btnSignInAnonymous)
-        btnSignOut = findViewById(R.id.btnSignOut)
-        progressBar = findViewById(R.id.progressBar)
-
-        // configure click handlers
-        btnSignInGoogle.setSize(SignInButton.SIZE_STANDARD)
-        btnSignInGoogle.setOnClickListener { initiateLoginWithGoogle() }
-        btnSignInAnonymous.setOnClickListener { viewModel.initiateAnonymousLogin() }
-        btnSignOut.setOnClickListener { viewModel.initiateSignOut() }
-
-
-        // observe state
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { state: State ->
-                    when (state) {
-
-                        State.Anonymous -> {
-                            showSignedOutContainer()
-                            hideProgressBar()
-                        }
-
-                        State.Loading -> showProgressBar()
-
-                        State.LoggedInUser -> {
-                            showSignedInContainer()
-                            hideProgressBar()
-                            displayLoginSuccessful()
-                        }
-
-                        State.Failure -> {
-                            displayLoginFailed()
-                            hideProgressBar()
-                        }
-                    }
+        setContentView(
+            ComposeView(this).apply {
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                setContent {
+                    LoginViewScreen()
                 }
             }
-        }
+        )
+
+//        return ComposeView(requireContext()).apply {
+//            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+//            setContent {
+//                GetMessageView()
+//            }
+//        }
+
+        // configure views
+//        container = findViewById(R.id.container)
+//        containerLoggedIn = findViewById(R.id.containerLoggedIn)
+//        containerLoggedOut = findViewById(R.id.containerLoggedOut)
+//        btnSignInGoogle = findViewById(R.id.btnSignInGoogle)
+//        btnSignInAnonymous = findViewById(R.id.btnSignInAnonymous)
+//        btnSignOut = findViewById(R.id.btnSignOut)
+//        progressBar = findViewById(R.id.progressBar)
+//
+//        // configure click handlers
+//        btnSignInGoogle.setSize(SignInButton.SIZE_STANDARD)
+//        btnSignInGoogle.setOnClickListener { initiateLoginWithGoogle() }
+//        btnSignInAnonymous.setOnClickListener { viewModel.initiateAnonymousLogin() }
+//        btnSignOut.setOnClickListener { viewModel.initiateSignOut() }
+
 
         // configure google
         oneTapClient = Identity.getSignInClient(this)
@@ -154,30 +138,31 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun displayLoginSuccessful() {
-        val welcomeMessage = getString(R.string.sign_in_success, "Dear Tester")
-        Snackbar.make(container, welcomeMessage, Snackbar.LENGTH_SHORT).show()
-    }
-
-    private fun displayLoginFailed() = Snackbar
-        .make(container, R.string.sign_in_failed, Snackbar.LENGTH_SHORT)
-        .show()
-
-    private fun showSignedInContainer() {
-        containerLoggedIn.visibility = View.VISIBLE
-        containerLoggedOut.visibility = View.GONE
-    }
-
-    private fun showSignedOutContainer() {
-        containerLoggedIn.visibility = View.GONE
-        containerLoggedOut.visibility = View.VISIBLE
-    }
-
-    private fun showProgressBar() {
-        progressBar.visibility = View.VISIBLE
-    }
-
-    private fun hideProgressBar() {
-        progressBar.visibility = View.INVISIBLE
-    }
+    // All imperative logic replaced by composable view
+//    private fun displayLoginSuccessful() {
+//        val welcomeMessage = getString(R.string.sign_in_success, "Dear Tester")
+//        Snackbar.make(container, welcomeMessage, Snackbar.LENGTH_SHORT).show()
+//    }
+//
+//    private fun displayLoginFailed() = Snackbar
+//        .make(container, R.string.sign_in_failed, Snackbar.LENGTH_SHORT)
+//        .show()
+//
+//    private fun showSignedInContainer() {
+//        containerLoggedIn.visibility = View.VISIBLE
+//        containerLoggedOut.visibility = View.GONE
+//    }
+//
+//    private fun showSignedOutContainer() {
+//        containerLoggedIn.visibility = View.GONE
+//        containerLoggedOut.visibility = View.VISIBLE
+//    }
+//
+//    private fun showProgressBar() {
+//        progressBar.visibility = View.VISIBLE
+//    }
+//
+//    private fun hideProgressBar() {
+//        progressBar.visibility = View.INVISIBLE
+//    }
 }
