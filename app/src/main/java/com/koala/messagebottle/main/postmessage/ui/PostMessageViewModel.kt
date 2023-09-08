@@ -19,13 +19,14 @@ class PostMessageViewModel @Inject constructor(
     private val useCase: PostMessageUseCase
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<PostMessageUiState> = MutableStateFlow(PostMessageUiState.Idle)
+    private val _state: MutableStateFlow<PostMessageUiState> =
+        MutableStateFlow(PostMessageUiState.Idle)
     val state: StateFlow<PostMessageUiState> = _state.asStateFlow()
 
     fun postMessage(messageToPost: String) {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             Timber.e(exception, "There was a problem posting your message")
-            _state.value = PostMessageUiState.Failure
+            _state.value = PostMessageUiState.Failure(FailureReason.Unknown)
         }
 
         viewModelScope.launch(exceptionHandler) {
@@ -33,12 +34,20 @@ class PostMessageViewModel @Inject constructor(
 
             when (val res: PostMessageResult = useCase.postMessage(messageToPost)) {
                 is PostMessageResult.Success -> _state.value =
-                    PostMessageUiState.MessagePosted(res.message)
+                    PostMessageUiState.Success(res.message)
 
-                PostMessageResult.Unauthenticated -> _state.value = PostMessageUiState.NotAuthenticated
+                PostMessageResult.Unauthenticated -> _state.value =
+                    PostMessageUiState.Failure(FailureReason.NotAuthenticated)
             }
         }
     }
+}
+
+sealed class FailureReason {
+
+    data object Unknown : FailureReason()
+
+    data object NotAuthenticated : FailureReason()
 }
 
 sealed class PostMessageUiState {
@@ -47,10 +56,9 @@ sealed class PostMessageUiState {
 
     data object Loading : PostMessageUiState()
 
-    data class MessagePosted(val messageEntity: MessageEntity) : PostMessageUiState()
+    data class Failure(val reason: FailureReason) : PostMessageUiState()
 
-    data object Failure : PostMessageUiState()
-
-    data object NotAuthenticated : PostMessageUiState()
+    data class Success(val messageEntity: MessageEntity) : PostMessageUiState()
 
 }
+
