@@ -67,7 +67,7 @@ sealed class State {
 
     data object Loading : State()
 
-    data object LoggedInUser : State()
+    data object LoggedInUser : State() // TODO: rename to AuthenticatedUser for consistency across codebase
 
     data object Failure : State()
 }
