@@ -8,5 +8,5 @@ sealed class UserEntity {
         val userId: String
     ) : UserEntity()
 
-    object UnauthenticatedUser : UserEntity()
+    data object UnauthenticatedUser : UserEntity()
 }
