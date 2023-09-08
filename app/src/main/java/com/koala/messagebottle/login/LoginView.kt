@@ -32,8 +32,8 @@ fun LoginViewScreen(
 
 
     val clickGoogle = { Toast.makeText(context, "SignInGoogle", Toast.LENGTH_SHORT).show() }
-    val clickAnon = { Toast.makeText(context, "SignIn ANON", Toast.LENGTH_SHORT).show() }
-    val clickLogout = { Toast.makeText(context, "sign OUT", Toast.LENGTH_SHORT).show() }
+    val clickAnon = { viewModel.initiateAnonymousLogin() }
+    val clickLogout = { viewModel.initiateSignOut() }
 
     when (state) {
         State.Anonymous,
@@ -76,41 +76,34 @@ fun AuthenticatedView(
 @Preview
 @Composable
 fun UnauthenticatedView(
-    isLoading: Boolean = false,
+    isLoading: Boolean = true,
     onGoogleLoginHandler: () -> Unit = fakeClickHandler,
     onAnonLoginHandler: () -> Unit = fakeClickHandler,
 ) {
     val context = LocalContext.current
+    Box(Modifier.fillMaxSize()) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.align(Alignment.Center)
+        ) {
+            Button(
+                onClick = onGoogleLoginHandler,
+                modifier = Modifier.padding(8.dp),
+            ) { Text(text = context.getString(R.string.btnSignIn)) }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Spacer(modifier = Modifier.weight(1f))
-
-        Box {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Button(
-                    onClick = onGoogleLoginHandler,
-                    modifier = Modifier.padding(16.dp),
-                ) { Text(text = context.getString(R.string.btnSignIn)) }
-
-                Button(
-                    onClick = onAnonLoginHandler,
-                    modifier = Modifier.padding(16.dp),
-                ) { Text(text = context.getString(R.string.btnSignInAnonymously)) }
-            }
-
-            if (isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(48.dp),
-                    strokeWidth = 4.dp
-                )
-            }
+            Button(
+                onClick = onAnonLoginHandler,
+                modifier = Modifier.padding(8.dp),
+            ) { Text(text = context.getString(R.string.btnSignInAnonymously)) }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        if (isLoading) {
+            CircularProgressIndicator(
+                strokeWidth = 4.dp,
+                modifier = Modifier
+                    .size(48.dp)
+                    .align(Alignment.Center),
+            )
+        }
     }
 }
