@@ -1,9 +1,7 @@
 package com.koala.messagebottle.main.viewmessages
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -85,10 +83,9 @@ fun MessageListView(
     val scrollState = rememberLazyListState()
 
     LazyColumn(
-        contentPadding = PaddingValues(all = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
         state = scrollState,
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .padding(vertical = 8.dp),
         content = {
             items(messageEntities) { MessageView(it) }
         })
@@ -98,17 +95,17 @@ fun MessageListView(
 fun MessageView(messageEntity: MessageEntity) {
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
-        modifier = Modifier.padding(all = 16.dp)
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Column(Modifier.fillMaxWidth()) {
             Text(
                 text = messageEntity.message,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 maxLines = 20,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp)
+                    .padding(16.dp)
                     .wrapContentWidth(Alignment.CenterHorizontally)
             )
         }
@@ -129,7 +126,7 @@ fun MessageListViewPreview() {
     MessageListView(
         listOf(
             MessageEntity(message = "Hello World", userId = fakeUserId),
-            MessageEntity(message = "It's nice to see you 👋", userId = fakeUserId)
+            MessageEntity(message = "It's nice to see you 👋 this is an example of a really long message that spans multiple lines", userId = fakeUserId)
         )
     )
 }
