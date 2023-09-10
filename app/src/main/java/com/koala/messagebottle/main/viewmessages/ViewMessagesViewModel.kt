@@ -44,10 +44,10 @@ class ViewMessagesViewModel @Inject constructor(
 
 sealed class MessagesState {
 
-    object Loading : MessagesState()
+    data object Loading : MessagesState()
 
     data class MessagesReceived(val messageEntities: List<MessageEntity>) : MessagesState()
 
-    object Failure : MessagesState()
+    data object Failure : MessagesState()
 
 }
