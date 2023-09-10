@@ -33,7 +33,8 @@
     <string name="btnSignIn">Sign in</string>
     <string name="btnSignInAnonymously">Sign in Anonymously</string>
     <string name="btnGetMessage">Get a message from a bottle</string>
-    <string name="snack_get_message_failed">"There was a problem fetching the message"</string>
+    <string name="snack_get_message_failed">"There was a problem fetching the message</string>
+    <string name="view_messages_error_get">"There was a problem fetching messages</string>
     <string name="btnPostMessage">Place message into a bottle</string>
     <string name="btnViewMessages">View messages</string>
     <string name="get_messages_failed">Failed to get all messages!</string>
