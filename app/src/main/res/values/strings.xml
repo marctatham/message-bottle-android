@@ -34,7 +34,7 @@
     <string name="btnSignInAnonymously">Sign in Anonymously</string>
     <string name="btnGetMessage">Get a message from a bottle</string>
     <string name="snack_get_message_failed">"There was a problem fetching the message"</string>
-    <string name="btnPostMessage">Put a message in a bottle</string>
+    <string name="btnPostMessage">Place message into a bottle</string>
     <string name="btnViewMessages">View messages</string>
     <string name="get_messages_failed">Failed to get all messages!</string>
     <string name="btnPurge">Purge</string>
@@ -42,4 +42,7 @@
     <string name="snack_post_message_failed">Failed to post your message!"</string>
     <string name="snack_post_message_requires_auth">You must be logged in to post!"</string>
     <string name="txtMessageLoading">…</string>
+
+    <string name="title_post_message">What would you like to say?</string>
+    <string name="post_message_hint">Often there are things we can say to complete strangers that we can\'t say to our closest friends 🧐</string>
 </resources>

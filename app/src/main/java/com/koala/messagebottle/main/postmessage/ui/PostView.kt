@@ -60,7 +60,7 @@ fun PostView(
             )
         } else {
             Text(
-                text = "What would you like to say?",
+                text = context.getString(R.string.title_post_message),
                 modifier = Modifier.padding(16.dp),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
@@ -70,6 +70,8 @@ fun PostView(
                 value = textState.value,
                 onValueChange = { textState.value = it },
                 minLines = 10,
+                placeholder = { Text(text = context.getString(R.string.post_message_hint)) },
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -95,14 +97,13 @@ fun PostView(
             )
         }
 
-        val isSuccessOrLoading =
-            uiState is PostMessageUiState.Success || uiState is PostMessageUiState.Loading
+        val isSuccessOrLoading = uiState is PostMessageUiState.Success || uiState is PostMessageUiState.Loading
 
         Button(
             onClick = { onPostHandler(textState.value.text) },
             enabled = !isSuccessOrLoading,
             modifier = Modifier.padding(16.dp),
-        ) { Text(text = "Put a message in a bottle") }
+        ) { Text(text = context.getString(R.string.btnPostMessage)) }
     }
 }
 
