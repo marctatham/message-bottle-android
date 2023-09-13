@@ -29,7 +29,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.example.reply.ui.theme.replyTypography
+import com.example.reply.ui.theme.typography
 
 // Material 3 color schemes
 private val replyDarkColorScheme = darkColorScheme(
@@ -96,7 +96,7 @@ fun BottlingTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val replyColorScheme = when {
+    val colorScheme = when {
         dynamicColor -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
@@ -108,14 +108,14 @@ fun BottlingTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = replyColorScheme.primary.toArgb()
+            window.statusBarColor = colorScheme.primary.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
 
     MaterialTheme(
-        colorScheme = replyColorScheme,
-        typography = replyTypography,
+        colorScheme = colorScheme,
+        typography = typography,
         shapes = shapes,
         content = content
     )
