@@ -35,7 +35,7 @@ import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 
 @Composable
-fun LoginViewScreen(
+fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current

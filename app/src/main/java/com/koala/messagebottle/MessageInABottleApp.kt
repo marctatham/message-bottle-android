@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.koala.messagebottle.login.LoginViewScreen
+import com.koala.messagebottle.login.LoginScreen
 import com.koala.messagebottle.main.getmessage.GetMessageScreen
 import com.koala.messagebottle.main.home.HomeView
 import com.koala.messagebottle.main.postmessage.ui.PostScreen
@@ -34,6 +34,6 @@ fun MessageInABottleAppNavHost(
         composable("getMessage") { GetMessageScreen() }
         composable("postMessage") { PostScreen() }
         composable("viewMessages") { ViewMessagesScreen() }
-        composable("login") { LoginViewScreen() }
+        composable("login") { LoginScreen() }
     }
 }
