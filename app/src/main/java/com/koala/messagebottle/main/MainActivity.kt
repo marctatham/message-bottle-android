@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.koala.messagebottle.MessageInABottleApp
+import com.koala.messagebottle.common.ui.BottlingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,7 +16,9 @@ class MainActivity : AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            MessageInABottleApp()
+            BottlingTheme {
+                MessageInABottleApp()
+            }
         }
     }
 }
