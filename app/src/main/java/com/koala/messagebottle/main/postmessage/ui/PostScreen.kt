@@ -30,7 +30,7 @@ import com.koala.messagebottle.R
 import com.koala.messagebottle.common.messages.domain.MessageEntity
 
 @Composable
-fun PostViewScreen(
+fun PostScreen(
     viewModel: PostMessageViewModel = hiltViewModel(),
 ) {
     val state: PostMessageUiState by viewModel.state.collectAsStateWithLifecycle()
