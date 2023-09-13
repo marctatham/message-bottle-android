@@ -68,7 +68,6 @@ fun PostView(
                 modifier = Modifier.padding(16.dp),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
             )
             TextField(
                 value = textState.value,
