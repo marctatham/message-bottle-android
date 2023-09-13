@@ -59,9 +59,12 @@ fun GetMessageScreen(
     )
     val inverseAlpha = 1f - alpha // Calculate the inverse value
 
-    Box(modifier = Modifier
-        .background(MaterialTheme.colorScheme.background)
-        .fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
         LottieAnimation(
             composition = composition,
             progress = { progress },
