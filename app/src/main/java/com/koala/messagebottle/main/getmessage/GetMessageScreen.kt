@@ -34,7 +34,7 @@ import com.koala.messagebottle.R
 //       - also important to make the preview modes work better!
 //       - investigate this issue of the animation not restarting
 @Composable
-fun GetMessageView(
+fun GetMessageScreen(
     viewModel: GetMessageViewModel = hiltViewModel(),
 ) {
     val uiState: MessageUiState by viewModel.state.collectAsStateWithLifecycle()
