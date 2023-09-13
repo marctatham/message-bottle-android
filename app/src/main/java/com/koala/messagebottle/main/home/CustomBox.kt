@@ -11,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,7 +25,6 @@ fun CustomBox(
     val configuration = LocalConfiguration.current
     val halfScreenHeightDp = (configuration.screenHeightDp / 2).dp
     val oneTenthOfScreenHeightDp = (configuration.screenHeightDp / 10).dp
-
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -34,11 +32,12 @@ fun CustomBox(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
+        val colorSurfaceVariant = MaterialTheme.colorScheme.surfaceVariant
         Canvas(modifier = Modifier
             .offset(x = 0.dp, y = oneTenthOfScreenHeightDp * 1)
             .align(alignment = Alignment.CenterHorizontally),
             onDraw = {
-                drawCircle(color = Color.White, radius = halfScreenHeightDp.toPx())
+                drawCircle(color = colorSurfaceVariant, radius = halfScreenHeightDp.toPx())
             })
 
         // Displays the canvasContent within the canvas
