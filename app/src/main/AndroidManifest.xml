@@ -29,18 +29,6 @@
         android:theme="@style/Theme.MessageInABottle"
         tools:targetApi="31">
 
-        <!--        TODO: Introduce new activies / remove old activities -->
-        <!--        <activity-->
-        <!--            android:name=".ui.MainActivity"-->
-        <!--            android:exported="true"-->
-        <!--            android:theme="@style/Theme.MessageInABottle">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
-
         <activity
             android:name=".main.MainActivity"
             android:exported="true"
@@ -52,10 +40,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".login.LoginActivity"
-            android:theme="@style/AppTheme" />
 
     </application>
 
