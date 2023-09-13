@@ -1,5 +1,6 @@
 package com.koala.messagebottle.main.postmessage.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -48,8 +50,9 @@ fun PostView(
     val textState: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
-
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
@@ -97,7 +100,8 @@ fun PostView(
             )
         }
 
-        val isSuccessOrLoading = uiState is PostMessageUiState.Success || uiState is PostMessageUiState.Loading
+        val isSuccessOrLoading =
+            uiState is PostMessageUiState.Success || uiState is PostMessageUiState.Loading
 
         Button(
             onClick = { onPostHandler(textState.value.text) },

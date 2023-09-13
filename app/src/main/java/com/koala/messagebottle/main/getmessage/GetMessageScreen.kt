@@ -4,11 +4,13 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -57,7 +59,9 @@ fun GetMessageScreen(
     )
     val inverseAlpha = 1f - alpha // Calculate the inverse value
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier
+        .background(MaterialTheme.colorScheme.background)
+        .fillMaxSize()) {
         LottieAnimation(
             composition = composition,
             progress = { progress },
@@ -74,7 +78,8 @@ fun GetMessageScreen(
                     color = Color.White.copy(alpha = alpha),
                     fontSize = 36.sp,
                     fontWeight = FontWeight.Normal,
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier
+                        .padding(16.dp)
                         .align(Alignment.Center),
                 )
             } else if (uiState is MessageUiState.Failure) {

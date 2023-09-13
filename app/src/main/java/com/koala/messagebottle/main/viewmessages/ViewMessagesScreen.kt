@@ -1,5 +1,6 @@
 package com.koala.messagebottle.main.viewmessages
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,7 +48,11 @@ fun ViewMessagesScreen(
 @Preview
 @Composable
 fun ViewMessagesLoading() {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+    ) {
         CircularProgressIndicator(
             strokeWidth = 4.dp,
             modifier = Modifier
@@ -62,7 +67,11 @@ fun ViewMessagesLoading() {
 fun ViewMessagesError() {
     val context = LocalContext.current
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+    ) {
         Text(
             text = context.getString(R.string.view_messages_error_get),
             fontSize = 24.sp,
@@ -84,7 +93,9 @@ fun MessageListView(
 
     LazyColumn(
         state = scrollState,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
             .padding(vertical = 8.dp),
         content = {
             items(messageEntities) { MessageView(it) }
@@ -126,7 +137,10 @@ fun MessageListViewPreview() {
     MessageListView(
         listOf(
             MessageEntity(message = "Hello World", userId = fakeUserId),
-            MessageEntity(message = "It's nice to see you 👋 this is an example of a really long message that spans multiple lines", userId = fakeUserId)
+            MessageEntity(
+                message = "It's nice to see you 👋 this is an example of a really long message that spans multiple lines",
+                userId = fakeUserId
+            )
         )
     )
 }
