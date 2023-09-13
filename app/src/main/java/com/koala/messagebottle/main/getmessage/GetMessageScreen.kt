@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -78,7 +77,7 @@ fun GetMessageScreen(
             if (uiState is MessageUiState.MessageReceived) {
                 Text(
                     text = (uiState as MessageUiState.MessageReceived).messageEntity.message,
-                    color = Color.White.copy(alpha = alpha),
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = alpha),
                     fontSize = 36.sp,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier
