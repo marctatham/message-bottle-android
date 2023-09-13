@@ -53,6 +53,7 @@ fun PostView(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
+            .padding(16.dp)
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
