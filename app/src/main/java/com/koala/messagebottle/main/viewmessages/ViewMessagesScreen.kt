@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -76,7 +75,7 @@ fun ViewMessagesError() {
             text = context.getString(R.string.view_messages_error_get),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Red,
+            color = MaterialTheme.colorScheme.error,
             modifier = Modifier
                 .padding(16.dp)
                 .align(Alignment.Center),

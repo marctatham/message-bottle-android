@@ -19,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -68,6 +67,7 @@ fun PostView(
                 modifier = Modifier.padding(16.dp),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground
             )
             TextField(
                 value = textState.value,
@@ -96,7 +96,7 @@ fun PostView(
                 modifier = Modifier.padding(16.dp),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Red,
+                color = MaterialTheme.colorScheme.error,
             )
         }
 
