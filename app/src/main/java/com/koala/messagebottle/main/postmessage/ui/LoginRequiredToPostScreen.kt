@@ -1,4 +1,4 @@
-package com.koala.messagebottle.main.postmessage
+package com.koala.messagebottle.main.postmessage.ui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Security
