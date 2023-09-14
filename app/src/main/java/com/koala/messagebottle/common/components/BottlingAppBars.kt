@@ -28,7 +28,7 @@ fun BottlingAppBar(
         title = {},
         modifier = modifier,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.inverseOnSurface
+            containerColor = MaterialTheme.colorScheme.background
         ),
         navigationIcon = {
             FilledIconButton(
