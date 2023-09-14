@@ -13,7 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.koala.messagebottle.login.LoginScreen
 import com.koala.messagebottle.main.getmessage.GetMessageScreen
-import com.koala.messagebottle.main.home.HomeView
+import com.koala.messagebottle.main.home.HomeScreen
 import com.koala.messagebottle.main.postmessage.ui.LoginRequiredToPostScreen
 import com.koala.messagebottle.main.postmessage.ui.PostScreen
 import com.koala.messagebottle.main.viewmessages.ViewMessagesScreen
@@ -33,11 +33,9 @@ fun MessageInABottleAppNavHost(
 ) {
     NavHost(navController = navController, startDestination = Screen.HOME) {
         composable(Screen.HOME) {
-            HomeView(
-                onSignInHandler = { navController.navigate(Screen.LOGIN) },
+            HomeScreen(
                 onGetMessageHandler = { navController.navigate(Screen.GET_MESSAGES) },
                 onPostMessageHandler = { navController.navigate(Flow.POST_MESSAGE_FLOW) },
-                onViewMessageHandler = { navController.navigate(Screen.VIEW_MESSAGES) },
             )
         }
         composable(Screen.GET_MESSAGES) { GetMessageScreen() }
