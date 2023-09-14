@@ -1,7 +1,6 @@
 package com.koala.messagebottle
 
-
-class Screen() {
+class Screen {
     companion object {
         const val HOME: String = "home"
         const val GET_MESSAGES: String = "get_messages"
