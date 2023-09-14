@@ -30,8 +30,7 @@ fun BottlingButton(
 
     Button(
         onClick = onTapHandler,
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         colors = colors,
         shape = MaterialTheme.shapes.extraSmall,
     ) { Text(text = text) }
