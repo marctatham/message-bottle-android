@@ -24,7 +24,7 @@ import com.koala.messagebottle.common.components.BottlingButton
 import com.koala.messagebottle.common.components.BottlingButtonType
 
 @Composable
-fun HomeView(
+fun HomeScreen(
     onGetMessageHandler: () -> Unit,
     onPostMessageHandler: () -> Unit,
 ) {
@@ -90,6 +90,6 @@ fun HomeView(
 
 @Preview
 @Composable
-fun HomeViewPreview() {
-    HomeView({}, {})
+private fun HomeScreenPreview() {
+    HomeScreen({}, {})
 }
