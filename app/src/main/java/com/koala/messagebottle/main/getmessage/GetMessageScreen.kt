@@ -28,6 +28,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.koala.messagebottle.R
+import com.koala.messagebottle.common.components.BottlingAppBar
 import com.koala.messagebottle.common.components.BottlingButton
 import com.koala.messagebottle.common.components.BottlingButtonType
 import com.koala.messagebottle.common.messages.domain.MessageEntity
@@ -75,6 +76,11 @@ fun GetMessageView(
             .padding(16.dp)
     ) {
 
+        BottlingAppBar(
+            onBackHandler = onBackHandler,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
+
         LottieAnimation(
             composition = composition,
             progress = { progress },
@@ -87,7 +93,9 @@ fun GetMessageView(
         if (isAnimationComplete) {
             if (uiState is MessageUiState.MessageReceived) {
                 Text(
-                    modifier = Modifier.padding(8.dp).align(Alignment.Center),
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .align(Alignment.Center),
                     text = uiState.messageEntity.message,
                     style = MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
