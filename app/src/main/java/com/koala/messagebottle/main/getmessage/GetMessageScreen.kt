@@ -94,7 +94,7 @@ fun GetMessageView(
             if (uiState is MessageUiState.MessageReceived) {
                 Text(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(16.dp)
                         .align(Alignment.Center),
                     text = uiState.messageEntity.message,
                     style = MaterialTheme.typography.titleLarge,
