@@ -15,7 +15,12 @@
   -->
 
 <resources>
-    <string name="app_name">Message In A Bottle</string>
+    <string name="app_name">BottleCast</string>
+    <string name="home_description">Ready for a virtual adventure filled with serendipitous discoveries? Find a hidden message in a virtual bottle or cast your own into the digital sea for others to uncover.</string>
+    <string name="home_button_get_message">Discover a Message 🏝️</string>
+    <string name="home_button_put_message">Send Your Own 🌊</string>
+
+
     <string name="button_back">Back</string>
 
     <string name="default_ok">OK!</string>
