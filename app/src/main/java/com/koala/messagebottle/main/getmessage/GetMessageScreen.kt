@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +28,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.koala.messagebottle.R
+import com.koala.messagebottle.common.components.BottlingButton
+import com.koala.messagebottle.common.components.BottlingButtonType
 
 // TODO: this works well, make it clean
 //       - also important to chop it up
@@ -64,6 +65,9 @@ fun GetMessageScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
+
+
+
         LottieAnimation(
             composition = composition,
             progress = { progress },
@@ -95,14 +99,14 @@ fun GetMessageScreen(
                 )
             }
 
-            Button(
-                onClick = viewModel::getNewMessage,
+            BottlingButton(
+                text = R.string.get_message_button_acknowledge,
+                buttonType = BottlingButtonType.PRIMARY,
+                onTapHandler = viewModel::getNewMessage,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .padding(16.dp)
                     .alpha(alpha)
-            ) { Text(text = "Get another message from a bottle") }
+            )
         }
     }
 }
