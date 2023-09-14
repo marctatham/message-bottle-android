@@ -190,11 +190,11 @@ suspend fun signIn(context: Context, launcher: ActivityResultLauncher<IntentSend
         // Now construct the IntentSenderRequest the launcher requires
         val intentSenderRequest = IntentSenderRequest.Builder(result.pendingIntent).build()
         launcher.launch(intentSenderRequest)
-    } catch (e: Exception) {
+    } catch (exception: Exception) {
         // No saved credentials found. Launch the One Tap sign-up flow, or
         // do nothing which results in no state changes & therefore continues
         // presenting the UnauthenticatedView.
-        Timber.e("there was a problem Signing in with Google One Tap", e)
+        Timber.e(exception, "there was a problem Signing in with Google One Tap")
     }
 }
 
