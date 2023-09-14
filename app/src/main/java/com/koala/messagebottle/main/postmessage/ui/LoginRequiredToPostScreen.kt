@@ -7,18 +7,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.koala.messagebottle.R
 import com.koala.messagebottle.common.components.EducationalScreen
 
-@Preview
 @Composable
-fun LoginRequiredToPostScreen() {
+fun LoginRequiredToPostScreen(
+    onProceedHandler: () -> Unit,
+    onCancelHandler: () -> Unit,
+    onBackHandler: () -> Unit,
+) {
     EducationalScreen(
         image = Icons.Default.Security,
         imageDescription = R.string.login_required_image_description,
         title = R.string.login_required_title,
         description = R.string.login_required_description,
-        onBackHandler = {},
-        onPrimaryTapHandler = {},
+        onBackHandler = onBackHandler,
+        onPrimaryTapHandler = onProceedHandler,
         primaryButtonText = R.string.login_required_button_primary,
         secondaryButtonText = R.string.login_required_button_secondary,
-        onSecondaryTapHandler = {},
+        onSecondaryTapHandler = onCancelHandler,
+    )
+}
+
+@Preview
+@Composable
+private fun LoginRequiredToPostScreenPreview() {
+    LoginRequiredToPostScreen(
+        onBackHandler = { },
+        onProceedHandler = { },
+        onCancelHandler = { },
     )
 }
