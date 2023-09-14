@@ -31,6 +31,7 @@ fun MessageInABottleAppNavHost(
     navController: NavHostController,
     appState: AppState,
 ) {
+    val backHandler: () -> Unit = { navController.popBackStack() }
     NavHost(navController = navController, startDestination = Screen.HOME) {
         composable(Screen.HOME) {
             HomeScreen(
@@ -38,18 +39,19 @@ fun MessageInABottleAppNavHost(
                 onPostMessageHandler = { navController.navigate(Flow.POST_MESSAGE_FLOW) },
             )
         }
-        composable(Screen.GET_MESSAGES) { GetMessageScreen() }
+        composable(Screen.GET_MESSAGES) { GetMessageScreen(backHandler) }
         postGraphFlow(navController, appState)
         composable(Screen.VIEW_MESSAGES) { ViewMessagesScreen() }
         composable(Screen.LOGIN) { LoginScreen() }
     }
 }
 
-fun NavGraphBuilder.postGraphFlow(navController: NavHostController, appState: AppState) {
-    val startDestination =
-        if (appState.isAuthenticated) Screen.POST_MESSAGE else Screen.POST_MESSAGE_EDUCATIONAL
+fun NavGraphBuilder.postGraphFlow(
+    navController: NavHostController, appState: AppState
+) {
+
     navigation(
-        startDestination = startDestination,
+        startDestination = if (appState.isAuthenticated) Screen.POST_MESSAGE else Screen.POST_MESSAGE_EDUCATIONAL,
         route = Flow.POST_MESSAGE_FLOW,
     ) {
         composable(Screen.POST_MESSAGE_EDUCATIONAL) {

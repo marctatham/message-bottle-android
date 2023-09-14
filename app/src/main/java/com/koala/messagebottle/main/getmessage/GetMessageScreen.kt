@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,16 +31,25 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.koala.messagebottle.R
 import com.koala.messagebottle.common.components.BottlingButton
 import com.koala.messagebottle.common.components.BottlingButtonType
+import com.koala.messagebottle.common.messages.domain.MessageEntity
 
-// TODO: this works well, make it clean
-//       - also important to chop it up
-//       - also important to make the preview modes work better!
-//       - investigate this issue of the animation not restarting
 @Composable
 fun GetMessageScreen(
+    onBackHandler: () -> Unit,
     viewModel: GetMessageViewModel = hiltViewModel(),
 ) {
-    val uiState: MessageUiState by viewModel.state.collectAsStateWithLifecycle()
+    GetMessageView(
+        onBackHandler = onBackHandler,
+        uiState = viewModel.state.collectAsStateWithLifecycle().value,
+    )
+}
+
+
+@Composable
+fun GetMessageView(
+    onBackHandler: () -> Unit,
+    uiState: MessageUiState,
+) {
     val isPlaying = uiState is MessageUiState.PlayingAnimation
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.message_from_bottle))
     val progress: Float by animateLottieCompositionAsState(
@@ -66,8 +76,6 @@ fun GetMessageScreen(
             .padding(16.dp)
     ) {
 
-
-
         LottieAnimation(
             composition = composition,
             progress = { progress },
@@ -80,7 +88,7 @@ fun GetMessageScreen(
         if (isAnimationComplete) {
             if (uiState is MessageUiState.MessageReceived) {
                 Text(
-                    text = (uiState as MessageUiState.MessageReceived).messageEntity.message,
+                    text = uiState.messageEntity.message,
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = alpha),
                     fontSize = 36.sp,
                     fontWeight = FontWeight.Normal,
@@ -102,11 +110,41 @@ fun GetMessageScreen(
             BottlingButton(
                 text = R.string.get_message_button_acknowledge,
                 buttonType = BottlingButtonType.PRIMARY,
-                onTapHandler = viewModel::getNewMessage,
+                onTapHandler = onBackHandler,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .alpha(alpha)
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun GetMessageReceivedPreview(
+) {
+    GetMessageView(
+        onBackHandler = {},
+        uiState = MessageUiState.MessageReceived(MessageEntity("1", "Hello World"))
+    )
+}
+
+@Preview
+@Composable
+private fun GetMessageAnimatingPreview(
+) {
+    GetMessageView(
+        onBackHandler = {},
+        uiState = MessageUiState.PlayingAnimation,
+    )
+}
+
+@Preview
+@Composable
+private fun GetMessageFailedPreview(
+) {
+    GetMessageView(
+        onBackHandler = {},
+        uiState = MessageUiState.Failure
+    )
 }
