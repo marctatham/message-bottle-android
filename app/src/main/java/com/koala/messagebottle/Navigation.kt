@@ -7,7 +7,6 @@ class Screen {
         const val POST_MESSAGE: String = "post_message"
         const val POST_MESSAGE_EDUCATIONAL: String = "post_message_login_required"
         const val VIEW_MESSAGES: String = "view_messages"
-        const val LOGIN: String = "login"
     }
 }
 

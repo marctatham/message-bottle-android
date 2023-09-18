@@ -11,7 +11,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.koala.messagebottle.login.LoginScreen
 import com.koala.messagebottle.main.getmessage.GetMessageScreen
 import com.koala.messagebottle.main.home.HomeScreen
 import com.koala.messagebottle.main.postmessage.ui.LoginRequiredToPostScreen
@@ -42,7 +41,6 @@ fun MessageInABottleAppNavHost(
         composable(Screen.GET_MESSAGES) { GetMessageScreen(backHandler) }
         postGraphFlow(navController, appState)
         composable(Screen.VIEW_MESSAGES) { ViewMessagesScreen() }
-        composable(Screen.LOGIN) { LoginScreen() }
     }
 }
 
@@ -59,7 +57,7 @@ fun NavGraphBuilder.postGraphFlow(
         composable(Screen.POST_MESSAGE_EDUCATIONAL) {
             val backHandler: () -> Unit = { navController.popBackStack() }
             LoginRequiredToPostScreen(
-                onProceedHandler = { navController.navigate(Screen.LOGIN) },
+                onProceedHandler = { navController.navigate(Screen.POST_MESSAGE) },
                 onBackHandler = backHandler,
                 onCancelHandler = backHandler
             )

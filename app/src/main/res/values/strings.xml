@@ -50,6 +50,10 @@
     <string name="access_revoked">Access has been revoked</string>
     <string name="more_sign_in_providers_soon">More sign in providers coming soon!</string>
     <string name="btnSignIn">Sign in</string>
+    <string name="loginBottomSheet_title">Log in to continue</string>
+    <string name="loginBottomSheet_subtext">By continuing, you agree to our User Agreement and acknowledge that you understand the Privacy Policy.</string>
+    <string name="loginBottomSheet_error">There was a problem signing you in, please try an alternative sign-in method.</string>
+    <string name="btnSignInWithGoogle">Sign in with Google</string>
     <string name="btnSignInAnonymously">Sign in Anonymously</string>
     <string name="btnGetMessage">Get a message from a bottle</string>
     <string name="snack_get_message_failed">"There was a problem fetching the message</string>
