@@ -73,14 +73,12 @@ fun GetMessageView(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
-            .padding(16.dp)
     ) {
 
         BottlingAppBar(
             onBackHandler = onBackHandler,
             modifier = Modifier.align(Alignment.TopCenter)
         )
-
         LottieAnimation(
             composition = composition,
             progress = { progress },
@@ -115,6 +113,7 @@ fun GetMessageView(
                 buttonType = BottlingButtonType.PRIMARY,
                 onTapHandler = onBackHandler,
                 modifier = Modifier
+                    .padding(16.dp)
                     .align(Alignment.BottomCenter)
                     .alpha(alpha)
             )
