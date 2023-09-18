@@ -35,7 +35,9 @@ fun MessageInABottleApp() {
                 onCancelHandler = backHandler
             )
         }
-        composable(Screen.POST_MESSAGE) { PostScreen() }
+        composable(Screen.POST_MESSAGE) { PostScreen(
+            onBackHandler = backHandler,
+        ) }
         composable(Screen.VIEW_MESSAGES) { ViewMessagesScreen() }
     }
 }

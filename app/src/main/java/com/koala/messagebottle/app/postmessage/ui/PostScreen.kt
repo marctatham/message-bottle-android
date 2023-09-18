@@ -17,45 +17,59 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.koala.messagebottle.R
+import com.koala.messagebottle.common.components.BottlingAppBar
 import com.koala.messagebottle.common.components.BottlingButton
 import com.koala.messagebottle.common.messages.domain.MessageEntity
+import kotlinx.coroutines.launch
 
 @Composable
 fun PostScreen(
+    onBackHandler: () -> Unit,
     viewModel: PostMessageViewModel = hiltViewModel(),
 ) {
     val state: PostMessageUiState by viewModel.state.collectAsStateWithLifecycle()
     val onPostHandler: (messageToPost: String) -> Unit = { viewModel.postMessage(it) }
-    PostView(state, onPostHandler)
+    PostView(onBackHandler, state, onPostHandler)
 }
 
 @Composable
-fun PostView(
+private fun PostView(
+    onBackHandler: () -> Unit,
     uiState: PostMessageUiState,
     onPostHandler: (messageToPost: String) -> Unit,
 ) {
     var textState: String by rememberSaveable { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
+    val wrappedPostHandler: () -> Unit = {
+        scope.launch { onPostHandler(textState) }
+            .invokeOnCompletion {
+                onBackHandler()
+            }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
-            .padding(16.dp)
     ) {
+        BottlingAppBar(
+            onBackHandler = onBackHandler,
+            modifier = Modifier.fillMaxWidth()
+        )
         Spacer(modifier = Modifier.weight(1f))
 
         if (uiState is PostMessageUiState.Loading) {
@@ -64,12 +78,15 @@ fun PostView(
                 strokeWidth = 4.dp
             )
         } else {
-            BottlingMessageCard(value = textState, onValueChange = { textState = it })
+            BottlingMessageCard(
+                value = textState,
+                onValueChange = { textState = it },
+                modifier = Modifier.padding(16.dp)
+            )
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // conditionally display failure reason
         if (uiState is PostMessageUiState.Failure) {
             val reason = uiState.reason
             val failureReason = if (reason is FailureReason.NotAuthenticated) {
@@ -80,18 +97,20 @@ fun PostView(
             Text(
                 text = failureReason,
                 modifier = Modifier.padding(16.dp),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.error,
             )
         }
 
-        val isSuccessOrLoading = uiState is PostMessageUiState.Success || uiState is PostMessageUiState.Loading
+        val isSuccessOrLoading =
+            uiState is PostMessageUiState.Success || uiState is PostMessageUiState.Loading
+
         BottlingButton(
             text = R.string.btnPostMessage,
             enabled = !isSuccessOrLoading,
             modifier = Modifier.padding(16.dp),
-            onTapHandler = { onPostHandler(textState) },
+            onTapHandler = { wrappedPostHandler() },
         )
     }
 }
@@ -105,9 +124,9 @@ private fun BottlingMessageCard(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.background
         ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant),
+        border = BorderStroke(1.dp, Color.Companion.Black),
         shape = MaterialTheme.shapes.large,
         elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
     ) {
@@ -118,16 +137,16 @@ private fun BottlingMessageCard(
             text = stringResource(id = R.string.title_post_message),
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onBackground
         )
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp),
+                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
+                .background(MaterialTheme.colorScheme.background),
             onValueChange = onValueChange,
             value = value,
             maxLines = 15,
-
             placeholder = { Text(text = stringResource(R.string.post_message_hint)) },
         )
     }
@@ -145,17 +164,17 @@ private fun BottlingMessageCard() {
 @Preview
 @Composable
 fun PostViewPreviewIdle() {
-    PostView(PostMessageUiState.Idle, onPostHandler = {})
+    PostView({}, PostMessageUiState.Idle, onPostHandler = {})
 }
 
 @Preview
 @Composable
 fun PostViewPreviewFailure() {
-    PostView(PostMessageUiState.Failure(FailureReason.NotAuthenticated), onPostHandler = {})
+    PostView({}, PostMessageUiState.Failure(FailureReason.NotAuthenticated), onPostHandler = {})
 }
 
 @Preview
 @Composable
 fun PostViewPreviewSuccess() {
-    PostView(PostMessageUiState.Success(MessageEntity("", "")), onPostHandler = {})
+    PostView({}, PostMessageUiState.Success(MessageEntity("", "")), onPostHandler = {})
 }
