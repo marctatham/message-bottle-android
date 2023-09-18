@@ -9,9 +9,3 @@ class Screen {
         const val VIEW_MESSAGES: String = "view_messages"
     }
 }
-
-class Flow {
-    companion object {
-        const val POST_MESSAGE_FLOW: String = "post_message_flow"
-    }
-}
