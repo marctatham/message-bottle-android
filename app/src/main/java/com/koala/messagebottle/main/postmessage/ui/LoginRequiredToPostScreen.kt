@@ -1,7 +1,7 @@
 package com.koala.messagebottle.main.postmessage.ui
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -35,9 +35,8 @@ fun LoginRequiredToPostScreen(
         }
     }
 
-    // Screen content
     EducationalScreen(
-        image = Icons.Default.Security,
+        image = Icons.Default.AccountCircle,
         imageDescription = R.string.login_required_image_description,
         title = R.string.login_required_title,
         description = R.string.login_required_description,
