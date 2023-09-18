@@ -1,4 +1,4 @@
-package com.koala.messagebottle.main.home
+package com.koala.messagebottle.app.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

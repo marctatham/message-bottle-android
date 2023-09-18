@@ -1,4 +1,4 @@
-package com.koala.messagebottle.main
+package com.koala.messagebottle.app
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

@@ -1,4 +1,4 @@
-package com.koala.messagebottle.main.getmessage
+package com.koala.messagebottle.app.getmessage
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState

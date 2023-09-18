@@ -4,8 +4,8 @@ import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepos
 import com.koala.messagebottle.common.authentication.domain.ProviderType
 import com.koala.messagebottle.common.authentication.domain.UserEntity
 import com.koala.messagebottle.common.messages.domain.IMessageRepository
-import com.koala.messagebottle.main.postmessage.domain.PostMessageResult
-import com.koala.messagebottle.main.postmessage.domain.PostMessageUseCase
+import com.koala.messagebottle.app.postmessage.domain.PostMessageResult
+import com.koala.messagebottle.app.postmessage.domain.PostMessageUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
