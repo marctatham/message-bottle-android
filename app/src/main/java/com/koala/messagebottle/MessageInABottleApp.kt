@@ -47,11 +47,8 @@ fun MessageInABottleAppNavHost(
 fun NavGraphBuilder.postGraphFlow(
     navController: NavHostController, appState: AppState
 ) {
-
     navigation(
-        // TODO: roll back this change when I no longer need a hook into the login screen
-        //startDestination = if (appState.isAuthenticated) Screen.POST_MESSAGE else Screen.POST_MESSAGE_EDUCATIONAL,
-        startDestination = Screen.POST_MESSAGE_EDUCATIONAL,
+        startDestination = if (appState.isAuthenticated) Screen.POST_MESSAGE else Screen.POST_MESSAGE_EDUCATIONAL,
         route = Flow.POST_MESSAGE_FLOW,
     ) {
         composable(Screen.POST_MESSAGE_EDUCATIONAL) {
