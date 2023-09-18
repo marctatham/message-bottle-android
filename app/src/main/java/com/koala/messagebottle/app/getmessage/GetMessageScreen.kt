@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -132,7 +133,7 @@ private fun UnbottledMessageCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface.copy(alpha = alpha)
         ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant),
+        border = BorderStroke(1.dp, Color.Companion.Black),
         shape = MaterialTheme.shapes.extraSmall,
         elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
     ) {
