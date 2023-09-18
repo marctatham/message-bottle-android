@@ -1,4 +1,4 @@
-//import androidx.compose.foundation.Canvas
+package com.koala.messagebottle.common.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background

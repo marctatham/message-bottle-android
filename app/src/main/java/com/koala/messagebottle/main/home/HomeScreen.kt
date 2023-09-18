@@ -1,6 +1,5 @@
 package com.koala.messagebottle.main.home
 
-import CustomBox
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +21,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.koala.messagebottle.R
 import com.koala.messagebottle.common.components.BottlingButton
 import com.koala.messagebottle.common.components.BottlingButtonType
+import com.koala.messagebottle.common.components.CustomBox
 
 @Composable
 fun HomeScreen(
