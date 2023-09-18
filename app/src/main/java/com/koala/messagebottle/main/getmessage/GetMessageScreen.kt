@@ -41,10 +41,8 @@ fun GetMessageScreen(
     onBackHandler: () -> Unit,
     viewModel: GetMessageViewModel = hiltViewModel(),
 ) {
-    GetMessageView(
-        onBackHandler = onBackHandler,
-        uiState = viewModel.state.collectAsStateWithLifecycle().value,
-    )
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
+    GetMessageView(onBackHandler = onBackHandler, uiState = uiState)
 }
 
 @Composable
