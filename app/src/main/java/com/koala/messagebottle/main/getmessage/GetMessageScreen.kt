@@ -3,12 +3,15 @@ package com.koala.messagebottle.main.getmessage
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +46,6 @@ fun GetMessageScreen(
         uiState = viewModel.state.collectAsStateWithLifecycle().value,
     )
 }
-
 
 @Composable
 fun GetMessageView(
@@ -92,16 +94,13 @@ fun GetMessageView(
 
         if (isAnimationComplete) {
             if (uiState is MessageUiState.MessageReceived) {
-                Text(
+                UnbottledMessageCard(
+                    unbottledMessage = uiState.messageEntity.message,
+                    alpha = alpha,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.Center),
-                    text = uiState.messageEntity.message,
-                    style = MaterialTheme.typography.titleLarge,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = alpha)
                 )
-
             } else if (uiState is MessageUiState.Failure) {
                 Image(
                     painter = painterResource(id = android.R.drawable.stat_notify_error),
@@ -124,6 +123,42 @@ fun GetMessageView(
         }
     }
 }
+
+@Composable
+private fun UnbottledMessageCard(
+    unbottledMessage: String,
+    alpha: Float,
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = alpha)
+        ),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant),
+        shape = MaterialTheme.shapes.extraSmall,
+        elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
+    ) {
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = unbottledMessage,
+            style = MaterialTheme.typography.titleLarge,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun UnbottledMessageCardPreview(
+) {
+    UnbottledMessageCard(
+        unbottledMessage = "This is the message I have received",
+        alpha = 1f
+    )
+}
+
 
 @Preview
 @Composable
