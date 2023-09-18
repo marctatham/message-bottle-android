@@ -68,6 +68,7 @@
     <string name="txtMessageLoading">…</string>
 
     <string name="title_post_message">What would you like to say?</string>
+    <string name="post_message_label">Your message</string>
     <string name="post_message_hint">Often there are things we can say to complete strangers that we can\'t say to our closest friends 🧐</string>
 
 
