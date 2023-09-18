@@ -38,8 +38,6 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.koala.messagebottle.R
 import com.koala.messagebottle.common.components.BottlingButton
 import com.koala.messagebottle.common.components.BottlingButtonType
-import com.koala.messagebottle.login.LoginViewModel
-import com.koala.messagebottle.login.State
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber

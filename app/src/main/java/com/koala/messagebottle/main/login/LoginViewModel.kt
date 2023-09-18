@@ -1,4 +1,4 @@
-package com.koala.messagebottle.login
+package com.koala.messagebottle.main.login
 
 
 import androidx.lifecycle.ViewModel
@@ -57,6 +57,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    // TODO: this will need to be re-introduced via the profile screen that's coming
     fun initiateSignOut() {
         viewModelScope.launch {
             _state.value = State.Loading
