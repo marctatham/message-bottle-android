@@ -25,10 +25,12 @@ enum class BottlingButtonType {
 fun BottlingButton(
     @StringRes text: Int,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     buttonType: BottlingButtonType = BottlingButtonType.PRIMARY,
     onTapHandler: () -> Unit = {},
 ) = BottlingButton(
     text = stringResource(text),
+    enabled = enabled,
     modifier = modifier,
     buttonType = buttonType,
     onTapHandler = onTapHandler,
@@ -38,6 +40,7 @@ fun BottlingButton(
 private fun BottlingButton(
     text: String,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     buttonType: BottlingButtonType = BottlingButtonType.PRIMARY,
     onTapHandler: () -> Unit = {},
 ) {
@@ -47,6 +50,7 @@ private fun BottlingButton(
         onClick = onTapHandler,
         modifier = modifier.fillMaxWidth(),
         colors = colors,
+        enabled = enabled,
         shape = MaterialTheme.shapes.extraSmall,
     ) { Text(text = text) }
 }
