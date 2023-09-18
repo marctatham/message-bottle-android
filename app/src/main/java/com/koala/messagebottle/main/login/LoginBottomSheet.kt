@@ -1,4 +1,4 @@
-package com.koala.messagebottle.main.postmessage.ui
+package com.koala.messagebottle.main.login
 
 import android.app.Activity
 import android.content.Context

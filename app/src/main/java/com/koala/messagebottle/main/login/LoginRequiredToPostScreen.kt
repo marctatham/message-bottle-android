@@ -1,4 +1,4 @@
-package com.koala.messagebottle.main.postmessage.ui
+package com.koala.messagebottle.main.login
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
