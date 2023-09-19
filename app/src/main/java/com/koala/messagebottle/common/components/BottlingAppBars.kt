@@ -42,7 +42,7 @@ fun BottlingAppBar(
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = stringResource(id = R.string.button_back),
-                    modifier = Modifier.size(14.dp)
+                    modifier = Modifier.size(24.dp)
                 )
             }
         },
