@@ -42,13 +42,13 @@ fun HomeScreen(
                     composition = composition,
                     iterations = LottieConstants.IterateForever,
                     speed = 0.6f,
-                    modifier = Modifier.fillMaxSize(0.6f)
+                    modifier = Modifier.fillMaxSize(0.4f)
                 )
 
                 Text(
                     modifier = Modifier.padding(8.dp),
                     text = stringResource(id = R.string.app_name),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.displayLarge,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -56,7 +56,7 @@ fun HomeScreen(
                 Text(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     text = stringResource(id = R.string.home_description),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
