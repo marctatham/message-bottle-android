@@ -2,8 +2,8 @@ package com.koala.messagebottle.app.postmessage.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -61,58 +61,69 @@ private fun PostScreen(
             }
     }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
     ) {
         BottlingAppBar(
             onBackHandler = onBackHandler,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter)
         )
-        Spacer(modifier = Modifier.weight(1f))
 
         if (uiState is PostMessageUiState.Loading) {
             CircularProgressIndicator(
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier
+                    .size(48.dp)
+                    .align(Alignment.Center),
                 strokeWidth = 4.dp
             )
         } else {
             BottlingMessageCard(
                 value = textState,
                 onValueChange = { textState = it },
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.Center)
+                    .padding(16.dp)
             )
         }
 
-        Spacer(modifier = Modifier.weight(1f))
-
-        if (uiState is PostMessageUiState.Failure) {
-            val reason = uiState.reason
-            val failureReason = if (reason is FailureReason.NotAuthenticated) {
-                stringResource(R.string.snack_post_message_requires_auth)
-            } else {
-                stringResource(R.string.snack_post_message_failed)
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(16.dp)
+        ) {
+            if (uiState is PostMessageUiState.Failure) {
+                val reason = uiState.reason
+                val failureReason = if (reason is FailureReason.NotAuthenticated) {
+                    stringResource(R.string.snack_post_message_requires_auth)
+                } else {
+                    stringResource(R.string.snack_post_message_failed)
+                }
+                Text(
+                    text = failureReason,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.error,
+                )
             }
-            Text(
-                text = failureReason,
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.error,
+
+            val isSuccessOrLoading =
+                uiState is PostMessageUiState.Success || uiState is PostMessageUiState.Loading
+
+            BottlingButton(
+                text = R.string.btnPostMessage,
+                enabled = !isSuccessOrLoading,
+                onTapHandler = { wrappedPostHandler() },
             )
         }
 
-        val isSuccessOrLoading =
-            uiState is PostMessageUiState.Success || uiState is PostMessageUiState.Loading
-
-        BottlingButton(
-            text = R.string.btnPostMessage,
-            enabled = !isSuccessOrLoading,
-            modifier = Modifier.padding(16.dp),
-            onTapHandler = { wrappedPostHandler() },
-        )
     }
 }
 
