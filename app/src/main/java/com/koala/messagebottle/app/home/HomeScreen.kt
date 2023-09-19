@@ -3,6 +3,7 @@ package com.koala.messagebottle.app.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,26 +43,19 @@ fun HomeScreen(
                     composition = composition,
                     iterations = LottieConstants.IterateForever,
                     speed = 0.6f,
-                    modifier = Modifier.fillMaxSize(0.4f)
+                    modifier = Modifier.fillMaxSize(0.6f)
                 )
 
                 Text(
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .offset(x = 0.dp, y = (-100).dp),
                     text = stringResource(id = R.string.app_name),
                     style = MaterialTheme.typography.displayLarge,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurface
                 )
-
-                Text(
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    text = stringResource(id = R.string.home_description),
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
             }
-
         },
         outsideCanvasContent = {
             Column(
@@ -69,6 +63,19 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.Bottom,
                 modifier = Modifier.fillMaxSize()
             ) {
+
+                Text(
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 16.dp,
+                        top = 0.dp
+                    ),
+                    text = stringResource(id = R.string.home_description),
+                    style = MaterialTheme.typography.titleSmall,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
 
                 BottlingButton(
                     text = R.string.home_button_get_message,
@@ -81,7 +88,12 @@ fun HomeScreen(
                     text = R.string.home_button_put_message,
                     buttonType = BottlingButtonType.SECONDARY,
                     onTapHandler = onPostMessageHandler,
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp)
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        top = 8.dp,
+                        bottom = 16.dp
+                    )
                 )
             }
         }
