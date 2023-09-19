@@ -25,7 +25,7 @@ class GetMessageViewModel @Inject constructor(
         getNewMessage()
     }
 
-    fun getNewMessage() {
+    private fun getNewMessage() {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
             Timber.e(exception, "There was a problem retrieving the message")
             _state.value = MessageUiState.Failure

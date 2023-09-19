@@ -63,8 +63,11 @@ private fun GetMessageView(
     val transitionEnterFade = fadeIn(animationSpec = tween(2000, 0, FastOutSlowInEasing))
     val transitionExitFade = fadeOut(animationSpec = tween(2000, 0, FastOutSlowInEasing))
 
-    val isAnimationComplete: Boolean = progress == 1f
-    val lottieVisible = !isAnimationComplete
+    // determined by both the animation progress and the uiState being in a final state
+    val isMessageVisible = progress == 1f // animation complete
+            && (uiState is MessageUiState.PlayingAnimation).not() // in either success or failure state
+    val lottieVisible = !isMessageVisible
+
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -88,52 +91,48 @@ private fun GetMessageView(
         }
 
         AnimatedVisibility(
-            visible = isAnimationComplete,
+            visible = isMessageVisible,
             enter = transitionEnterFade,
             exit = transitionExitFade
         ) {
-
             Box(modifier = Modifier.fillMaxSize()) {
-                if (isAnimationComplete) {
-                    if (uiState is MessageUiState.MessageReceived) {
-                        UnbottledMessageCard(
-                            unbottledMessage = uiState.messageEntity.message,
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .align(Alignment.Center)
-                                .animateEnterExit(
-                                    enter = slideInVertically(
-                                        animationSpec = tween(
-                                            3000,
-                                            0,
-                                            FastOutSlowInEasing
-                                        )
-                                    ),
-                                    exit = transitionExitFade,
-                                    label = "card slide in animation"
-                                )
-                        )
-                    } else if (uiState is MessageUiState.Failure) {
-                        Image(
-                            painter = painterResource(id = android.R.drawable.stat_notify_error),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth(0.4f)
-                                .align(Alignment.Center)
-                                .padding(16.dp)
-                        )
-                    }
-
-                    BottlingButton(
-                        text = R.string.get_message_button_acknowledge,
-                        buttonType = BottlingButtonType.PRIMARY,
-                        onTapHandler = onBackHandler,
+                if (uiState is MessageUiState.MessageReceived) {
+                    UnbottledMessageCard(
+                        unbottledMessage = uiState.messageEntity.message,
                         modifier = Modifier
                             .padding(16.dp)
-                            .align(Alignment.BottomCenter)
+                            .align(Alignment.Center)
+                            .animateEnterExit(
+                                enter = slideInVertically(
+                                    animationSpec = tween(
+                                        3000,
+                                        0,
+                                        FastOutSlowInEasing
+                                    )
+                                ),
+                                exit = transitionExitFade,
+                                label = "card slide in animation"
+                            )
+                    )
+                } else if (uiState is MessageUiState.Failure) {
+                    Image(
+                        painter = painterResource(id = android.R.drawable.stat_notify_error),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth(0.4f)
+                            .align(Alignment.Center)
+                            .padding(16.dp)
                     )
                 }
 
+                BottlingButton(
+                    text = R.string.get_message_button_acknowledge,
+                    buttonType = BottlingButtonType.PRIMARY,
+                    onTapHandler = onBackHandler,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.BottomCenter)
+                )
             }
         }
     }
