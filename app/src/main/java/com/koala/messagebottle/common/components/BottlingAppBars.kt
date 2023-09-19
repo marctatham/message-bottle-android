@@ -1,5 +1,7 @@
 package com.koala.messagebottle.common.components
 
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -9,11 +11,13 @@ import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.koala.messagebottle.R
@@ -22,10 +26,24 @@ import com.koala.messagebottle.R
 @Composable
 fun BottlingAppBar(
     modifier: Modifier = Modifier,
-    onBackHandler: () -> Unit
+    onBackHandler: () -> Unit,
+    @StringRes title: Int = Int.MIN_VALUE
 ) {
     TopAppBar(
-        title = {},
+        title = {
+            if (title != Int.MIN_VALUE) {
+                Text(
+                    modifier = Modifier.padding(
+                        start = 8.dp,
+                        end = 16.dp,
+                    ),
+                    text = stringResource(id = title),
+                    style = MaterialTheme.typography.titleLarge,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+        },
         modifier = modifier,
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.background
@@ -52,5 +70,9 @@ fun BottlingAppBar(
 @Preview
 @Composable
 fun BottlingAppBarPreview() {
-    BottlingAppBar(onBackHandler = {})
+    BottlingAppBar(
+        onBackHandler = {},
+        modifier = Modifier.fillMaxWidth(),
+        title = R.string.app_name
+    )
 }
