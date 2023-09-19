@@ -69,7 +69,7 @@
     <string name="post_message_char_count">%1$s characters"</string>
     <string name="txtMessageLoading">…</string>
 
-    <string name="title_post_message">Your BottleCast </string>
+    <string name="title_post_message">Your BottleCast</string>
     <string name="post_message_hint">🌟 Need a nudge to start? How about this: \nIf you could send a message to anyone, anywhere, what would it say?</string>
     <string name="btnPostMessage">Cast Away!</string>
 

@@ -1,21 +1,25 @@
 package com.koala.messagebottle.app.postmessage.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -42,56 +46,74 @@ private fun PostMessageScreen(
     onPostHandler: (messageToPost: String) -> Unit,
 ) {
     var textState: String by rememberSaveable { mutableStateOf("") }
-
-    Box(
+    Column(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
         BottlingAppBar(
             onBackHandler = onBackHandler,
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.TopCenter)
+            modifier = Modifier.fillMaxWidth(),
+            title = R.string.title_post_message
         )
 
-        if (uiState is PostMessageUiState.Loading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(48.dp)
-                    .align(Alignment.Center),
-                strokeWidth = 4.dp
-            )
-        } else {
-            BottlingMessageCard(
-                value = textState,
-                onValueChange = { textState = it },
+        TextField(
+            modifier = Modifier.weight(1f),
+            value = textState,
+            onValueChange = { textState = it },
+            singleLine = false,
+            placeholder = {
+                Text(text = stringResource(R.string.post_message_hint))
+            },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ),
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences,
+                autoCorrect = true
+            ),
+        )
+
+        if (uiState is PostMessageUiState.Failure) {
+            BottlingFailureReason(
+                failure = uiState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .align(Alignment.Center)
-                    .padding(16.dp)
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp),
             )
         }
 
-        Column(
+        Text(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(16.dp)
-        ) {
-            if (uiState is PostMessageUiState.Failure) {
-                BottlingFailureReason(failure = uiState)
-            }
+                .fillMaxWidth()
+                .padding(16.dp),
+            text = stringResource(id = R.string.post_message_char_count, textState.length),
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.End,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
 
-            val isSuccessOrLoading =
-                uiState is PostMessageUiState.Success || uiState is PostMessageUiState.Loading
-            BottlingButton(
-                text = R.string.btnPostMessage,
-                enabled = !isSuccessOrLoading,
-                onTapHandler = { onPostHandler(textState) },
-            )
-        }
-
+        BottlingButton(
+            text = R.string.btnPostMessage,
+            enabled = isPostButtonEnabled(uiState),
+            onTapHandler = { onPostHandler(textState) },
+            isLoading = uiState is PostMessageUiState.Loading,
+            modifier = Modifier.padding(16.dp),
+        )
     }
+}
+
+private fun isPostButtonEnabled(uiState: PostMessageUiState): Boolean = when (uiState) {
+    is PostMessageUiState.Failure,
+    PostMessageUiState.Idle -> true
+
+    PostMessageUiState.Loading,
+    is PostMessageUiState.Success -> false
 }
 
 @Preview

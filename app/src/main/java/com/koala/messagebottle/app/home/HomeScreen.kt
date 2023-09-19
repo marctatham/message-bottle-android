@@ -67,21 +67,21 @@ fun HomeScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             ) {
 
                 BottlingButton(
                     text = R.string.home_button_get_message,
                     buttonType = BottlingButtonType.PRIMARY,
                     onTapHandler = onGetMessageHandler,
+                    modifier = Modifier.padding(horizontal = 16.dp)
                 )
 
                 BottlingButton(
                     text = R.string.home_button_put_message,
                     buttonType = BottlingButtonType.SECONDARY,
                     onTapHandler = onPostMessageHandler,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp)
                 )
             }
         }
