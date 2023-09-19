@@ -2,17 +2,16 @@ package com.koala.messagebottle.common.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -53,50 +52,93 @@ private fun BottlingButton(
     buttonType: BottlingButtonType = BottlingButtonType.PRIMARY,
     onTapHandler: () -> Unit = {},
 ) {
-    val buttonColors: ButtonColors = deriveButtonColors(buttonType = buttonType)
+    return when (buttonType) {
+        BottlingButtonType.PRIMARY -> BottlingButtonPrimary(
+            text = text,
+            modifier = modifier,
+            enabled = enabled,
+            isLoading = isLoading,
+            buttonType = buttonType,
+            onTapHandler = onTapHandler
+        )
+
+        BottlingButtonType.SECONDARY -> BottlingButtonSecondary(
+            text = text,
+            modifier = modifier,
+            enabled = enabled,
+            isLoading = isLoading,
+            buttonType = buttonType,
+            onTapHandler = onTapHandler
+        )
+    }
+}
+
+@Composable
+private fun BottlingButtonPrimary(
+    text: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    isLoading: Boolean = false,
+    buttonType: BottlingButtonType = BottlingButtonType.PRIMARY,
+    onTapHandler: () -> Unit = {},
+) {
     Button(
         onClick = onTapHandler,
         modifier = modifier
             .fillMaxWidth()
             .height(60.dp),
-        colors = buttonColors,
         enabled = enabled,
         shape = MaterialTheme.shapes.medium,
-        content = {
-            Text(
-                text = text,
-                style = MaterialTheme.typography.labelLarge,
-                minLines = 1,
-                modifier = Modifier
-                    .weight(1f)
-                    .align(Alignment.CenterVertically),
-                textAlign = TextAlign.Center,
-            )
-            if (isLoading) {
-                CircularProgressIndicator(
-                    strokeWidth = 4.dp,
-                    color = deriveIndicatorColor(buttonType),
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .align(Alignment.CenterVertically),
-                )
-            }
-        }
+        content = { ButtonContent(text, isLoading, buttonType) }
     )
 }
 
 @Composable
-private fun deriveButtonColors(buttonType: BottlingButtonType): ButtonColors {
-    return when (buttonType) {
-        BottlingButtonType.PRIMARY -> ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-        )
+private fun BottlingButtonSecondary(
+    text: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    isLoading: Boolean = false,
+    buttonType: BottlingButtonType = BottlingButtonType.PRIMARY,
+    onTapHandler: () -> Unit = {},
+) {
+    OutlinedButton(
+        onClick = onTapHandler,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(60.dp),
+        enabled = enabled,
+        shape = MaterialTheme.shapes.medium,
+        content = { ButtonContent(text, isLoading, buttonType) }
+    )
+}
 
-        BottlingButtonType.SECONDARY -> ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.secondary,
-            contentColor = MaterialTheme.colorScheme.onSecondary,
+
+@Composable
+private fun ButtonContent(
+    text: String,
+    isLoading: Boolean = false,
+    buttonType: BottlingButtonType = BottlingButtonType.PRIMARY,
+) {
+    Row {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge,
+            minLines = 1,
+            modifier = Modifier
+                .weight(1f)
+                .align(Alignment.CenterVertically),
+            textAlign = TextAlign.Center,
         )
+        if (isLoading) {
+            CircularProgressIndicator(
+                strokeWidth = 4.dp,
+                color = deriveIndicatorColor(buttonType),
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .align(Alignment.CenterVertically),
+            )
+        }
     }
 }
 
@@ -126,6 +168,12 @@ private fun BottlingButtonPreview() {
         BottlingButton(
             text = "Primary Button - Loading",
             buttonType = BottlingButtonType.PRIMARY,
+            isLoading = true
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        BottlingButton(
+            text = "Secondary Button - Loading",
+            buttonType = BottlingButtonType.SECONDARY,
             isLoading = true
         )
     }

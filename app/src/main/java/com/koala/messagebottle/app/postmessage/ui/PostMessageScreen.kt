@@ -46,6 +46,9 @@ private fun PostMessageScreen(
     onPostHandler: (messageToPost: String) -> Unit,
 ) {
     var textState: String by rememberSaveable { mutableStateOf("") }
+    val isCurrentlyEditable = isCurrentlyEditable(uiState)
+    val isCurrentlyInError = uiState is PostMessageUiState.Failure
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,6 +64,7 @@ private fun PostMessageScreen(
             modifier = Modifier.weight(1f),
             value = textState,
             onValueChange = { textState = it },
+            enabled = isCurrentlyEditable,
             singleLine = false,
             placeholder = {
                 Text(text = stringResource(R.string.post_message_hint))
@@ -79,9 +83,9 @@ private fun PostMessageScreen(
             ),
         )
 
-        if (uiState is PostMessageUiState.Failure) {
+        if (isCurrentlyInError) {
             BottlingFailureReason(
-                failure = uiState,
+                failure = uiState as PostMessageUiState.Failure,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp),
@@ -96,11 +100,12 @@ private fun PostMessageScreen(
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.End,
             color = MaterialTheme.colorScheme.onSurfaceVariant
+            //color = if (isCurrentlyInError)MaterialTheme.colorScheme.onError else MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         BottlingButton(
             text = R.string.btnPostMessage,
-            enabled = isPostButtonEnabled(uiState),
+            enabled = isCurrentlyEditable,
             onTapHandler = { onPostHandler(textState) },
             isLoading = uiState is PostMessageUiState.Loading,
             modifier = Modifier.padding(16.dp),
@@ -108,7 +113,7 @@ private fun PostMessageScreen(
     }
 }
 
-private fun isPostButtonEnabled(uiState: PostMessageUiState): Boolean = when (uiState) {
+private fun isCurrentlyEditable(uiState: PostMessageUiState): Boolean = when (uiState) {
     is PostMessageUiState.Failure,
     PostMessageUiState.Idle -> true
 
