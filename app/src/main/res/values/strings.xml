@@ -66,6 +66,7 @@
     <string name="snack_post_message_failed">Failed to post your message!"</string>
     <string name="snack_post_message_requires_auth">You must be logged in to post!"</string>
     <string name="snack_post_message_insufficient_length">Your message must be at least %1$s characters long"</string>
+    <string name="post_message_char_count">%1$s characters"</string>
     <string name="txtMessageLoading">…</string>
 
     <string name="title_post_message">Your BottleCast </string>
