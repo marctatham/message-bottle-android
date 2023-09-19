@@ -49,7 +49,7 @@ fun EducationalScreen(
         )
 
         Text(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(16.dp),
             text = stringResource(id = title),
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
@@ -57,7 +57,7 @@ fun EducationalScreen(
         )
 
         Text(
-            modifier = Modifier.padding(horizontal = 8.dp),
+            modifier = Modifier.padding(horizontal = 16.dp),
             text = stringResource(id = description),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
@@ -77,6 +77,7 @@ fun EducationalScreen(
                 text = secondaryButtonText,
                 buttonType = BottlingButtonType.SECONDARY,
                 onTapHandler = onSecondaryTapHandler,
+                modifier = Modifier.padding(top = 8.dp)
             )
         }
     }

@@ -56,7 +56,6 @@ fun LoginRequiredToPostScreen(
     }
 }
 
-
 @Preview
 @Composable
 private fun LoginRequiredToPostScreenPreview() {
