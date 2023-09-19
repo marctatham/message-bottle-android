@@ -123,7 +123,7 @@ private fun ButtonContent(
     Row {
         Text(
             text = text,
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.titleMedium,
             minLines = 1,
             modifier = Modifier
                 .weight(1f)
