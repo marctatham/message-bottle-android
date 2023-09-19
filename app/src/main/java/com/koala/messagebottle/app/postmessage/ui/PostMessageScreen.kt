@@ -31,17 +31,17 @@ import com.koala.messagebottle.common.messages.domain.MessageEntity
 import kotlinx.coroutines.launch
 
 @Composable
-fun PostScreen(
+fun PostMessageScreen(
     onBackHandler: () -> Unit,
     viewModel: PostMessageViewModel = hiltViewModel(),
 ) {
     val state: PostMessageUiState by viewModel.state.collectAsStateWithLifecycle()
     val onPostHandler: (messageToPost: String) -> Unit = { viewModel.postMessage(it) }
-    PostScreen(onBackHandler, state, onPostHandler)
+    PostMessageScreen(onBackHandler, state, onPostHandler)
 }
 
 @Composable
-private fun PostScreen(
+private fun PostMessageScreen(
     onBackHandler: () -> Unit,
     uiState: PostMessageUiState,
     onPostHandler: (messageToPost: String) -> Unit,
@@ -124,17 +124,17 @@ private fun PostScreen(
 @Preview
 @Composable
 fun PostViewPreviewIdle() {
-    PostScreen({}, PostMessageUiState.Idle, onPostHandler = {})
+    PostMessageScreen({}, PostMessageUiState.Idle, onPostHandler = {})
 }
 
 @Preview
 @Composable
 fun PostViewPreviewFailure() {
-    PostScreen({}, PostMessageUiState.Failure(FailureReason.NotAuthenticated), onPostHandler = {})
+    PostMessageScreen({}, PostMessageUiState.Failure(FailureReason.NotAuthenticated), onPostHandler = {})
 }
 
 @Preview
 @Composable
 fun PostViewPreviewSuccess() {
-    PostScreen({}, PostMessageUiState.Success(MessageEntity("", "")), onPostHandler = {})
+    PostMessageScreen({}, PostMessageUiState.Success(MessageEntity("", "")), onPostHandler = {})
 }

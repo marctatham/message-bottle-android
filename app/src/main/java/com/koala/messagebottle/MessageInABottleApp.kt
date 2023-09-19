@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.koala.messagebottle.app.getmessage.GetMessageScreen
 import com.koala.messagebottle.app.home.HomeScreen
 import com.koala.messagebottle.app.login.LoginRequiredToPostScreen
-import com.koala.messagebottle.app.postmessage.ui.PostScreen
+import com.koala.messagebottle.app.postmessage.ui.PostMessageScreen
 import com.koala.messagebottle.app.viewmessages.ViewMessagesScreen
 
 @Composable
@@ -35,9 +35,11 @@ fun MessageInABottleApp() {
                 onCancelHandler = backHandler
             )
         }
-        composable(Screen.POST_MESSAGE) { PostScreen(
-            onBackHandler = backHandler,
-        ) }
+        composable(Screen.POST_MESSAGE) {
+            PostMessageScreen(
+                onBackHandler = backHandler,
+            )
+        }
         composable(Screen.VIEW_MESSAGES) { ViewMessagesScreen() }
     }
 }
