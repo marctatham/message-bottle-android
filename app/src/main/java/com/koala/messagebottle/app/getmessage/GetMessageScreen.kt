@@ -1,10 +1,12 @@
 package com.koala.messagebottle.app.getmessage
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -41,6 +43,7 @@ fun GetMessageScreen(
     GetMessageView(onBackHandler = onBackHandler, uiState = uiState)
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun GetMessageView(
     onBackHandler: () -> Unit,
@@ -57,6 +60,9 @@ private fun GetMessageView(
         cancellationBehavior = LottieCancellationBehavior.OnIterationFinish
     )
 
+    val transitionEnterFade = fadeIn(animationSpec = tween(2000, 0, FastOutSlowInEasing))
+    val transitionExitFade = fadeOut(animationSpec = tween(2000, 0, FastOutSlowInEasing))
+
     val isAnimationComplete: Boolean = progress == 1f
     val lottieVisible = !isAnimationComplete
     Box(
@@ -71,8 +77,8 @@ private fun GetMessageView(
 
         AnimatedVisibility(
             visible = lottieVisible,
-            enter = fadeIn(animationSpec = tween(2000, 0, FastOutSlowInEasing)),
-            exit = fadeOut(animationSpec = tween(2000, 0, FastOutSlowInEasing))
+            enter = transitionEnterFade,
+            exit = transitionExitFade
         ) {
             LottieAnimation(
                 composition = composition,
@@ -83,8 +89,8 @@ private fun GetMessageView(
 
         AnimatedVisibility(
             visible = isAnimationComplete,
-            enter = fadeIn(animationSpec = tween(2000, 0, FastOutSlowInEasing)),
-            exit = fadeOut(animationSpec = tween(2000, 0, FastOutSlowInEasing))
+            enter = transitionEnterFade,
+            exit = transitionExitFade
         ) {
 
             Box(modifier = Modifier.fillMaxSize()) {
@@ -95,6 +101,17 @@ private fun GetMessageView(
                             modifier = Modifier
                                 .padding(16.dp)
                                 .align(Alignment.Center)
+                                .animateEnterExit(
+                                    enter = slideInVertically(
+                                        animationSpec = tween(
+                                            3000,
+                                            0,
+                                            FastOutSlowInEasing
+                                        )
+                                    ),
+                                    exit = transitionExitFade,
+                                    label = "card slide in animation"
+                                )
                         )
                     } else if (uiState is MessageUiState.Failure) {
                         Image(
