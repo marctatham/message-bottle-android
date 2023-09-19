@@ -38,6 +38,9 @@ class PostMessageViewModel @Inject constructor(
 
                 PostMessageResult.Unauthenticated -> _state.value =
                     PostMessageUiState.Failure(FailureReason.NotAuthenticated)
+
+                PostMessageResult.InsufficientLength -> _state.value =
+                    PostMessageUiState.Failure(FailureReason.InsufficientLength)
             }
         }
     }
@@ -48,6 +51,8 @@ sealed class FailureReason {
     data object Unknown : FailureReason()
 
     data object NotAuthenticated : FailureReason()
+
+    data object InsufficientLength : FailureReason()
 }
 
 sealed class PostMessageUiState {
@@ -59,6 +64,4 @@ sealed class PostMessageUiState {
     data class Failure(val reason: FailureReason) : PostMessageUiState()
 
     data class Success(val messageEntity: MessageEntity) : PostMessageUiState()
-
 }
-
