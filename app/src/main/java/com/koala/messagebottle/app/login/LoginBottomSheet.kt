@@ -129,11 +129,10 @@ private fun LoginBottomSheet(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 0.dp, bottom = 32.dp)
             ) {
                 Text(
-                    modifier = Modifier.padding(bottom = 8.dp),
                     text = stringResource(id = R.string.loginBottomSheet_title),
                     style = MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.outline
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 BottlingButton(
@@ -141,13 +140,14 @@ private fun LoginBottomSheet(
                     buttonType = BottlingButtonType.PRIMARY,
                     enabled = areLoginOptionsEnabled,
                     onTapHandler = signInWithGoogleHandler,
-
-                    )
+                    modifier = Modifier.padding(top = 8.dp)
+                )
                 BottlingButton(
                     text = R.string.btnSignInAnonymously,
                     buttonType = BottlingButtonType.SECONDARY,
                     enabled = areLoginOptionsEnabled,
                     onTapHandler = signInAnonymouslyHandler,
+                    modifier = Modifier.padding(top = 8.dp)
                 )
 
                 if (uiState is State.Failure) {
@@ -161,11 +161,16 @@ private fun LoginBottomSheet(
                 }
 
                 Text(
-                    modifier = Modifier.padding(horizontal = 8.dp),
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        top = 8.dp,
+                        bottom = 0.dp
+                    ),
                     text = stringResource(id = R.string.loginBottomSheet_subtext),
                     style = MaterialTheme.typography.bodySmall,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.outlineVariant
+                    color = MaterialTheme.colorScheme.outline,
                 )
             }
 
