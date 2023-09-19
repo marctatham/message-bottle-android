@@ -71,7 +71,6 @@
     <string name="post_message_hint">🌟 Need a nudge to start? How about this: \nIf you could send a message to anyone, anywhere, what would it say?</string>
     <string name="btnPostMessage">Cast Away!</string>
 
-    <!--    <string name="get_bottle_requirements_both">To get a message from a bottle, you must first place a message in a bottle.</string>-->
     <string name="get_bottle_requirements_title">To get a message from a bottle, you must first…</string>
     <string name="get_bottle_requirements_sign_in"> Sign in</string>
     <string name="get_bottle_requirements_post">- Place a message in a bottle</string>
