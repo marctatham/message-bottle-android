@@ -13,6 +13,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,11 +43,11 @@ fun PostScreen(
 ) {
     val state: PostMessageUiState by viewModel.state.collectAsStateWithLifecycle()
     val onPostHandler: (messageToPost: String) -> Unit = { viewModel.postMessage(it) }
-    PostView(onBackHandler, state, onPostHandler)
+    PostScreen(onBackHandler, state, onPostHandler)
 }
 
 @Composable
-private fun PostView(
+private fun PostScreen(
     onBackHandler: () -> Unit,
     uiState: PostMessageUiState,
     onPostHandler: (messageToPost: String) -> Unit,
@@ -142,10 +143,15 @@ private fun BottlingMessageCard(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
-                .background(MaterialTheme.colorScheme.background),
+                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp),
             onValueChange = onValueChange,
             value = value,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.background,
+                unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+            ),
             maxLines = 15,
             placeholder = { Text(text = stringResource(R.string.post_message_hint)) },
         )
@@ -164,17 +170,17 @@ private fun BottlingMessageCard() {
 @Preview
 @Composable
 fun PostViewPreviewIdle() {
-    PostView({}, PostMessageUiState.Idle, onPostHandler = {})
+    PostScreen({}, PostMessageUiState.Idle, onPostHandler = {})
 }
 
 @Preview
 @Composable
 fun PostViewPreviewFailure() {
-    PostView({}, PostMessageUiState.Failure(FailureReason.NotAuthenticated), onPostHandler = {})
+    PostScreen({}, PostMessageUiState.Failure(FailureReason.NotAuthenticated), onPostHandler = {})
 }
 
 @Preview
 @Composable
 fun PostViewPreviewSuccess() {
-    PostView({}, PostMessageUiState.Success(MessageEntity("", "")), onPostHandler = {})
+    PostScreen({}, PostMessageUiState.Success(MessageEntity("", "")), onPostHandler = {})
 }
