@@ -16,13 +16,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun UnbottledMessageCard(
     unbottledMessage: String,
-    alpha: Float,
     modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = alpha)
+            containerColor = MaterialTheme.colorScheme.surface //.copy(alpha = alpha)
         ),
         border = BorderStroke(1.dp, Color.Black),
         shape = MaterialTheme.shapes.extraSmall,
@@ -42,8 +41,5 @@ fun UnbottledMessageCard(
 @Composable
 private fun UnbottledMessageCardPreview(
 ) {
-    UnbottledMessageCard(
-        unbottledMessage = "This is the message I have received",
-        alpha = 1f
-    )
+    UnbottledMessageCard(unbottledMessage = "This is the message I have received")
 }

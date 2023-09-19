@@ -1,8 +1,10 @@
 package com.koala.messagebottle.app.getmessage
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,7 +42,7 @@ fun GetMessageScreen(
 }
 
 @Composable
-fun GetMessageView(
+private fun GetMessageView(
     onBackHandler: () -> Unit,
     uiState: MessageUiState,
 ) {
@@ -57,61 +58,66 @@ fun GetMessageView(
     )
 
     val isAnimationComplete: Boolean = progress == 1f
-    val alpha: Float by animateFloatAsState(
-        targetValue = if (isAnimationComplete) 1f else 0f,
-        animationSpec = tween(2000, 0, FastOutSlowInEasing),
-        label = "Text Fade Animation"
-    )
-    val inverseAlpha = 1f - alpha // Calculate the inverse value
-
+    val lottieVisible = !isAnimationComplete
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
     ) {
-
         BottlingAppBar(
             onBackHandler = onBackHandler,
             modifier = Modifier.align(Alignment.TopCenter)
         )
-        LottieAnimation(
-            composition = composition,
-            progress = { progress },
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .fillMaxSize()
-                .alpha(inverseAlpha),
-        )
 
-        if (isAnimationComplete) {
-            if (uiState is MessageUiState.MessageReceived) {
-                UnbottledMessageCard(
-                    unbottledMessage = uiState.messageEntity.message,
-                    alpha = alpha,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.Center),
-                )
-            } else if (uiState is MessageUiState.Failure) {
-                Image(
-                    painter = painterResource(id = android.R.drawable.stat_notify_error),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth(0.4f)
-                        .align(Alignment.Center)
-                        .padding(16.dp)
-                )
-            }
-
-            BottlingButton(
-                text = R.string.get_message_button_acknowledge,
-                buttonType = BottlingButtonType.PRIMARY,
-                onTapHandler = onBackHandler,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .align(Alignment.BottomCenter)
-                    .alpha(alpha)
+        AnimatedVisibility(
+            visible = lottieVisible,
+            enter = fadeIn(animationSpec = tween(2000, 0, FastOutSlowInEasing)),
+            exit = fadeOut(animationSpec = tween(2000, 0, FastOutSlowInEasing))
+        ) {
+            LottieAnimation(
+                composition = composition,
+                progress = { progress },
+                modifier = Modifier.fillMaxSize()
             )
+        }
+
+        AnimatedVisibility(
+            visible = isAnimationComplete,
+            enter = fadeIn(animationSpec = tween(2000, 0, FastOutSlowInEasing)),
+            exit = fadeOut(animationSpec = tween(2000, 0, FastOutSlowInEasing))
+        ) {
+
+            Box(modifier = Modifier.fillMaxSize()) {
+                if (isAnimationComplete) {
+                    if (uiState is MessageUiState.MessageReceived) {
+                        UnbottledMessageCard(
+                            unbottledMessage = uiState.messageEntity.message,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .align(Alignment.Center)
+                        )
+                    } else if (uiState is MessageUiState.Failure) {
+                        Image(
+                            painter = painterResource(id = android.R.drawable.stat_notify_error),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxWidth(0.4f)
+                                .align(Alignment.Center)
+                                .padding(16.dp)
+                        )
+                    }
+
+                    BottlingButton(
+                        text = R.string.get_message_button_acknowledge,
+                        buttonType = BottlingButtonType.PRIMARY,
+                        onTapHandler = onBackHandler,
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .align(Alignment.BottomCenter)
+                    )
+                }
+
+            }
         }
     }
 }
