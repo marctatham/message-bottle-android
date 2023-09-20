@@ -2,6 +2,7 @@ package com.koala.messagebottle.app.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -63,19 +64,17 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.Bottom,
                 modifier = Modifier.fillMaxSize()
             ) {
-
                 Text(
                     modifier = Modifier.padding(
                         start = 16.dp,
                         end = 16.dp,
-                        bottom = 16.dp,
-                        top = 0.dp
                     ),
                     text = stringResource(id = R.string.home_description),
-                    style = MaterialTheme.typography.titleSmall,
+                    style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                Spacer(modifier = Modifier.weight(1f))
 
                 BottlingButton(
                     text = R.string.home_button_get_message,
