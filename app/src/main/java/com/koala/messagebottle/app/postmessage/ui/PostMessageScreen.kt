@@ -40,14 +40,14 @@ fun PostMessageScreen(
     when (state) {
         is PostMessageUiState.Failure,
         PostMessageUiState.Idle,
-        PostMessageUiState.Loading -> PostMessageScreen(onBackHandler, state, onPostHandler)
+        PostMessageUiState.Loading -> PostMessageView(onBackHandler, state, onPostHandler)
 
         is PostMessageUiState.Success -> PostMessageSuccessView(onCompletionHandler = onBackHandler)
     }
 }
 
 @Composable
-private fun PostMessageScreen(
+private fun PostMessageView(
     onBackHandler: () -> Unit,
     uiState: PostMessageUiState,
     onPostHandler: (messageToPost: String) -> Unit,
@@ -137,13 +137,13 @@ private fun isCurrentlyEditable(uiState: PostMessageUiState): Boolean = when (ui
 @Preview
 @Composable
 fun PostViewPreviewIdle() {
-    PostMessageScreen({}, PostMessageUiState.Idle, onPostHandler = {})
+    PostMessageView({}, PostMessageUiState.Idle, onPostHandler = {})
 }
 
 @Preview
 @Composable
 fun PostViewPreviewFailure() {
-    PostMessageScreen(
+    PostMessageView(
         {},
         PostMessageUiState.Failure(FailureReason.NotAuthenticated),
         onPostHandler = {})
@@ -152,5 +152,5 @@ fun PostViewPreviewFailure() {
 @Preview
 @Composable
 fun PostViewPreviewSuccess() {
-    PostMessageScreen({}, PostMessageUiState.Success(MessageEntity("", "")), onPostHandler = {})
+    PostMessageView({}, PostMessageUiState.Success(MessageEntity("", "")), onPostHandler = {})
 }
