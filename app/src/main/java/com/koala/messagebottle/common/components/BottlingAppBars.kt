@@ -6,13 +6,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,7 +29,7 @@ fun BottlingAppBar(
     onBackHandler: () -> Unit,
     @StringRes title: Int = Int.MIN_VALUE
 ) {
-    TopAppBar(
+    CenterAlignedTopAppBar(
         title = {
             if (title != Int.MIN_VALUE) {
                 Text(
@@ -45,7 +45,7 @@ fun BottlingAppBar(
             }
         },
         modifier = modifier,
-        colors = TopAppBarDefaults.topAppBarColors(
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.background
         ),
         navigationIcon = {
