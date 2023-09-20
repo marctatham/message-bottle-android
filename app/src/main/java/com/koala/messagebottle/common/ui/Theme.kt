@@ -84,6 +84,7 @@ fun BottlingTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
+
         darkTheme -> replyDarkColorScheme
         else -> replyLightColorScheme
     }
@@ -98,7 +99,7 @@ fun BottlingTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = typography,
+        typography = bottlingTypography,
         shapes = shapes,
         content = content
     )

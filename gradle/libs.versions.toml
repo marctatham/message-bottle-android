@@ -29,6 +29,7 @@ androidx-window = "1.2.0-beta01"
 googleServices = "4.3.15"
 playServices="20.6.0"
 firebase="32.2.2"
+googleFonts="1.5.1"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
@@ -77,6 +78,7 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 androidx-compose-materialWindow = { module = "androidx.compose.material3:material3-window-size-class" }
 androidx-compose-material-iconsExtended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-window = { module = "androidx.window:window", version.ref = "androidx-window" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version = "googleFonts" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

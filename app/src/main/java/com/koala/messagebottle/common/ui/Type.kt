@@ -6,6 +6,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 // Material 3 typography
+// TODO: Deprecate this file once we migrate on over to BottlingTypography
 val typography = Typography(
     headlineLarge = TextStyle(
         fontWeight = FontWeight.SemiBold,
