@@ -61,7 +61,9 @@ private fun PostMessageScreen(
         )
 
         TextField(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
             value = textState,
             onValueChange = { textState = it },
             enabled = isCurrentlyEditable,
