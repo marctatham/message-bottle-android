@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.koala.messagebottle.R
+import com.koala.messagebottle.app.postmessage.domain.MINIMUM_MESSAGE_LENGTH
 import com.koala.messagebottle.common.components.BottlingAppBar
 import com.koala.messagebottle.common.components.BottlingButton
 import com.koala.messagebottle.common.messages.domain.MessageEntity
@@ -46,8 +47,9 @@ private fun PostMessageScreen(
     onPostHandler: (messageToPost: String) -> Unit,
 ) {
     var textState: String by rememberSaveable { mutableStateOf("") }
-    val isCurrentlyEditable = isCurrentlyEditable(uiState)
     val isCurrentlyInError = uiState is PostMessageUiState.Failure
+    val isMessageLongEnough = textState.length >= MINIMUM_MESSAGE_LENGTH
+    val isCurrentlyEditable = isCurrentlyEditable(uiState)
 
     Column(
         modifier = Modifier
@@ -98,16 +100,15 @@ private fun PostMessageScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            text = stringResource(id = R.string.post_message_char_count, textState.length),
+            text = if (isMessageLongEnough) textState.length.toString() else stringResource(id = R.string.post_message_char_count, textState.length, MINIMUM_MESSAGE_LENGTH),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.End,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-            //color = if (isCurrentlyInError)MaterialTheme.colorScheme.onError else MaterialTheme.colorScheme.onSurfaceVariant
+            color = if (isMessageLongEnough) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error
         )
 
         BottlingButton(
             text = R.string.btnPostMessage,
-            enabled = isCurrentlyEditable,
+            enabled = isCurrentlyEditable && isMessageLongEnough,
             onTapHandler = { onPostHandler(textState) },
             isLoading = uiState is PostMessageUiState.Loading,
             modifier = Modifier.padding(16.dp),
