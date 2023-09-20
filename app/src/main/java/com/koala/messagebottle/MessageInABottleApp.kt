@@ -38,6 +38,14 @@ fun MessageInABottleApp() {
         composable(Screen.POST_MESSAGE) {
             PostMessageScreen(
                 onBackHandler = backHandler,
+                onCompletionHandler = {
+                    navController.navigate(Screen.HOME) {
+                        popUpTo("home") {
+                            // Pop up to the "home" destination, including "home" itself
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
         composable(Screen.VIEW_MESSAGES) { ViewMessagesScreen() }

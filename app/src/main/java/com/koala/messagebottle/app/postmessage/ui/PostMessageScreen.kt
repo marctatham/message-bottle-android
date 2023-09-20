@@ -8,6 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun PostMessageScreen(
     onBackHandler: () -> Unit,
+    onCompletionHandler: () -> Unit,
     viewModel: PostMessageViewModel = hiltViewModel(),
 ) {
     val state: PostMessageUiState by viewModel.state.collectAsStateWithLifecycle()
@@ -17,6 +18,6 @@ fun PostMessageScreen(
         PostMessageUiState.Idle,
         PostMessageUiState.Loading -> PostMessageView(onBackHandler, state, onPostHandler)
 
-        is PostMessageUiState.Success -> PostMessageSuccessView(onCompletionHandler = onBackHandler)
+        is PostMessageUiState.Success -> PostMessageSuccessView(onCompletionHandler = onCompletionHandler)
     }
 }
