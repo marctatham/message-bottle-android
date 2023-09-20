@@ -69,6 +69,10 @@
     <string name="post_message_char_count">%1$s/%2$s"</string>
     <string name="txtMessageLoading">…</string>
 
+    <string name="post_completion_title">Message Bottled!\n⛵</string>
+    <string name="post_completion_description">Your message has been bottled up and is ready to set sail!</string>
+    <string name="btn_post_complete">Back to adventure</string>
+
     <string name="title_post_message">Your BottleCast</string>
     <string name="post_message_hint">🌟 Need a nudge to start? How about this: \nIf you could send a message to anyone, anywhere, what would it say?</string>
     <string name="btnPostMessage">Cast Away!</string>

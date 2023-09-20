@@ -37,7 +37,13 @@ fun PostMessageScreen(
 ) {
     val state: PostMessageUiState by viewModel.state.collectAsStateWithLifecycle()
     val onPostHandler: (messageToPost: String) -> Unit = { viewModel.postMessage(it) }
-    PostMessageScreen(onBackHandler, state, onPostHandler)
+    when (state) {
+        is PostMessageUiState.Failure,
+        PostMessageUiState.Idle,
+        PostMessageUiState.Loading -> PostMessageScreen(onBackHandler, state, onPostHandler)
+
+        is PostMessageUiState.Success -> PostMessageSuccessView(onCompletionHandler = onBackHandler)
+    }
 }
 
 @Composable
@@ -100,7 +106,11 @@ private fun PostMessageScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            text = if (isMessageLongEnough) textState.length.toString() else stringResource(id = R.string.post_message_char_count, textState.length, MINIMUM_MESSAGE_LENGTH),
+            text = if (isMessageLongEnough) textState.length.toString() else stringResource(
+                id = R.string.post_message_char_count,
+                textState.length,
+                MINIMUM_MESSAGE_LENGTH
+            ),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.End,
             color = if (isMessageLongEnough) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error
