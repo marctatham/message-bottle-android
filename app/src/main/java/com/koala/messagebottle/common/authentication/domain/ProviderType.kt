@@ -8,7 +8,7 @@ sealed class ProviderType(val signInProvider: String) {
         const val PROVIDER_GOOGLE = "google.com"
     }
 
-    object Anonymous : ProviderType(PROVIDER_ANONYMOUS)
+    data object Anonymous : ProviderType(PROVIDER_ANONYMOUS)
 
-    object Google : ProviderType(PROVIDER_GOOGLE)
+    data object Google : ProviderType(PROVIDER_GOOGLE)
 }
