@@ -63,11 +63,17 @@ fun PostMessageView(
             },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
                 focusedTextColor = MaterialTheme.colorScheme.onBackground,
-                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
                 focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
+
+                unfocusedContainerColor = Color.Transparent,
+                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedIndicatorColor = Color.Transparent,
+
+                disabledContainerColor = Color.Transparent,
+                disabledTextColor = MaterialTheme.colorScheme.onBackground,
+                disabledIndicatorColor = Color.Transparent,
+
             ),
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences,
