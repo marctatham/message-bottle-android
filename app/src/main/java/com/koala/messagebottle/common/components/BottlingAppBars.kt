@@ -33,12 +33,9 @@ fun BottlingAppBar(
         title = {
             if (title != Int.MIN_VALUE) {
                 Text(
-                    modifier = Modifier.padding(
-                        start = 8.dp,
-                        end = 16.dp,
-                    ),
+                    modifier = Modifier.padding(8.dp),
                     text = stringResource(id = title),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.headlineSmall,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
