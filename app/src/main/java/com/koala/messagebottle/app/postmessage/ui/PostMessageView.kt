@@ -58,8 +58,12 @@ fun PostMessageView(
             onValueChange = { textState = it },
             enabled = isCurrentlyEditable,
             singleLine = false,
+            textStyle = MaterialTheme.typography.bodyLarge,
             placeholder = {
-                Text(text = stringResource(R.string.post_message_hint))
+                Text(
+                    text = stringResource(R.string.post_message_hint),
+                    color = MaterialTheme.colorScheme.outline,
+                )
             },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
