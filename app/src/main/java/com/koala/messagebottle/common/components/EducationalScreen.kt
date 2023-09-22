@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -49,18 +50,20 @@ fun EducationalScreen(
         )
 
         Text(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             text = stringResource(id = title),
             style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
             color = MaterialTheme.colorScheme.outline
         )
 
         Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
             text = stringResource(id = description),
             style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
             color = MaterialTheme.colorScheme.outline
         )
 
