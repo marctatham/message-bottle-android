@@ -36,17 +36,17 @@ import com.koala.messagebottle.common.messages.domain.MessageEntity
 
 @Composable
 fun GetMessageScreen(
-    onBackHandler: () -> Unit,
+    onHomeHandler: () -> Unit,
     viewModel: GetMessageViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
-    GetMessageView(onBackHandler = onBackHandler, uiState = uiState)
+    GetMessageView(onHomeHandler = onHomeHandler, uiState = uiState)
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun GetMessageView(
-    onBackHandler: () -> Unit,
+    onHomeHandler: () -> Unit,
     uiState: MessageUiState,
 ) {
     val isPlaying = uiState is MessageUiState.PlayingAnimation
@@ -74,7 +74,7 @@ private fun GetMessageView(
             .fillMaxSize()
     ) {
         BottlingAppBar(
-            onBackHandler = onBackHandler,
+            onBackHandler = onHomeHandler,
             modifier = Modifier.align(Alignment.TopCenter)
         )
 
@@ -128,7 +128,7 @@ private fun GetMessageView(
                 BottlingButton(
                     text = R.string.get_message_button_acknowledge,
                     buttonType = BottlingButtonType.PRIMARY,
-                    onTapHandler = onBackHandler,
+                    onTapHandler = onHomeHandler,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.BottomCenter)
@@ -143,7 +143,7 @@ private fun GetMessageView(
 private fun GetMessageReceivedPreview(
 ) {
     GetMessageView(
-        onBackHandler = {},
+        onHomeHandler = {},
         uiState = MessageUiState.MessageReceived(MessageEntity("1", "Hello World"))
     )
 }
@@ -153,7 +153,7 @@ private fun GetMessageReceivedPreview(
 private fun GetMessageAnimatingPreview(
 ) {
     GetMessageView(
-        onBackHandler = {},
+        onHomeHandler = {},
         uiState = MessageUiState.PlayingAnimation,
     )
 }
@@ -163,7 +163,7 @@ private fun GetMessageAnimatingPreview(
 private fun GetMessageFailedPreview(
 ) {
     GetMessageView(
-        onBackHandler = {},
+        onHomeHandler = {},
         uiState = MessageUiState.Failure
     )
 }

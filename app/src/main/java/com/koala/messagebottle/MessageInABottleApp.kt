@@ -36,7 +36,7 @@ fun MessageInABottleApp() {
                 },
             )
         }
-        composable(Screen.GET_MESSAGES) { GetMessageScreen(backHandler) }
+        composable(Screen.GET_MESSAGES) { GetMessageScreen(homeHandler) }
         composable(Screen.POST_MESSAGE_EDUCATIONAL) {
             LoginRequiredToPostScreen(
                 onProceedHandler = {
