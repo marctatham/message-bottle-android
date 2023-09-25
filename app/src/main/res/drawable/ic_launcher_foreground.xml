@@ -3,7 +3,7 @@
     android:height="108dp"
     android:viewportWidth="200"
     android:viewportHeight="200">
-tweaking
+
   <group
       android:scaleX="0.40"
       android:scaleY="0.40"
