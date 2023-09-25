@@ -39,7 +39,10 @@ fun MessageInABottleApp() {
         composable(Screen.GET_MESSAGES) { GetMessageScreen(backHandler) }
         composable(Screen.POST_MESSAGE_EDUCATIONAL) {
             LoginRequiredToPostScreen(
-                onProceedHandler = { navController.navigate(Screen.POST_MESSAGE) },
+                onProceedHandler = {
+                    navController.popBackStack(Screen.POST_MESSAGE_EDUCATIONAL, inclusive = true)
+                    navController.navigate(Screen.POST_MESSAGE)
+                },
                 onBackHandler = backHandler,
                 onCancelHandler = homeHandler
             )
