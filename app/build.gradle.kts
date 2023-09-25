@@ -42,10 +42,31 @@ android {
         }
     }
 
+    signingConfigs {
+        val keyStorePassword: String = "${properties["keyStorePassword"]}"
+        val keyStoreAlias = "${properties["keyStoreAlias"]}"
+        val keyStoreAliasPassword = "${properties["keyStoreAliasPassword"]}"
+        create("release") {
+            storeFile = file("message-bottle-release.jks")
+            storePassword = keyStorePassword
+            keyAlias = keyStoreAlias
+            keyPassword = keyStoreAliasPassword
+        }
+    }
+
     buildTypes {
+        getByName("debug") { } // nothing custom for debug builds at this time
         getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            // Enables code shrinking, obfuscation, and optimization for only this build type.
+            isMinifyEnabled = true
+
+            // Enables resource shrinking, which is performed by the Android Gradle plugin.
+            isShrinkResources = true
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -140,6 +161,7 @@ dependencies {
 
     // Tooling
     debugImplementation(libs.androidx.compose.ui.tooling)
+
     // Instrumented tests
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.test.manifest)

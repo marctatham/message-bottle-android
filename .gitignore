@@ -1,3 +1,7 @@
+# Release builds, secrets, etc.
+message-bottle-release.jks
+properties.properties
+
 # Built application files
 /build
 /release/output.json
