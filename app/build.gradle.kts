@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 /*
  * Copyright (C) 2022 The Android Open Source Project
  *
@@ -43,10 +45,12 @@ android {
     }
 
     signingConfigs {
-        val keyStorePassword: String = "${properties["keyStorePassword"]}"
-        val keyStoreAlias = "${properties["keyStoreAlias"]}"
-        val keyStoreAliasPassword = "${properties["keyStoreAliasPassword"]}"
+        val keyStoreAlias = gradleLocalProperties(rootDir).getProperty("keyStoreAlias")
+        val keyStoreAliasPassword = gradleLocalProperties(rootDir).getProperty("keyStoreAliasPassword")
+        val keyStorePassword = gradleLocalProperties(rootDir).getProperty("keyStorePassword")
+
         create("release") {
+            println("keyStoreAlias: $keyStoreAlias keyStoreAliasPassword: $keyStoreAliasPassword keyStorePassword: $keyStorePassword")
             storeFile = file("message-bottle-release.jks")
             storePassword = keyStorePassword
             keyAlias = keyStoreAlias
@@ -57,6 +61,8 @@ android {
     buildTypes {
         getByName("debug") { } // nothing custom for debug builds at this time
         getByName("release") {
+            isDebuggable = false
+
             // Enables code shrinking, obfuscation, and optimization for only this build type.
             isMinifyEnabled = true
 
@@ -67,6 +73,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
