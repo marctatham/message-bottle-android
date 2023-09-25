@@ -47,7 +47,7 @@ fun MessageInABottleApp() {
         composable(Screen.POST_MESSAGE) {
             PostMessageScreen(
                 onBackHandler = backHandler,
-                onCompletionHandler = homeHandler,
+                onHomeHandler = homeHandler,
             )
         }
         composable(Screen.VIEW_MESSAGES) { ViewMessagesScreen() }

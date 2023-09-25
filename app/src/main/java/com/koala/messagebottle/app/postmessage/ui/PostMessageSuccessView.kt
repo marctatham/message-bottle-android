@@ -28,7 +28,7 @@ import com.koala.messagebottle.common.components.CustomBox
 
 @Composable
 fun PostMessageSuccessView(
-    onCompletionHandler: () -> Unit,
+    onHomeHandler: () -> Unit,
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.message_in_bottle))
 
@@ -79,7 +79,7 @@ fun PostMessageSuccessView(
                 BottlingButton(
                     text = R.string.btn_post_complete,
                     buttonType = BottlingButtonType.PRIMARY,
-                    onTapHandler = onCompletionHandler,
+                    onTapHandler = onHomeHandler,
                     modifier = Modifier.padding(16.dp)
                 )
             }
@@ -91,5 +91,5 @@ fun PostMessageSuccessView(
 @Composable
 private fun PostMessageSuccessViewPreview(
 ) {
-    PostMessageSuccessView(onCompletionHandler = {})
+    PostMessageSuccessView(onHomeHandler = {})
 }
