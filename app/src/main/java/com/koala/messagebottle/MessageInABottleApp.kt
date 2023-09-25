@@ -6,11 +6,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.koala.messagebottle.app.getmessage.GetMessageScreen
-import com.koala.messagebottle.app.home.HomeScreen
-import com.koala.messagebottle.app.login.LoginRequiredToPostScreen
-import com.koala.messagebottle.app.postmessage.ui.PostMessageScreen
-import com.koala.messagebottle.app.viewmessages.ViewMessagesScreen
+import com.koala.messagebottle.feature.getmessage.GetMessageScreen
+import com.koala.messagebottle.feature.home.HomeScreen
+import com.koala.messagebottle.feature.login.LoginRequiredToPostScreen
+import com.koala.messagebottle.feature.postmessage.ui.PostMessageScreen
+import com.koala.messagebottle.feature.viewmessages.ViewMessagesScreen
 
 @Composable
 fun MessageInABottleApp() {

@@ -1,4 +1,4 @@
-package com.koala.messagebottle.app.postmessage.ui
+package com.koala.messagebottle.feature.postmessage.ui
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.koala.messagebottle.R
-import com.koala.messagebottle.app.postmessage.domain.MINIMUM_MESSAGE_LENGTH
+import com.koala.messagebottle.feature.postmessage.domain.MINIMUM_MESSAGE_LENGTH
 
 
 @Composable

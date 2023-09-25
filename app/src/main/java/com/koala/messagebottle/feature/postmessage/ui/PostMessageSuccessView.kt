@@ -1,4 +1,4 @@
-package com.koala.messagebottle.app.postmessage.ui
+package com.koala.messagebottle.feature.postmessage.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

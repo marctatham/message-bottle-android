@@ -1,4 +1,4 @@
-package com.koala.messagebottle.app.getmessage
+package com.koala.messagebottle.feature.getmessage
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
