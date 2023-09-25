@@ -17,6 +17,15 @@ fun MessageInABottleApp() {
     val navController = rememberNavController()
     val viewModel: AppNavigationStateViewModel = hiltViewModel()
     val backHandler: () -> Unit = { navController.popBackStack() }
+    val homeHandler: () -> Unit = {
+        navController.navigate(Screen.HOME) {
+            popUpTo("home") {
+                // Pop up to the "home" destination, including "home" itself
+                inclusive = true
+            }
+        }
+    }
+
     NavHost(navController = navController, startDestination = Screen.HOME) {
         composable(Screen.HOME) {
             HomeScreen(
@@ -38,14 +47,7 @@ fun MessageInABottleApp() {
         composable(Screen.POST_MESSAGE) {
             PostMessageScreen(
                 onBackHandler = backHandler,
-                onCompletionHandler = {
-                    navController.navigate(Screen.HOME) {
-                        popUpTo("home") {
-                            // Pop up to the "home" destination, including "home" itself
-                            inclusive = true
-                        }
-                    }
-                }
+                onCompletionHandler = homeHandler,
             )
         }
         composable(Screen.VIEW_MESSAGES) { ViewMessagesScreen() }
