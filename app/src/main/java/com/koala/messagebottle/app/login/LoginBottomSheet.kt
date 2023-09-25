@@ -22,6 +22,7 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -87,20 +88,13 @@ fun LoginBottomSheet(
             }
         }
 
-    val clickAnon: () -> Unit = {
-        scope.launch { viewModel.initiateAnonymousLogin() }.invokeOnCompletion {
-            onSignInCompleteHandler()
-        }
-    }
-    val clickGoogle: () -> Unit = {
-        scope.launch { signInWithGoogle(context, launcher) }
-            .invokeOnCompletion { onSignInCompleteHandler() }
-    }
-
+    val clickAnon: () -> Unit = { viewModel.initiateAnonymousLogin() }
+    val clickGoogle: () -> Unit = { scope.launch { signInWithGoogle(context, launcher) } }
     LoginBottomSheet(
         signInWithGoogleHandler = clickGoogle,
         signInAnonymouslyHandler = clickAnon,
         onDismissRequest = onDismissRequest,
+        onSignInCompleteHandler = onSignInCompleteHandler,
         bottomSheetState = sheetState,
         uiState = uiState
     )
@@ -112,13 +106,19 @@ private fun LoginBottomSheet(
     signInWithGoogleHandler: () -> Unit,
     signInAnonymouslyHandler: () -> Unit,
     onDismissRequest: () -> Unit,
+    onSignInCompleteHandler: () -> Unit,
     bottomSheetState: SheetState,
     uiState: State,
 ) {
+    if (uiState is State.LoggedInUser) {
+        LaunchedEffect(Unit) {
+            onSignInCompleteHandler()
+        }
+    }
+
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         sheetState = bottomSheetState,
-        //scrimColor = MaterialTheme.colorScheme.scrim
     ) {
         val isLoading = uiState is State.Loading
         val areLoginOptionsEnabled: Boolean = isLoading.not() || uiState is State.LoggedInUser
@@ -196,6 +196,7 @@ private fun FailureContentPreview(
         signInWithGoogleHandler = {},
         signInAnonymouslyHandler = {},
         onDismissRequest = {},
+        onSignInCompleteHandler = { },
         bottomSheetState = SheetState(true, SheetValue.Expanded, { true }),
         uiState = State.Loading,
     )
@@ -210,6 +211,7 @@ private fun LoadingContentPreview(
         signInWithGoogleHandler = {},
         signInAnonymouslyHandler = {},
         onDismissRequest = {},
+        onSignInCompleteHandler = { },
         bottomSheetState = SheetState(true, SheetValue.Expanded, { true }),
         uiState = State.Failure,
     )
