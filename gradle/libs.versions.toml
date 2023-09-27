@@ -1,4 +1,5 @@
 [versions]
+firebaseCrashlyticsPlugin = "2.9.9"
 androidGradlePlugin = "8.1.0"
 androidxCore = "1.10.1"
 androidxLifecycle = "2.6.1"
@@ -73,6 +74,7 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
+firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServices" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 androidx-compose-materialWindow = { module = "androidx.compose.material3:material3-window-size-class" }
@@ -89,3 +91,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
