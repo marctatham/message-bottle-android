@@ -36,6 +36,8 @@ import com.koala.messagebottle.common.components.BottlingAppBar
 import com.koala.messagebottle.common.components.BottlingButton
 import com.koala.messagebottle.common.components.BottlingButtonType
 import com.koala.messagebottle.common.messages.domain.MessageEntity
+import com.koala.messagebottle.feature.getmessage.components.ReportMessageDialog
+import com.koala.messagebottle.feature.getmessage.components.UnbottledMessageCard
 
 @Composable
 fun GetMessageScreen(

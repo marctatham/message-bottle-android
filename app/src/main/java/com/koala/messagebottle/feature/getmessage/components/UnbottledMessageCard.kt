@@ -1,4 +1,4 @@
-package com.koala.messagebottle.feature.getmessage
+package com.koala.messagebottle.feature.getmessage.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

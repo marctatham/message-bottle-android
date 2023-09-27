@@ -1,4 +1,4 @@
-package com.koala.messagebottle.feature.getmessage
+package com.koala.messagebottle.feature.getmessage.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
