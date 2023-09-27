@@ -16,6 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -50,6 +53,7 @@ private fun GetMessageView(
     uiState: MessageUiState,
 ) {
     val isPlaying = uiState is MessageUiState.PlayingAnimation
+    var showAlertDialog by remember { mutableStateOf(false) }
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.message_from_bottle))
     val progress: Float by animateLottieCompositionAsState(
         composition = composition,
@@ -98,7 +102,7 @@ private fun GetMessageView(
             Box(modifier = Modifier.fillMaxSize()) {
                 if (uiState is MessageUiState.MessageReceived) {
                     UnbottledMessageCard(
-                        onReportHandler = { /* TODO: implement Report Dialog */ },
+                        onReportHandler = { showAlertDialog = !showAlertDialog },
                         unbottledMessage = uiState.messageEntity.message,
                         modifier = Modifier
                             .padding(16.dp)
@@ -136,6 +140,13 @@ private fun GetMessageView(
                 )
             }
         }
+    }
+
+    if (showAlertDialog) {
+        ReportMessageDialog(
+            onDismiss = { showAlertDialog = !showAlertDialog },
+            onReportConfirmed = { }
+        )
     }
 }
 

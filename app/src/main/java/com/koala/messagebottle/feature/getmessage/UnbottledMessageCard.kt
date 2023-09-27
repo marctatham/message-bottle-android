@@ -34,7 +34,7 @@ fun UnbottledMessageCard(
             containerColor = MaterialTheme.colorScheme.surface
         ),
         shape = MaterialTheme.shapes.medium,
-        //elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
     ) {
         Row(
             modifier = Modifier
