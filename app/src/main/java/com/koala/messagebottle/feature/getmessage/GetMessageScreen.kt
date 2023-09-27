@@ -98,6 +98,7 @@ private fun GetMessageView(
             Box(modifier = Modifier.fillMaxSize()) {
                 if (uiState is MessageUiState.MessageReceived) {
                     UnbottledMessageCard(
+                        onReportHandler = { /* TODO: implement Report Dialog */ },
                         unbottledMessage = uiState.messageEntity.message,
                         modifier = Modifier
                             .padding(16.dp)

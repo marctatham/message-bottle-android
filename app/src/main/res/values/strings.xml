@@ -61,6 +61,13 @@
 
     <string name="btnViewMessages">View messages</string>
     <string name="get_messages_failed">Failed to get all messages!</string>
+
+    <string name="get_message_report">Report Message</string>
+    <string name="get_message_report_dialog_title">Report Offensive Message</string>
+    <string name="get_message_report_dialog_description">Are you sure you want to report this message as offensive? Our team will review it, and if it is found to be offensive, it will be removed from circulation to maintain a safe and enjoyable experience for all users.</string>
+    <string name="get_message_report_dialog_confirm">Report Message</string>
+    <string name="get_message_report_dialog_cancel">Cancel</string>
+
     <string name="btnPurge">Purge</string>
     <string name="snack_posted_message">Posted Message: "\n%1$s"</string>
     <string name="snack_post_message_failed">Failed to post your message!"</string>
