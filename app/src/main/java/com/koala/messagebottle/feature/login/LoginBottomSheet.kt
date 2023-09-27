@@ -84,7 +84,7 @@ fun LoginBottomSheet(
                 Timber.i("Sign in with Google successful, attempting authenticate to backend with idToken")
                 viewModel.initiateLoginWithGoogle(idToken)
             } else {
-                Timber.e("Null idToken from google, signin to google failed")
+                Timber.e("Null idToken from google, sign in to google failed")
             }
         }
 
