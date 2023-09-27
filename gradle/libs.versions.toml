@@ -1,6 +1,6 @@
 [versions]
 firebaseCrashlyticsPlugin = "2.9.9"
-androidGradlePlugin = "8.1.0"
+pluginAndroidGradle = "8.1.0"
 androidxCore = "1.12.0"
 androidxLifecycle = "2.6.2"
 androidxActivity = "1.7.2"
