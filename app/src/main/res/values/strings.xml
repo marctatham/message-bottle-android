@@ -20,13 +20,9 @@
     <string name="home_button_get_message">Discover a Message 🏝️</string>
     <string name="home_button_put_message">Send Your Own 🌊</string>
 
-
     <string name="get_message_button_acknowledge">Message Explored! 🌟</string>
 
-    <string name="button_back">Back</string>
-
-    <string name="default_ok">OK!</string>
-    <string name="default_no">Nah…</string>
+    <string name="button_back">Back</string>>
 
     <string name="login_required_title">Your Guide to Bottling Messages</string>
     <string name="login_required_image_description">Safety First, sign in is required</string>
@@ -35,32 +31,14 @@
     <string name="login_required_button_primary">Agree and Set Sail</string>
     <string name="login_required_button_secondary">No Thanks, I\'ll Stay Dry</string>
 
-
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="sign_in_using">Sign in using one of the below providers</string>
-    <string name="sign_in_failed">Sign in failed</string>
-    <string name="sign_in_success">"Welcome %1$s!"</string>
-
-    <string name="sign_out">Sign out</string>
-    <string name="access_revoked">Access has been revoked</string>
-    <string name="more_sign_in_providers_soon">More sign in providers coming soon!</string>
-    <string name="btnSignIn">Sign in</string>
     <string name="loginBottomSheet_title">Log in to continue</string>
     <string name="loginBottomSheet_subtext">By continuing, you agree to our User Agreement and acknowledge that you understand the Privacy Policy.</string>
     <string name="loginBottomSheet_error">There was a problem signing you in, please try an alternative sign-in method.</string>
     <string name="btnSignInWithGoogle">Sign in with Google</string>
     <string name="btnSignInAnonymously">Sign in Anonymously</string>
-    <string name="btnGetMessage">Get a message from a bottle</string>
-    <string name="snack_get_message_failed">"There was a problem fetching the message</string>
-    <string name="view_messages_error_get">"There was a problem fetching messages</string>
-
-    <string name="btnViewMessages">View messages</string>
     <string name="get_messages_failed">Failed to get all messages!</string>
+
+    <string name="view_messages_error_get">"There was a problem fetching messages</string>
 
     <string name="get_message_report">Report Message</string>
     <string name="get_message_report_dialog_title">Report Offensive Message</string>
@@ -68,13 +46,10 @@
     <string name="get_message_report_dialog_confirm">Report Message</string>
     <string name="get_message_report_dialog_cancel">Cancel</string>
 
-    <string name="btnPurge">Purge</string>
-    <string name="snack_posted_message">Posted Message: "\n%1$s"</string>
     <string name="snack_post_message_failed">Failed to post your message!"</string>
     <string name="snack_post_message_requires_auth">You must be logged in to post!"</string>
     <string name="snack_post_message_insufficient_length">Your message must be at least %1$s characters long"</string>
     <string name="post_message_char_count">%1$s/%2$s"</string>
-    <string name="txtMessageLoading">…</string>
 
     <string name="post_completion_title">Message Bottled!\n⛵</string>
     <string name="post_completion_description">Your message has been bottled up and is ready to set sail!</string>
@@ -83,10 +58,5 @@
     <string name="title_post_message">Your BottleCast</string>
     <string name="post_message_hint">🌟 Need a nudge to start? How about this: \nIf you could send a message to anyone, anywhere, what would it say?</string>
     <string name="btnPostMessage">Cast Away!</string>
-
-    <string name="get_bottle_requirements_title">To get a message from a bottle, you must first…</string>
-    <string name="get_bottle_requirements_sign_in"> Sign in</string>
-    <string name="get_bottle_requirements_post">- Place a message in a bottle</string>
-
 
 </resources>
