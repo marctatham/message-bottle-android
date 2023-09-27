@@ -54,8 +54,17 @@ private fun GetMessageView(
     onHomeHandler: () -> Unit,
     uiState: MessageUiState,
 ) {
-    val isPlaying = uiState is MessageUiState.PlayingAnimation
+    // report message functionality
     var showAlertDialog by remember { mutableStateOf(false) }
+    var isReported by remember { mutableStateOf(false) }
+    val handlerDismissReportDialog = { showAlertDialog = !showAlertDialog }
+    val handlerReportMessage = {
+        isReported = true
+        handlerDismissReportDialog()
+    }
+
+    // animation control
+    val isPlaying = uiState is MessageUiState.PlayingAnimation
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.message_from_bottle))
     val progress: Float by animateLottieCompositionAsState(
         composition = composition,
@@ -70,8 +79,8 @@ private fun GetMessageView(
     val transitionExitFade = fadeOut(animationSpec = tween(2000, 0, FastOutSlowInEasing))
 
     // determined by both the animation progress and the uiState being in a final state
-    val isMessageVisible = progress == 1f // animation complete
-            && (uiState is MessageUiState.PlayingAnimation).not() // in either success or failure state
+    val isMessageVisible = progress == 1f // is animation complete?
+            && (uiState is MessageUiState.PlayingAnimation).not() // is in either success or failure state?
     val lottieVisible = !isMessageVisible
 
     Box(
@@ -104,6 +113,7 @@ private fun GetMessageView(
             Box(modifier = Modifier.fillMaxSize()) {
                 if (uiState is MessageUiState.MessageReceived) {
                     UnbottledMessageCard(
+                        isReported = isReported,
                         onReportHandler = { showAlertDialog = !showAlertDialog },
                         unbottledMessage = uiState.messageEntity.message,
                         modifier = Modifier
@@ -146,8 +156,8 @@ private fun GetMessageView(
 
     if (showAlertDialog) {
         ReportMessageDialog(
-            onDismiss = { showAlertDialog = !showAlertDialog },
-            onReportConfirmed = { }
+            onDismiss = handlerDismissReportDialog,
+            onReportConfirmed = handlerReportMessage
         )
     }
 }

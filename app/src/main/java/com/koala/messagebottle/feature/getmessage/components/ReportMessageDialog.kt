@@ -23,10 +23,7 @@ fun ReportMessageDialog(
         },
         confirmButton = {
             TextButton(
-                onClick = {
-                    onReportConfirmed()
-                    onDismiss()
-                },
+                onClick = onReportConfirmed,
             ) { Text(text = stringResource(id = R.string.get_message_report_dialog_confirm)) }
         },
         title = {

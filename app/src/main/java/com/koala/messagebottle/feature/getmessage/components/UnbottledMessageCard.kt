@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -16,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,10 +26,13 @@ import com.koala.messagebottle.R
 
 @Composable
 fun UnbottledMessageCard(
+    isReported: Boolean,
     onReportHandler: () -> Unit,
     unbottledMessage: String,
     modifier: Modifier = Modifier,
 ) {
+    val imageFlag: ImageVector = if (isReported) Icons.Filled.Flag else Icons.Outlined.Flag
+
     ElevatedCard(
         modifier = modifier,
         colors = CardDefaults.cardColors(
@@ -52,7 +57,7 @@ fun UnbottledMessageCard(
                 )
             ) {
                 Icon(
-                    imageVector = Icons.Outlined.Flag,
+                    imageVector = imageFlag,
                     contentDescription = stringResource(id = R.string.get_message_report),
                     modifier = Modifier.size(24.dp)
                 )
@@ -74,6 +79,7 @@ fun UnbottledMessageCard(
 private fun UnbottledMessageCardPreview(
 ) {
     UnbottledMessageCard(
+        isReported = false,
         {},
         unbottledMessage = "This is the message I have received"
     )
