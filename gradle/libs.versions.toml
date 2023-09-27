@@ -24,8 +24,6 @@ timber = "5.0.1"
 lottie = "6.1.0"
 firebaseAnalytics = "21.3.0"
 firebaseAuth = "22.1.0"
-constraintLayout = "2.1.4" #TODO: deprecate when everything has been migrated on over to compose
-material = "1.9.0"
 androidx-window = "1.2.0-beta03"
 googleServices = "4.3.15"
 playServices="20.7.0"
@@ -68,8 +66,6 @@ kotlinx-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kot
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 airbnb-lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 airbnb-lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
-material = { module = "com.google.android.material:material", version.ref = "material" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" } # when using the BoM, don't specify versions in the Firebase dependencies
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }

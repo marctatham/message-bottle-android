@@ -17,7 +17,7 @@
 <resources>
 
     <!-- To see how these attributes are used, please visit https://material.io/develop/android/theming/color/ -->
-    <style name="Base.Theme.Bottling" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+    <style name="Base.Theme.Bottling" parent="Theme.AppCompat.NoActionBar" />
 
     <style name="Theme.Bottling" parent="Base.Theme.Bottling" />
 

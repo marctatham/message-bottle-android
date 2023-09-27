@@ -165,8 +165,6 @@ dependencies {
     implementation(libs.play.services.auth)
 
     // ui bits (worth revisiting & replacing with jetpack compose for the most part)
-    implementation(libs.material)
-    implementation(libs.constraintLayout)
     implementation(libs.androidx.ui.text.google.fonts)
 
     // Tooling
