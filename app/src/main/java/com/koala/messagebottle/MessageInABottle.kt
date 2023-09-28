@@ -3,6 +3,8 @@ package com.koala.messagebottle
 import android.app.Application
 import android.content.pm.ApplicationInfo
 import android.util.Log
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber.*
 import timber.log.Timber.Forest.plant
@@ -18,8 +20,7 @@ class MessageInABottle : Application() {
         if (isDebuggableBuild) {
             plant(DebugTree())
         } else {
-            // TODO: plugin production CrashReportingTree
-            //plant(CrashReportingTree())
+            plant(CrashReportingTree())
         }
     }
 
@@ -30,16 +31,21 @@ class MessageInABottle : Application() {
                 return
             }
 
-            //TODO: plug in crashlytics
-//            FakeCrashLibrary.log(priority, tag, message)
-//            if (t != null) {
-//                if (priority == Log.ERROR) {
-//                    FakeCrashLibrary.logError(t)
-//                } else if (priority == Log.WARN) {
-//                    FakeCrashLibrary.logWarning(t)
-//                }
-//            }
+            Firebase.crashlytics.log("${priority.logPriorityPrefix}: $message")
+            t?.let { Firebase.crashlytics.recordException(it) }
         }
     }
 }
 
+private val Int.logPriorityPrefix: String
+    get() {
+        return when (this) {
+            Log.DEBUG -> "d"
+            Log.VERBOSE -> "v"
+            Log.INFO -> "i"
+            Log.ERROR -> "e"
+            Log.WARN -> "w"
+            Log.ASSERT -> "a"
+            else -> "undefined"
+        }
+    }
