@@ -19,6 +19,7 @@
     <string name="home_description">Ready for a virtual adventure filled with serendipitous discoveries? Find a hidden message in a virtual bottle or cast your own into the digital sea for others to uncover.</string>
     <string name="home_button_get_message">Discover a Message 🏝️</string>
     <string name="home_button_put_message">Send Your Own 🌊</string>
+    <string name="home_button_view_messages">View ALL 👻</string>
 
     <string name="get_message_button_acknowledge">Message Explored! 🌟</string>
 

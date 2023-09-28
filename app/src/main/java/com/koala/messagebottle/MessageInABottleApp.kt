@@ -33,6 +33,7 @@ fun MessageInABottleApp() {
                     val destination: String = viewModel.onNavigateToPostMessage()
                     navController.navigate(destination)
                 },
+                onViewMessagesHandler = { navController.navigate(Screen.VIEW_MESSAGES) },
             )
         }
         composable(Screen.GET_MESSAGES) { GetMessageScreen(homeHandler) }

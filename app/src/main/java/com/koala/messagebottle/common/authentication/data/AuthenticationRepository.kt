@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
+private const val ADMIN_USER_ID = "GxSib4PSfLgfL8IQzPDmjQcgpSk1"
+
 // Serves as a single source of truth to indicate whether the
 // user is currently signed into the application
 class AuthenticationRepository constructor(
@@ -46,7 +48,7 @@ class AuthenticationRepository constructor(
                 Timber.d("Sign in Provider - [${tokenResult.signInProvider}]")
 
                 val providerType: ProviderType = getProviderTypeForSignInProvider(tokenResult.signInProvider!!)
-                _user.value = UserEntity.AuthenticatedUser(providerType, tokenResult.token!!, currentUser.uid)
+                _user.value = UserEntity.AuthenticatedUser(providerType, tokenResult.token!!, currentUser.uid, currentUser.uid == ADMIN_USER_ID)
                 Firebase.crashlytics.setUserId(currentUser.uid)
             }
 
