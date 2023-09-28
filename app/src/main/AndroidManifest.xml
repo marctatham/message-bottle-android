@@ -14,8 +14,7 @@
   ~ limitations under the License.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name=".MessageInABottle"
@@ -26,8 +25,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Bottling"
-        tools:targetApi="31">
+        android:theme="@style/Theme.Bottling">
 
         <activity
             android:name=".MainActivity"
