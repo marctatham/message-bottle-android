@@ -7,6 +7,8 @@ import com.google.firebase.auth.FirebaseAuth.IdTokenListener
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GetTokenResult
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
 import com.koala.messagebottle.common.authentication.domain.ProviderType
 import com.koala.messagebottle.common.authentication.domain.UserEntity
@@ -45,6 +47,7 @@ class AuthenticationRepository constructor(
 
                 val providerType: ProviderType = getProviderTypeForSignInProvider(tokenResult.signInProvider!!)
                 _user.value = UserEntity.AuthenticatedUser(providerType, tokenResult.token!!, currentUser.uid)
+                Firebase.crashlytics.setUserId(currentUser.uid)
             }
 
         } else {
