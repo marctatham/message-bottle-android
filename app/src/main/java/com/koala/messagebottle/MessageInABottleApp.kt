@@ -19,9 +19,8 @@ fun MessageInABottleApp() {
     val backHandler: () -> Unit = { navController.popBackStack() }
     val homeHandler: () -> Unit = {
         navController.navigate(Screen.HOME) {
-            popUpTo("home") {
-                // Pop up to the "home" destination, including "home" itself
-                inclusive = true
+            popUpTo(Screen.HOME) {
+                inclusive = true // Pop up to the "home" destination, including "home" itself
             }
         }
     }
