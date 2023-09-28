@@ -1,5 +1,5 @@
 [versions]
-pluginAndroidGradle = "8.1.0"
+pluginAndroidGradle = "8.1.1"
 pluginKotlin = "1.9.10"
 pluginParcelize = "1.9.0"
 pluginKsp = "1.9.10-1.0.13"
