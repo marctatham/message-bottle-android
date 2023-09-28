@@ -29,7 +29,7 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             authenticationRepository.user.collect {
                 when (it) {
-                    is UserEntity.AuthenticatedUser -> _state.value = State.LoggedInUser
+                    is UserEntity.AuthenticatedUser -> _state.value = State.AuthenticatedUser
                     UserEntity.UnauthenticatedUser -> _state.value = State.Anonymous
                 }
             }
@@ -73,8 +73,7 @@ sealed class State {
 
     data object Loading : State()
 
-    data object LoggedInUser :
-        State() // TODO: rename to AuthenticatedUser for consistency across codebase
+    data object AuthenticatedUser : State()
 
     data object Failure : State()
 }

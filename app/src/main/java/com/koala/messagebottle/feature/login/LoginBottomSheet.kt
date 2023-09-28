@@ -110,7 +110,7 @@ private fun LoginBottomSheet(
     bottomSheetState: SheetState,
     uiState: State,
 ) {
-    if (uiState is State.LoggedInUser) {
+    if (uiState is State.AuthenticatedUser) {
         LaunchedEffect(Unit) {
             onSignInCompleteHandler()
         }
@@ -121,7 +121,7 @@ private fun LoginBottomSheet(
         sheetState = bottomSheetState,
     ) {
         val isLoading = uiState is State.Loading
-        val areLoginOptionsEnabled: Boolean = isLoading.not() || uiState is State.LoggedInUser
+        val areLoginOptionsEnabled: Boolean = isLoading.not() || uiState is State.AuthenticatedUser
 
         Box {
             Column(
