@@ -85,7 +85,9 @@ private fun HomeScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 32.dp)
             ) {
                 if (homeUiState is HomeUiState.Admin) {
                     Spacer(modifier = Modifier.weight(1f))
