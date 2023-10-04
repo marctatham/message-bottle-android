@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.koala.messagebottle.common.analytics.IAnalyticsProvider
 import com.koala.messagebottle.feature.getmessage.GetMessageScreen
 import com.koala.messagebottle.feature.home.HomeScreen
 import com.koala.messagebottle.feature.login.LoginRequiredToPostScreen
@@ -13,8 +14,12 @@ import com.koala.messagebottle.feature.postmessage.ui.PostMessageScreen
 import com.koala.messagebottle.feature.viewmessages.ViewMessagesScreen
 
 @Composable
-fun MessageInABottleApp() {
+fun MessageInABottleApp(analyticsProvider: IAnalyticsProvider) {
     val navController = rememberNavController()
+    navController.addOnDestinationChangedListener { _, destination, _ ->
+        analyticsProvider.trackScreen(destination.route ?: "Unknown")
+    }
+
     val viewModel: AppNavigationStateViewModel = hiltViewModel()
     val backHandler: () -> Unit = { navController.popBackStack() }
     val homeHandler: () -> Unit = {
@@ -25,7 +30,11 @@ fun MessageInABottleApp() {
         }
     }
 
-    NavHost(navController = navController, startDestination = Screen.HOME) {
+    NavHost(
+        navController = navController,
+        startDestination = Screen.HOME,
+
+        ) {
         composable(Screen.HOME) {
             HomeScreen(
                 onGetMessageHandler = { navController.navigate(Screen.GET_MESSAGES) },
