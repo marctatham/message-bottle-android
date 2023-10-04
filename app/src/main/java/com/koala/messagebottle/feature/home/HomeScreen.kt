@@ -39,11 +39,19 @@ fun HomeScreen(
     onViewMessagesHandler: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
+    val tracker: IAnalyticsProvider = LocalTracker.current
+
     val homeUiState: HomeUiState by viewModel.state.collectAsStateWithLifecycle()
     val composition: LottieComposition? by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.message_in_bottle))
     HomeScreen(
-        onGetMessageHandler = onGetMessageHandler,
-        onPostMessageHandler = onPostMessageHandler,
+        onGetMessageHandler = {
+            tracker.trackEvent(AnalyticsEvent.GetMessageTapped)
+            onGetMessageHandler()
+        },
+        onPostMessageHandler = {
+            tracker.trackEvent(AnalyticsEvent.PostMessageTapped)
+            onPostMessageHandler()
+        },
         onViewMessagesHandler = onViewMessagesHandler,
         homeUiState = homeUiState,
         composition = composition
@@ -58,8 +66,6 @@ private fun HomeScreen(
     homeUiState: HomeUiState,
     composition: LottieComposition?
 ) {
-    // TODO: hoist up
-    val tracker: IAnalyticsProvider = LocalTracker.current
 
     CustomBox(
         canvasContent = {
@@ -125,20 +131,14 @@ private fun HomeScreen(
                 BottlingButton(
                     text = R.string.home_button_get_message,
                     buttonType = BottlingButtonType.PRIMARY,
-                    onTapHandler = {
-                        tracker.trackEvent(AnalyticsEvent.GetMessageTapped)
-                        onGetMessageHandler()
-                    },
+                    onTapHandler = onGetMessageHandler,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
 
                 BottlingButton(
                     text = R.string.home_button_put_message,
                     buttonType = BottlingButtonType.SECONDARY,
-                    onTapHandler = {
-                        tracker.trackEvent(AnalyticsEvent.PostMessageTapped)
-                        onPostMessageHandler()
-                    },
+                    onTapHandler = onPostMessageHandler,
                     modifier = Modifier.padding(
                         start = 16.dp,
                         end = 16.dp,
