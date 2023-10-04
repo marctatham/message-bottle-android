@@ -3,7 +3,9 @@ package com.koala.messagebottle
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.CompositionLocalProvider
 import com.koala.messagebottle.common.analytics.IAnalyticsProvider
+import com.koala.messagebottle.common.analytics.LocalTracker
 import com.koala.messagebottle.common.ui.BottlingTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -16,9 +18,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             BottlingTheme {
-                MessageInABottleApp(analyticsProvider)
+                // ensure that the analytics provider as has been configured
+                // via Dagger Hilt is made available to the entire app
+                CompositionLocalProvider(LocalTracker provides analyticsProvider) {
+                    MessageInABottleApp(analyticsProvider)
+                }
             }
         }
     }

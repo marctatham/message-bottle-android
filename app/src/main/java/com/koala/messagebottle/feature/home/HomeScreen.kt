@@ -24,6 +24,9 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.koala.messagebottle.R
+import com.koala.messagebottle.common.analytics.AnalyticsEvent
+import com.koala.messagebottle.common.analytics.IAnalyticsProvider
+import com.koala.messagebottle.common.analytics.LocalTracker
 import com.koala.messagebottle.common.components.BottlingButton
 import com.koala.messagebottle.common.components.BottlingButtonType
 import com.koala.messagebottle.common.components.CustomBox
@@ -55,6 +58,9 @@ private fun HomeScreen(
     homeUiState: HomeUiState,
     composition: LottieComposition?
 ) {
+    // TODO: hoist up
+    val tracker: IAnalyticsProvider = LocalTracker.current
+
     CustomBox(
         canvasContent = {
             Column(
@@ -119,14 +125,20 @@ private fun HomeScreen(
                 BottlingButton(
                     text = R.string.home_button_get_message,
                     buttonType = BottlingButtonType.PRIMARY,
-                    onTapHandler = onGetMessageHandler,
+                    onTapHandler = {
+                        tracker.trackEvent(AnalyticsEvent.GetMessageTapped)
+                        onGetMessageHandler()
+                    },
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
 
                 BottlingButton(
                     text = R.string.home_button_put_message,
                     buttonType = BottlingButtonType.SECONDARY,
-                    onTapHandler = onPostMessageHandler,
+                    onTapHandler = {
+                        tracker.trackEvent(AnalyticsEvent.PostMessageTapped)
+                        onPostMessageHandler()
+                    },
                     modifier = Modifier.padding(
                         start = 16.dp,
                         end = 16.dp,
