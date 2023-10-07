@@ -1,7 +1,7 @@
 package com.koala.messagebottle.main.postmessage
 
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
-import com.koala.messagebottle.common.authentication.domain.ProviderType
+import com.koala.messagebottle.common.authentication.domain.AuthProviderType
 import com.koala.messagebottle.common.authentication.domain.UserEntity
 import com.koala.messagebottle.common.messages.domain.IMessageRepository
 import com.koala.messagebottle.feature.postmessage.domain.PostMessageResult
@@ -42,7 +42,7 @@ class PostMessageUseCaseTest {
         val authRepo = mockk<IAuthenticationRepository>()
         val useCase = PostMessageUseCase(authRepo, messageRepo)
         val authenticatedUser =
-            UserEntity.AuthenticatedUser(ProviderType.Google, "myFakeToken", "myFakeUserId")
+            UserEntity.AuthenticatedUser(AuthProviderType.Google, "myFakeToken", "myFakeUserId")
         every { authRepo.user.value } returns authenticatedUser
         coEvery { messageRepo.postMessage(any()) } returns Unit
 

@@ -10,7 +10,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.common.authentication.domain.IAuthenticationRepository
-import com.koala.messagebottle.common.authentication.domain.ProviderType
+import com.koala.messagebottle.common.authentication.domain.AuthProviderType
 import com.koala.messagebottle.common.authentication.domain.UserEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,7 +47,7 @@ class AuthenticationRepository constructor(
                 Timber.d("Token - [${tokenResult.token}]")
                 Timber.d("Sign in Provider - [${tokenResult.signInProvider}]")
 
-                val providerType: ProviderType = getProviderTypeForSignInProvider(tokenResult.signInProvider!!)
+                val providerType: AuthProviderType = getProviderTypeForSignInProvider(tokenResult.signInProvider!!)
                 _user.value = UserEntity.AuthenticatedUser(providerType, tokenResult.token!!, currentUser.uid, currentUser.uid == ADMIN_USER_ID)
                 Firebase.crashlytics.setUserId(currentUser.uid)
             }
@@ -58,10 +58,10 @@ class AuthenticationRepository constructor(
         }
     }
 
-    private fun getProviderTypeForSignInProvider(signInProvider:String):ProviderType {
+    private fun getProviderTypeForSignInProvider(signInProvider:String):AuthProviderType {
         return when (signInProvider) {
-            ProviderType.PROVIDER_GOOGLE -> ProviderType.Google
-            ProviderType.PROVIDER_ANONYMOUS -> ProviderType.Anonymous
+            AuthProviderType.PROVIDER_GOOGLE -> AuthProviderType.Google
+            AuthProviderType.PROVIDER_ANONYMOUS -> AuthProviderType.Anonymous
             else -> throw IllegalArgumentException("Unsupported SignInProvider $signInProvider")
         }
     }
