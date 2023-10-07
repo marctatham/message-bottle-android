@@ -4,7 +4,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.koala.messagebottle.common.analytics.FirebaseAnalyticsProvider
-import com.koala.messagebottle.common.analytics.IAnalyticsProvider
+import com.koala.messagebottle.common.analytics.ITracker
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,7 @@ class AnalyticsModule {
     @Singleton
     fun providesAnalyticsProvider(
         firebaseAnalytics: FirebaseAnalytics
-    ): IAnalyticsProvider =
+    ): ITracker =
         FirebaseAnalyticsProvider(firebaseAnalytics)
 
 

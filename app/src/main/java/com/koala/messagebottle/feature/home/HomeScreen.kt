@@ -25,7 +25,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.koala.messagebottle.R
 import com.koala.messagebottle.common.analytics.AnalyticsEvent
-import com.koala.messagebottle.common.analytics.IAnalyticsProvider
+import com.koala.messagebottle.common.analytics.ITracker
 import com.koala.messagebottle.common.analytics.LocalTracker
 import com.koala.messagebottle.common.components.BottlingButton
 import com.koala.messagebottle.common.components.BottlingButtonType
@@ -39,7 +39,7 @@ fun HomeScreen(
     onViewMessagesHandler: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
-    val tracker: IAnalyticsProvider = LocalTracker.current
+    val tracker: ITracker = LocalTracker.current
 
     val homeUiState: HomeUiState by viewModel.state.collectAsStateWithLifecycle()
     val composition: LottieComposition? by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.message_in_bottle))

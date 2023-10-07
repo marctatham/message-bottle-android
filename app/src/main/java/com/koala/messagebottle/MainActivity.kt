@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.CompositionLocalProvider
-import com.koala.messagebottle.common.analytics.IAnalyticsProvider
+import com.koala.messagebottle.common.analytics.ITracker
 import com.koala.messagebottle.common.analytics.LocalTracker
 import com.koala.messagebottle.common.ui.BottlingTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var analyticsProvider: IAnalyticsProvider
+    lateinit var analyticsProvider: ITracker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

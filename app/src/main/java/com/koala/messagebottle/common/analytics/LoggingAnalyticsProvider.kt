@@ -4,7 +4,7 @@ import android.os.Bundle
 import timber.log.Timber
 
 // TODO: let's make sure this is plugged into Debug builds
-class LoggingAnalyticsProvider : IAnalyticsProvider {
+class LoggingAnalyticsProvider : ITracker {
 
     override fun trackScreen(screenName: String) {
         Timber.i("Screen: $screenName")

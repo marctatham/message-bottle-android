@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class FirebaseAnalyticsProvider @Inject constructor(
     private val firebaseAnalytics: FirebaseAnalytics
-) : IAnalyticsProvider {
+) : ITracker {
 
     override fun trackScreen(screenName: String) {
         val params = Bundle().apply {

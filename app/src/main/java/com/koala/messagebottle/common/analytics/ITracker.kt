@@ -1,6 +1,6 @@
 package com.koala.messagebottle.common.analytics
 
-interface IAnalyticsProvider {
+interface ITracker {
 
     fun trackScreen(screenName: String)
 
