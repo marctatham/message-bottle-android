@@ -62,7 +62,7 @@ android {
     buildTypes {
         getByName("debug") {
             isDebuggable = true
-            applicationIdSuffix = ".debug"
+            //applicationIdSuffix = ".debug" TODO: add necessary configuration to firebase
         }
         getByName("release") {
             isDebuggable = false
