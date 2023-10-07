@@ -42,7 +42,12 @@ class PostMessageUseCaseTest {
         val authRepo = mockk<IAuthenticationRepository>()
         val useCase = PostMessageUseCase(authRepo, messageRepo)
         val authenticatedUser =
-            UserEntity.AuthenticatedUser(AuthProviderType.Google, "myFakeToken", "myFakeUserId")
+            UserEntity.AuthenticatedUser(
+                providerType = AuthProviderType.Google,
+                jwtToken = "myFakeToken",
+                userId = "myFakeUserId",
+                isAdmin = false
+            )
         every { authRepo.user.value } returns authenticatedUser
         coEvery { messageRepo.postMessage(any()) } returns Unit
 
