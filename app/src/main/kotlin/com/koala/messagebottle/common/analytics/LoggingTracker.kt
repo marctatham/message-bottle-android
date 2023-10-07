@@ -3,7 +3,6 @@ package com.koala.messagebottle.common.analytics
 import android.os.Bundle
 import timber.log.Timber
 
-// TODO: let's make sure this is plugged into Debug builds
 class LoggingTracker : ITracker {
 
     override fun trackScreen(screenName: String) {
