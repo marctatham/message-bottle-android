@@ -3,7 +3,7 @@ package com.koala.messagebottle.common.analytics.di
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.koala.messagebottle.common.analytics.FirebaseAnalyticsProvider
+import com.koala.messagebottle.common.analytics.FirebaseTracker
 import com.koala.messagebottle.common.analytics.ITracker
 import dagger.Module
 import dagger.Provides
@@ -25,7 +25,7 @@ class AnalyticsModule {
     fun providesAnalyticsProvider(
         firebaseAnalytics: FirebaseAnalytics
     ): ITracker =
-        FirebaseAnalyticsProvider(firebaseAnalytics)
+        FirebaseTracker(firebaseAnalytics)
 
 
 }
