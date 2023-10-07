@@ -33,7 +33,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.koala.messagebottle"
+        applicationId = "com.bottlecast.app"
         minSdk = 33
         targetSdk = 34
         versionCode = 2
