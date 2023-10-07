@@ -39,7 +39,7 @@ android {
         versionCode = 2
         versionName = "1.0"
 
-        testInstrumentationRunner = "com.koala.messagebottle.HiltTestRunner"
+        testInstrumentationRunner = "com.bottlecast.app.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
