@@ -19,13 +19,10 @@ class AnalyticsModule {
     @Singleton
     fun providesFirebaseAnalytics(): FirebaseAnalytics = Firebase.analytics
 
-
     @Provides
     @Singleton
     fun providesAnalyticsProvider(
         firebaseAnalytics: FirebaseAnalytics
-    ): ITracker =
-        FirebaseTracker(firebaseAnalytics)
-
+    ): ITracker = FirebaseTracker(firebaseAnalytics)
 
 }
