@@ -60,7 +60,10 @@ android {
     }
 
     buildTypes {
-        getByName("debug") { } // nothing custom for debug builds at this time
+        getByName("debug") {
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
+        }
         getByName("release") {
             isDebuggable = false
 
