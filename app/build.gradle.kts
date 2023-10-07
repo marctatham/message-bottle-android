@@ -29,7 +29,7 @@ plugins {
 }
 
 android {
-    namespace = "com.koala.messagebottle"
+    namespace = "com.bottlecast.app"
     compileSdk = 34
 
     defaultConfig {
@@ -62,7 +62,7 @@ android {
     buildTypes {
         getByName("debug") {
             isDebuggable = true
-            //applicationIdSuffix = ".debug" TODO: add necessary configuration to firebase
+            applicationIdSuffix = ".debug"
         }
         getByName("release") {
             isDebuggable = false
