@@ -86,7 +86,7 @@ private fun HomeScreen(
                     modifier = Modifier
                         .padding(16.dp)
                         .offset(x = 0.dp, y = (-100).dp),
-                    text = stringResource(id = R.string.app_name),
+                    text = stringResource(id = R.string.home_title),
                     style = MaterialTheme.typography.displayLarge,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurface
