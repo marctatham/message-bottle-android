@@ -36,7 +36,7 @@ android {
         applicationId = "com.bottlecast.app"
         minSdk = 33
         targetSdk = 34
-        versionCode = 2
+        versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "com.bottlecast.app.HiltTestRunner"
