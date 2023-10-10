@@ -1,10 +1,8 @@
 package com.bottlecast.app.common.analytics.di
 
+import com.bottlecast.app.common.analytics.FirebaseTracker
+import com.bottlecast.app.common.analytics.ITracker
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
-import com.bottlecast.app.analytics.FirebaseTracker
-import com.bottlecast.app.analytics.ITracker
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
