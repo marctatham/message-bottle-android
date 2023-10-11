@@ -28,17 +28,17 @@ class MessageFirestoreSource @Inject constructor(
     override suspend fun getMessage(): MessageEntity {
 
         // generate a random ID within the index
-        val random = getRandomIndexId()
+        val randomIndexId = getRandomIndexId()
 
         // define the query to search up the index
         val searchUpTheIndex: Query = collectionReference
-            .whereGreaterThanOrEqualTo(FieldPath.documentId(), random)
+            .whereGreaterThanOrEqualTo(FieldPath.documentId(), randomIndexId)
             .orderBy(FieldPath.documentId())
             .limit(1)
 
         // define the query to search down the index
         val searchDownTheIndex: Query = collectionReference
-            .whereLessThanOrEqualTo(FieldPath.documentId(), random)
+            .whereLessThanOrEqualTo(FieldPath.documentId(), randomIndexId)
             .orderBy(FieldPath.documentId())
             .limit(1)
 
