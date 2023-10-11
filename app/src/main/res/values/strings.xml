@@ -51,7 +51,7 @@
     <string name="snack_post_message_insufficient_length">Your message must be at least %1$s characters long"</string>
     <string name="post_message_char_count">%1$s/%2$s"</string>
 
-    <string name="post_completion_title">Message Bottled!\n⛵</string>
+    <string name="post_completion_title">Message Bottled!</string>
     <string name="post_completion_description">Your message has been bottled up and is ready to set sail!</string>
     <string name="btn_post_complete">Back to adventure</string>
 
