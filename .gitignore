@@ -1,5 +1,5 @@
 # Release builds, secrets, etc.
-message-bottle-release.jks
+bottlecast-upload-keystore.jks
 
 # Built application files
 /build
