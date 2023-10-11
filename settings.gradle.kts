@@ -28,6 +28,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "MessageInABottle"
+rootProject.name = "BottleCast"
 
 include(":app")
