@@ -52,7 +52,7 @@ android {
 
         create("release") {
             println("keyStoreAlias: $keyStoreAlias keyStoreAliasPassword: $keyStoreAliasPassword keyStorePassword: $keyStorePassword")
-            storeFile = file("message-bottle-release.jks")
+            storeFile = file("bottlecast-upload-keystore.jks")
             storePassword = keyStorePassword
             keyAlias = keyStoreAlias
             keyPassword = keyStoreAliasPassword
