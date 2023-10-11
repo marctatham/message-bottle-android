@@ -13,7 +13,9 @@ import com.google.firebase.firestore.util.Util.autoId
 import com.bottlecast.app.common.messages.data.mapper.MessageDataModelMapper
 import com.bottlecast.app.common.messages.data.model.MessageFirestoreDataModel
 import com.bottlecast.app.common.messages.domain.MessageEntity
+import com.google.firebase.firestore.DocumentSnapshot
 import timber.log.Timber
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 private const val COLLECTION = "messages"
@@ -44,13 +46,25 @@ class MessageFirestoreSource @Inject constructor(
 
         var querySnapshot: QuerySnapshot = Tasks.await(searchUpTheIndex.get())
         if (querySnapshot.documents.size == 0) {
+            Timber.d("No firestore document found, searching down the index instead")
             querySnapshot = Tasks.await(searchDownTheIndex.get())
         }
 
-        val messageContent: String = querySnapshot.documents[0].data!!["messageContent"].toString()
-        val userId: String = querySnapshot.documents[0].data!!["userId"].toString()
-        val dataModel = MessageFirestoreDataModel(messageContent, userId)
-        return mapper.mapFrom(dataModel)
+        if (querySnapshot.documents.size == 0) {
+            Timber.d("No documents found down the index EITHER")
+            querySnapshot = Tasks.await(searchDownTheIndex.get())
+        }
+
+        val doc: DocumentSnapshot = querySnapshot.documents.first()
+        if (doc.exists()) {
+            val docData: Map<String, Any> = doc.data!!
+            val messageContent: String = docData["messageContent"].toString()
+            val userId: String = docData["userId"].toString()
+            val dataModel = MessageFirestoreDataModel(messageContent, userId)
+            return mapper.mapFrom(dataModel)
+        }
+
+        throw IllegalStateException("No message exists found in remoteSource")
     }
 
     override suspend fun getMessages(): List<MessageEntity> {
