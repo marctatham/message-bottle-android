@@ -112,7 +112,6 @@ dependencies {
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
 
     // Hilt Dependency Injection
@@ -126,6 +125,7 @@ dependencies {
     kaptTest(libs.hilt.android.compiler)
 
     // Arch Components
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
