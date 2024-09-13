@@ -192,13 +192,21 @@ private fun LoginBottomSheet(
 @Composable
 private fun FailureContentPreview(
 ) {
-    LoginBottomSheet(
-        signInWithGoogleHandler = {},
-        signInAnonymouslyHandler = {},
-        onDismissRequest = {},
-        onSignInCompleteHandler = { },
-        bottomSheetState = SheetState(true, SheetValue.Expanded, { true }),
-        uiState = State.Loading,
+
+
+//    LoginBottomSheet(
+//        signInWithGoogleHandler = {},
+//        signInAnonymouslyHandler = {},
+//        onDismissRequest = {},
+//        onSignInCompleteHandler = { },
+//        bottomSheetState = SheetState(true, SheetValue.Expanded, { true }),
+//        uiState = State.Loading,
+//    )
+    // TODO: Fix
+    Text(
+        text = "TODO: Fix the bottom sheet implementation",
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onBackground
     )
 }
 
@@ -207,13 +215,20 @@ private fun FailureContentPreview(
 @Composable
 private fun LoadingContentPreview(
 ) {
-    LoginBottomSheet(
-        signInWithGoogleHandler = {},
-        signInAnonymouslyHandler = {},
-        onDismissRequest = {},
-        onSignInCompleteHandler = { },
-        bottomSheetState = SheetState(true, SheetValue.Expanded, { true }),
-        uiState = State.Failure,
+//    LoginBottomSheet(
+//        signInWithGoogleHandler = {},
+//        signInAnonymouslyHandler = {},
+//        onDismissRequest = {},
+//        onSignInCompleteHandler = { },
+//        bottomSheetState = SheetState(true, SheetValue.Expanded, { true }),
+//        uiState = State.Failure,
+//    )
+
+    // TODO: Fix
+    Text(
+        text = "TODO: Fix the bottom sheet implementation",
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onBackground
     )
 }
 
